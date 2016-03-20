@@ -130,6 +130,22 @@
   duck
 }
 
+{
+  type: 'ADD_DUCK',
+}
+
+{
+  type: 'ADD_DUCK_FAILURE',
+  error
+}
+
+{
+  type: 'ADD_DUCK_SUCCESS',
+  duck,
+  duckId
+}
+
+
 // Users Ducks
 
 {
@@ -149,31 +165,6 @@
   timestamp
 }
 
-// New Duck
-
-{
-  type: 'ADD_DUCK',
-  duck
-}
-
-{
-  type: 'ADD_DUCK_FAILURE',
-  error
-}
-
-{
-  type: 'ADD_DUCK_SUCCESS'
-}
-
-{
-  type: 'UPDATE_DUCK_TEXT',
-  text
-}
-
-{
-  type: 'RESET_DUCK'
-}
-
 // Replies
 
 {
@@ -188,20 +179,13 @@
 
 {
   type: 'FETCH_REPLIES_SUCCESS',
+  duckId,
   replies,
   timestamp
 }
 
-// New Reply
-
 {
-  type: 'UPDATE_REPLY_TEXT',
-  text
-}
-
-{
-  type: 'ADD_REPLY',
-  reply
+  type: 'ADD_REPLY'
 }
 
 {
@@ -210,11 +194,10 @@
 }
 
 {
-  type: 'ADD_REPLY_SUCCESS'
-}
-
-{
-  type: 'RESET_REPLY'
+  type: 'ADD_REPLY_SUCCESS',
+  duckId,
+  reply,
+  replyId,
 }
 
 // Feed
@@ -231,7 +214,7 @@
 
 {
   type: 'SET_FEED_LISTENER_SUCCESS',
-  feed
+  duckIds
 }
 
 {
@@ -244,7 +227,7 @@
 
 {
   type: 'NEW_DUCK',
-  duck
+  duckId
 }
 
 {
@@ -289,6 +272,7 @@
 
 {
   type: 'ADD_LISTENER',
+  listenerId,
   listener
 }
 

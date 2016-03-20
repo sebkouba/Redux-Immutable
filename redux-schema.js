@@ -53,24 +53,10 @@
       duckIds: [duckId, duckId, duckId]
     }
   },
-  newDuck: {
-    isPosting,
-    error,
-    info: {
-      avatar,
-      duckId,
-      name,
-      numberOfReplies,
-      numberOfLikes,
-      text,
-      timestamp,
-      uid
-    }
-  },
   replies: {
+    isFetching,
+    error,
     [duckId]: {
-      isFetching,
-      error,
       lastUpdated,
       replies: {
         [replyId]: {
@@ -83,17 +69,6 @@
       }
     }
   },
-  newReply: {
-    isPosting,
-    error,
-    info: {
-      name,
-      reply,
-      uid,
-      timestamp,
-      avatar
-    }
-  }
   **feed: {
       ducks: [duckId, duckId, duckId],
       newDucksAvailable,

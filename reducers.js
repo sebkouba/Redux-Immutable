@@ -183,15 +183,18 @@ function ducks (state = initialDuckState, action) {
   const type = action.type
   switch (action.type) {
     case 'FETCH_DUCK' :
+    case 'ADD_DUCK' :
       return Object.assign({}, state, {
         isFetching: true,
       })
     case 'FETCH_DUCK_FAILURE' :
+    case 'ADD_DUCK_FAILURE' :
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
       })
     case 'FETCH_DUCK_SUCCESS' :
+    case 'ADD_DUCK_SUCCESS' :
       return Object.assign({}, state, {
         isFetching: false,
         error: '',
@@ -233,28 +236,173 @@ function userDucks (state  = initialUserDucksState, actions) {
   }
 }
 
-// New Duck
+// Replies
 
-const initialNewDuckState = {
-  isPosting: false,
-  error: '',
-  info: {
-    avatar: '',
-    duckId: '',
-    name: '',
-    numberOfReplies: '',
-    numberOfLikes: '',
-    text: '',
-    timestamp: 0,
-    uid: ''
+const initialReplyState = {
+  name: '',
+  reply: '',
+  uid: '',
+  timestamp: 0,
+  avatar: ''
+}
+
+function reply (state, action) {
+  const type = action.type
+  switch (type) {
+    case 'ADD_REPLY_SUCCESS' :
+      return Object.assign({}, state, {
+        [action.replyId]: action.reply
+      })
+    default :
+      return state
   }
 }
 
-function newDuck (state = initialNewDuckState, action) {
+function replies (state = {}, action) {
   const type = action.type
   switch (type) {
-    type: 'ADD_DUCK'
-    mehhhhhh
+    case 'FETCH_REPLIES' :
+    case 'ADD_REPLY' :
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case 'FETCH_REPLIES_FAILURE' :
+    case 'ADD_REPLY_FAILURE' :
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      })
+    case 'FETCH_REPLIES_SUCCESS' :
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: '',
+        [action.duckId]: {
+          lastUpdated: action.timestamp,
+          replies: action.replies
+        }
+      })
+    case 'ADD_REPLY_SUCCESS' :
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: '',
+        [action.duckId]: reply(state[action.duckId], action)
+      })
+    default :
+      return state
+  }
+}
+
+// Feed
+
+const initialFeedState = {
+  newDucksAvailable: false,
+  newDucksToAdd: [],
+  isFetching: false,
+  error: '',
+  duckIds: []
+}
+
+function feed (state, action) {
+  const type = action.type
+  switch (type) {
+    case 'SET_FEED_LISTENER' :
+      return Object.assign({}, state, {
+        isFetching: true,
+      })
+    case 'SET_FEED_LISTENER_ERROR' :
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      })
+    case 'SET_FEED_LISTENER_SUCCESS' :
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: '',
+        duckIds: action.duckIds
+      })
+    case 'NEW_DUCKS_AVAILABLE' :
+      return Object.assign({}, state, {
+        newDucksAvailable: true,
+      })
+    case 'RESET_NEW_DUCKS_AVAILABLE' :
+      return Object.assign({}, state, {
+        newDucksAvailable: false,
+      })
+    case 'NEW_DUCK' :
+      return Object.assign({}, state, {
+        newDucksToAdd: state.newDucksToAdd.concat([action.duckId])
+      })
+    case 'RESET_NEW_DUCKS_TO_ADD' :
+      return Object.assign({}, state, {
+        newDucksToAdd: []
+      })
+    default :
+      return state
+  }
+}
+
+// Notifications
+
+const initialNotificationsState = {
+  notifs: [],
+  newNotificationsAvailable: false,
+  newNotificationsToAdd: [],
+  error: '',
+  isLoading: false
+}
+
+function notifications (state = initialNotificationsState, action) {
+  const type = action.type
+  switch (type) {
+    case 'SET_NOTIFICATIONS_LISTENER' :
+      return Object.assign({}, state, {
+        isLoading: true,
+      })
+    case 'SET_NOTIFICATIONS_LISTENER_ERROR' :
+      return Object.assign({}, state, {
+        isLoading: false,
+        error: action.error,
+      })
+    case 'SET_NOTIFICATIONS_LISTENER_SUCCESS' :
+      return Object.assign({}, state, {
+        isLoading: false,
+        error: '',
+        notifs: action.notifications,
+      })
+    case 'NEW_NOTIFICATIONS_AVAILABLE' :
+      return Object.assign({}, state, {
+        newNotificationsAvailable: true,
+      })
+    case 'RESET_NEW_NOTIFICATIONS_AVAILABLE' :
+      return Object.assign({}, state, {
+        newNotificationsAvailable: false,
+      })
+    case 'NEW_NOTIFICATION' :
+      return Object.assign({}, state, {
+        newNotificationsToAdd: state.newNotificationsToAdd.concat([action.newNotification]),
+      })
+    case 'RESET_NEW_NOTIFICATIONS_TO_ADD' :
+      return Object.assign({}, state, {
+        newNotifications: [],
+      })
+    default :
+      return state
+  }
+}
+
+// Listeners
+
+function listeners (state = {}, action) {
+  const type = action.type
+  switch (type) {
+    case 'ADD_LISTENER' :
+      return Object.assign({}, state, {
+        [action.listenerId]: action.listener
+      })
+    case 'REMOVE_LISTENER' :
+      const listenersClone = Object.assign({}, state)
+      delete listenersClone[action.listenerId]
+      return listenersClone
     default :
       return state
   }
