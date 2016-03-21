@@ -14,7 +14,7 @@
   },
   followers: {
     error,
-    isFetching,
+    isLoading,
     [uid]: {
       lastUpdated,
       followerIds: [uid, uid, uid]
@@ -22,14 +22,14 @@
   },
   following: {
     error,
-    isFetching,
+    isLoading,
     [uid]: {
       lastUpdated,
       followingIds: [uid, uid, uid]
     }
   },
   ducks: {
-    isFetching,
+    isLoading,
     error,
     [duckId]: {
       lastUpdated,
@@ -54,7 +54,7 @@
     }
   },
   replies: {
-    isFetching,
+    isLoading,
     error,
     [duckId]: {
       lastUpdated,
@@ -70,10 +70,10 @@
     }
   },
   **feed: {
-      ducks: [duckId, duckId, duckId],
+      duckIds: [duckId, duckId, duckId],
       newDucksAvailable,
       newDucksToAdd,
-      isFetching,
+      isLoading,
       error
   },
   **notifications: {
@@ -87,8 +87,9 @@
           timestamp
       }],
       newNotificationAvailable,
-      newNotificationsToAdd
-      error
+      newNotificationsToAdd,
+      error,
+      isLoading,
   },
   listeners: {
     [listenerId]: true

@@ -75,7 +75,7 @@ function follower (state = {}, action) {
 }
 
 const initialFollowersState = {
-  isFetching: false,
+  isLoading: false,
   error: ''
 }
 
@@ -86,19 +86,19 @@ function followers (state  = initialFollowersState, action) {
     case 'ADD_FOLLOWER' :
     case 'REMOVE_FOLLOWER' :
       return Object.assign({}, state, {
-        isFetching: true,
+        isLoading: true,
         error: '',
       })
     case 'FETCH_FOLLOWERS_FAILURE' :
     case 'ADD_FOLLOWER_FAILURE' :
     case 'REMOVE_FOLLOWER_FAILURE' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: action.error,
       })
     case 'FETCH_FOLLOWERS_SUCCESS' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: '',
         [action.uid]: follower(state[action.uid], action),
       })
@@ -107,7 +107,7 @@ function followers (state  = initialFollowersState, action) {
       return typeof state[action.otherUid] === 'undefined'
         ? state
         : Object.assign({}, state, {
-            isFetching: false,
+            isLoading: false,
             error: '',
             [action.otherUid]: follower(state[action.otherUid], action),
           })
@@ -140,7 +140,7 @@ function following (state = {}, action) {
 }
 
 const initialFollowingState = {
-  isFetching: false,
+  isLoading: false,
   error: '',
 }
 
@@ -150,20 +150,20 @@ function followings (state  = initialFollowingState, action) {
     case 'FETCH_FOLLOWING' :
     case 'REMOVE_FOLLOWING' :
       return Object.assign({}, state, {
-        isFetching: true,
+        isLoading: true,
         error: '',
       })
     case 'FETCH_FOLLOWING_FAILURE' :
     case 'REMOVE_FOLLOWING_FAILURE' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: action.error,
       })
     case 'FETCH_FOLLOWING_SUCCESS' :
     case 'ADD_FOLLOWING_SUCCESS' :
     case 'REMOVE_FOLLOWING_SUCCESS'
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: '',
         [action.uid]: following(state[action.uid], action)
       })
@@ -176,7 +176,7 @@ function followings (state  = initialFollowingState, action) {
 
 const initialDuckState = {
   error: false,
-  isFetching: false,
+  isLoading: false,
 }
 
 function ducks (state = initialDuckState, action) {
@@ -185,18 +185,18 @@ function ducks (state = initialDuckState, action) {
     case 'FETCH_DUCK' :
     case 'ADD_DUCK' :
       return Object.assign({}, state, {
-        isFetching: true,
+        isLoading: true,
       })
     case 'FETCH_DUCK_FAILURE' :
     case 'ADD_DUCK_FAILURE' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: action.error
       })
     case 'FETCH_DUCK_SUCCESS' :
     case 'ADD_DUCK_SUCCESS' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: '',
         [action.duckId]: action.duck
       })
@@ -264,17 +264,17 @@ function replies (state = {}, action) {
     case 'FETCH_REPLIES' :
     case 'ADD_REPLY' :
       return Object.assign({}, state, {
-        isFetching: true
+        isLoading: true
       })
     case 'FETCH_REPLIES_FAILURE' :
     case 'ADD_REPLY_FAILURE' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: action.error
       })
     case 'FETCH_REPLIES_SUCCESS' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: '',
         [action.duckId]: {
           lastUpdated: action.timestamp,
@@ -283,7 +283,7 @@ function replies (state = {}, action) {
       })
     case 'ADD_REPLY_SUCCESS' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: '',
         [action.duckId]: reply(state[action.duckId], action)
       })
@@ -297,7 +297,7 @@ function replies (state = {}, action) {
 const initialFeedState = {
   newDucksAvailable: false,
   newDucksToAdd: [],
-  isFetching: false,
+  isLoading: false,
   error: '',
   duckIds: []
 }
@@ -307,16 +307,16 @@ function feed (state, action) {
   switch (type) {
     case 'SET_FEED_LISTENER' :
       return Object.assign({}, state, {
-        isFetching: true,
+        isLoading: true,
       })
     case 'SET_FEED_LISTENER_ERROR' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: action.error
       })
     case 'SET_FEED_LISTENER_SUCCESS' :
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         error: '',
         duckIds: action.duckIds
       })
