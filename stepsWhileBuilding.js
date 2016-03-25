@@ -19,3 +19,23 @@ react-router - Add React Router
       - Main.js and move HelloWorld code to it
   - Make index.js of components folder
   - Make config/routes.js and fill out routes
+developer-experience
+  - npm -v
+  - node -v
+  - Purposefully mistype a variable name and then check the error in the cosole
+    - Gross index_bundle.js error.
+    - Add devtool: 'eval-source-map' to webpack config and restart webpack
+    - show error message again with sourcemap enabled.
+  - Eslint
+    - http://standardjs.com/
+    - npm install --save-dev eslint eslint-{config-standard,plugin-standard,plugin-promise}
+    - Add lint to node script
+    - touch .eslintrc
+    - run 'npm run lint' and see errors + gross ERR! npm code.
+    - Fix ^ by adding exit 0 to npm lint script
+    - Notice we're not linting for React stuff
+    - npm install --save-dev eslint-plugin-react
+    - Add react plugin to eslintrc
+    - Fill out rest of eslintrc besides rules
+    - Add rules
+    - Fix errors but should still be one error in index.js with exporting file
