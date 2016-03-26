@@ -14,10 +14,10 @@ hello-world - Build Hello World
     - add start and prod to package.json
 react-router - Add React Router
   - npm install --save react-router
-  - Make components folder
+  - Make containers folder
   - Make Main folder
-      - Main.js and move HelloWorld code to it
-  - Make index.js of components folder
+      - MainContainer.js and move HelloWorld code to it
+  - Make index.js of containers folder
   - Make config/routes.js and fill out routes
 developer-experience
   - npm -v
@@ -64,7 +64,7 @@ developer-experience
     - Change requires to imports and vars to consts
     - Use Object.assign
     - Test it out
-  - How about hot module replacement?
+  - HMR
     - npm install --save-dev babel-preset-react-hmre
     - Enable babel-preset-react-hmre when were in dev mode
       - add process.env.BABEL_ENV = LAUNCH_COMMAND
@@ -75,3 +75,17 @@ developer-experience
       - Add a styles.css file and test it out with styles
       - Add state that changes on click. Change state then show how state remains the same.
       - Once finished remove code that just demonstrates HMR
+  - Now talk about how the paths will be a pain when each component has its own folder
+    - ie import Header from '../../components'
+    - Fix by adding resolve root to webpack base
+    - Remove all ./ and ../ from imports
+  - Add Home route/view
+    - this.props.children in MainContainer.js
+    - In containers Make Home folder with HomeContainer.js
+    - Build out HomeContainer.js
+    - Make components folder
+    - Build out Home.js
+    - Make index.js for components Folder and export Home
+    - Add HomeContainer as IndexRoute in route config
+    - Reset on styling using globalStyles
+    - Add styling to Home.js

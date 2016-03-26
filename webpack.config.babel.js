@@ -37,6 +37,9 @@ const base = {
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.css$/,loader: 'style!css-loader?modules'}
     ]
+  },
+  resolve: {
+    root: path.resolve('./app')
   }
 }
 
