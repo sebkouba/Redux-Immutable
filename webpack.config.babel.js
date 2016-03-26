@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 
 const isProduction = LAUNCH_COMMAND === 'production'
-// process.env.BABEL_ENV = LAUNCH_COMMAND
+process.env.BABEL_ENV = LAUNCH_COMMAND
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -34,19 +34,26 @@ const base = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+      {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+      {test: /\.css$/,loader: 'style!css-loader?modules'}
     ]
   }
 }
 
 const developmentConfig = {
   devtool: 'eval',
-  plugins: [HTMLWebpackPluginConfig]
+  devServer: {
+    contentBase: PATHS.build,
+    hot: true,
+    inline: true,
+    progress: true,
+  },
+  plugins: [HTMLWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()]
 }
 
 const productionConfig = {
   devtool: 'cheap-module-source-map',
-  plugins: [HTMLWebpackPluginConfig, productionPlugin, new webpack.optimize.UglifyJsPlugin({minimize: true})]
+  plugins: [HTMLWebpackPluginConfig, productionPlugin]
 }
 
 export default Object.assign({}, base, isProduction === true ? productionConfig : developmentConfig)

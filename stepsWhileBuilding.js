@@ -4,8 +4,8 @@ actions - Make actions.js file add all actions to it for now.
 reducers - Make reducers.js file and add all reducers to it for now.
 hello-world - Build Hello World
     - npm init -y
-    - npm install --save react react-dom && npm install --save-dev html-webpack-plugin webpack webpack-dev-server babel-{core,loader} babel-preset-{react,es2015,stage-0}
-    - Basic webpack.config.js
+    - npm install --save react react-dom && npm install --save-dev html-webpack-plugin webpack webpack-dev-server babel-{core,loader} babel-preset-{react,es2015,stage-0} style-loader css-loader
+    - Basic webpack.config.js with css and style loader
     - .babelrc
     - mkdir app
     - touch index.js && touch index.html
@@ -38,7 +38,7 @@ developer-experience
       - Mention how the export is experimental so we need to have eslint use the babel parser
       - Add npm install babel-eslint@next --save-dev
       - Add parser: "babel-eslint"
-  - require('path') and PATHS object in webpack.config
+  - require('path') and PATHS object in webpack.config (take out index.js because of comment in notes about default when main in package.json)
   - Purposefully mistype a variable name and then check the error in the cosole
     - Gross index_bundle.js error.
     - Add devtool: 'eval' to webpack config and restart webpack
@@ -57,9 +57,21 @@ developer-experience
   - Add shared config to base
   - Add devtool: 'eval' to developmentConfig
   - Add devtool: 'cheap-module-source-map' to productionConfig
-  - Add plugins to developmentConfig
+  - Add plugins to developmentConfig (just HTMLWebpackPlugin)
   - Add plugins to productionConfig
   - Now we need a way to merge them together
     - Change name to webpack.config.babel.js
     - Change requires to imports and vars to consts
     - Use Object.assign
+    - Test it out
+  - How about hot module replacement?
+    - npm install --save-dev babel-preset-react-hmre
+    - Enable babel-preset-react-hmre when were in dev mode
+      - add process.env.BABEL_ENV = LAUNCH_COMMAND
+      - Add hmre to .babelrc
+      - Add new webpack.HotModuleReplacementPlugin() to dev config
+      - add devServer to developmentConfig
+      - Test it out by changing Hello World
+      - Add a styles.css file and test it out with styles
+      - Add state that changes on click. Change state then show how state remains the same.
+      - Once finished remove code that just demonstrates HMR
