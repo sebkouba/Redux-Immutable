@@ -1,4 +1,16 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
-import routes from 'config/routes'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import getRoutes from 'config/routes'
+import users from 'redux/reducers/users'
 
-ReactDOM.render(routes, document.getElementById('app'))
+const store = createStore(users)
+const routes = getRoutes()
+
+ReactDOM.render(
+  <Provider store={store}>
+    {routes}
+  </Provider>,
+  document.getElementById('app')
+)

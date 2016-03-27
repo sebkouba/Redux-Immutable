@@ -79,17 +79,61 @@ developer-experience
     - ie import Header from '../../components'
     - Fix by adding resolve root to webpack base
     - Remove all ./ and ../ from imports
-  - Add Home route/view
-    - this.props.children in MainContainer.js
-    - In containers Make Home folder with HomeContainer.js
-    - Build out HomeContainer.js
-    - Make components folder
-    - Build out Home.js
-    - Make index.js for components Folder and export Home
-    - Add HomeContainer as IndexRoute in route config
-    - Reset on styling using sharedStyles
-    - Add styling to Home.js
-    - Create Navigation folder in components
-    - Build Navigation.js (no styling)
-    - Add <Navigation isAuthed={true} to MainContainer
-    - Style Home and Navigation components
+home
+  - this.props.children in MainContainer.js
+  - In containers Make Home folder with HomeContainer.js
+  - Build out HomeContainer.js
+  - Make components folder
+  - Build out Home.js
+  - Make index.js for components Folder and export Home
+  - Add HomeContainer as IndexRoute in route config
+  - Reset on styling using sharedStyles
+  - Add styling to Home.js
+  - Create Navigation folder in components
+  - Build Navigation.js (no styling)
+  - Add <Navigation isAuthed={true} to MainContainer
+  - Style Home and Navigation components
+login-register-mocks
+  - Create Register folder in containers, registerContainer.js file
+  - Create Register folder in components, Register.js file
+  - Add both to both index.js files
+  - Add styling for Register component
+  - Create shared folder in components for FacebookAuthBtn
+  - Create FacebookAuthBtn component and style it
+  - Create index.js file in shared folder which exports FacebookAuthBtn
+  - Import and use FacebookAuthBtn in Register.js
+  - Repeat the above steps with Login
+redux-auth
+  - Review what weve covered with Redux thus far (reducers.js and actions.js)
+  - Show typical file structure for a Redux app (https://github.com/reactjs/react-router-redux/tree/master/examples/basic)
+  - Talk about Ducks
+  - Create redux folder & redux/modules folder
+  - create redux/modules/users.js file
+  - Move users from reducers.js to users.js file
+  - Swap strings for constants and update initialState variable
+  - export default the reducer
+  - Now move users actions into users.js from actions.js. Talk about actionCreators
+  - Talk about how well import both action creators and reducer (since reducer is default and rest arent)
+  - DONT talk thunk yet. Let them see the problem first.
+  - Now that we have our first reducer, we can create our Redux store.
+  - In /app/index.js import the users reducer
+  - Now we need to use createStore on the redux module
+  - npm install --save redux
+  - create the store using createStore(users) and then console.log the store to check it out
+  - Talk about each property
+  - call getState to see the state and talk about it.
+  - Talk about how until this point weve just used "vanilla flux". This all could have been done without React.
+  - Now, we want to make sure each component has access to the store, which is where react-redux and Provider come in.
+  - npm install --save react-redux
+  - Talk again how if we needed the store, we would have to pass it down as props. Thats lame. Provider fixes that
+  - With Provider, we will be able to have each component specificy which part of the state it needs from the store
+  - Import Provider
+  - Wrap routes in Provider and pass it the store
+  - Note that nothing is different. Cause we havent "connected" any components
+  - **Currently here. No components to connect. Debate should I have created the Login/Register components before this section? That introduces Firebase though. Im tired.
+
+  - Do this later
+  - First, add a index.js file to /reducers just like we did for /components and /containers which exports every reducer well make
+  - create index.js in /reducers and have it export users.js
+  - Now in /app/index.js import all reducers with import * as reducers from 'redux/reducers'
+  - DONT use combine reducers yet

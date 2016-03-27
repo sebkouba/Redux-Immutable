@@ -1,8 +1,5 @@
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  composes: centeredContainer from 'sharedStyles/styles.css';
   color: #4a90e2;
   font-weight: 100;
 }
