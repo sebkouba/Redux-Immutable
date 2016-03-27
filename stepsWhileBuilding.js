@@ -102,7 +102,7 @@ authenticate-mocks
   - Create FacebookAuthBtn component and style it
   - Create index.js file in shared folder which exports FacebookAuthBtn
   - Import and use FacebookAuthBtn in Authenticate.js
-  -
+  - Mock facebook auth. Create helpers folder and then helpers/auth.js
 redux-auth
   - Review what weve covered with Redux thus far (reducers.js and actions.js)
   - Show typical file structure for a Redux app (https://github.com/reactjs/react-router-redux/tree/master/examples/basic)

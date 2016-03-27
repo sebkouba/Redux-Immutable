@@ -30,7 +30,6 @@ const initialUserState = {
     name: '',
     uid: '',
     avatar: '',
-    email: ''
   }
 }
 
