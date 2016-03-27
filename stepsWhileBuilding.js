@@ -159,8 +159,15 @@ redux-auth
   - Update UI now
     - Add temporary {error ? <p> error </p> : null}
     - Update Login with facebook button when fetching
-  - Enough for this video.
+  - Enough for this video. (see Tempory UI changes for FacebookAuthBtn commit)
 thunks
+  - Show handleAuth and managing all the different phases of the async action is annoying
+  - What if...
+    - Move auth() to users.js
+    - in users.js import auth from 'helpers/auth'
+    - create fetchAndHandleUser in users.js and remove exports from other actionCreators
+    - Try to run it. Get nice error message about middleware.
+    - npm install --save redux-thunk
 
   - Do this later
   - First, add a index.js file to /reducers just like we did for /components and /containers which exports every reducer well make

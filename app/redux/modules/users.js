@@ -1,26 +1,40 @@
+import auth from 'helpers/auth'
+
 const FETCH_USER = 'FETCH_USER'
 const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE'
 const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
 
-export function fetchUser () {
+function fetchUser () {
   return {
     type: 'FETCH_USER'
   }
 }
 
-export function fetchUserFailure (error) {
+function fetchUserFailure (error) {
   return {
     type: 'FETCH_USER_FAILURE',
     error
   }
 }
 
-export function fetchUserSuccess (uid, user, timestamp) {
+function fetchUserSuccess (uid, user, timestamp) {
   return {
     type: 'FETCH_USER_SUCCESS',
     uid,
     user,
     timestamp
+  }
+}
+
+export function fetchAndHandleUser () {
+  return function (dispatch) {
+    dispatch(fetchUser())
+    auth().then((user) => {
+      dispatch(fetchUserSuccess(user.uid, user, Date.now))
+    })
+    .catch((error) => {
+      dispatch(fetchUserFailure(error))
+    })
   }
 }
 

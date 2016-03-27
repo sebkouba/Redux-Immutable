@@ -7,13 +7,7 @@ import * as userActionCreators from 'redux/modules/users'
 
 const AuthenticateContainer = React.createClass({
   handleAuth () {
-    this.props.fetchUser()
-    auth().then((user) => {
-      this.props.fetchUserSuccess(user.uid, user, Date.now())
-    })
-    .catch((error) => {
-      this.props.fetchUserFailure(error)
-    })
+    this.props.fetchAndHandleUser()
   },
   render () {
     return (
