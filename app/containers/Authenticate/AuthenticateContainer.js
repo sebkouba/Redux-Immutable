@@ -17,20 +17,16 @@ const AuthenticateContainer = React.createClass({
   },
   render () {
     return (
-      <Authenticate onAuth={this.handleAuth}/>
+      <Authenticate
+        onAuth={this.handleAuth}
+        isFetching={this.props.isFetching}
+        error={this.props.error}
+        user={this.props.user} />
     )
   },
 })
 
-function mapStateToProps (state) {
-  console.log(state)
-  return {
-    users: state.users
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators(userActionCreators, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateContainer)
+export default connect(
+  (state) => ({isFetching: state.isFetching, error: state.error, user: state['tylermcginnis']}),
+  (dispatch) => bindActionCreators(userActionCreators, dispatch)
+)(AuthenticateContainer)

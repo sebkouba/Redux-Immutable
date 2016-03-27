@@ -148,7 +148,19 @@ redux-auth
   - Create mapDispatchToProps function
   - Add mapDispatchToProps to connect
   - Remove this.props.dispatch and instead invoke this.props.fnName
-  - Show that everything is working the same.
+  - Show that everything is working the same. (See First mapDispatchToProps commit)
+  - Move mapStateToProps and mapDispatchToProps into connect as arrow fns
+  - Update UI as redux store changes
+  - Look at redux-schema and see that shape of users.
+  - Pass in isFetching, error, and state['tylermcginnis'] (since thats what my mock id is)
+  - Talk about propTypes in Container vs Component. Ill just use them in the component since we already have bindActionCreators and mapStateToProps
+  - Add attrs to Authenticate Component
+  - Add propTypes to Authenticate.js
+  - Update UI now
+    - Add temporary {error ? <p> error </p> : null}
+    - Update Login with facebook button when fetching
+  - Enough for this video.
+thunks
 
   - Do this later
   - First, add a index.js file to /reducers just like we did for /components and /containers which exports every reducer well make

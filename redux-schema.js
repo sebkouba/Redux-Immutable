@@ -8,7 +8,6 @@
         name,
         uid,
         avatar,
-        email
       }
     }
   },
