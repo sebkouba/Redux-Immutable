@@ -3,14 +3,17 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  color: #4a90e2;
+  font-weight: 100;
 }
 
 .title {
-  font-size: 55px;
+  font-size: 115px;
   margin-bottom: 20px;
 }
 
 .slogan {
-  font-size: 25px;
+  font-size: 35px;
   text-align: center;
+  line-height: 55px;
 }

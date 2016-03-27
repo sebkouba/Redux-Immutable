@@ -87,5 +87,9 @@ developer-experience
     - Build out Home.js
     - Make index.js for components Folder and export Home
     - Add HomeContainer as IndexRoute in route config
-    - Reset on styling using globalStyles
+    - Reset on styling using sharedStyles
     - Add styling to Home.js
+    - Create Navigation folder in components
+    - Build Navigation.js (no styling)
+    - Add <Navigation isAuthed={true} to MainContainer
+    - Style Home and Navigation components
