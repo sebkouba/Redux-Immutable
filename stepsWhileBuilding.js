@@ -102,7 +102,9 @@ authenticate-mocks
   - Create FacebookAuthBtn component and style it
   - Create index.js file in shared folder which exports FacebookAuthBtn
   - Import and use FacebookAuthBtn in Authenticate.js
-  - Mock facebook auth. Create helpers folder and then helpers/auth.js
+  - Create helpers folder and then helpers/auth.js
+  - Create mock auth.js
+  - Create handleAuth function in AuthenticateContainer and pass it down through to FacebookAuthButton (see commit Log mock auth user)
 redux-auth
   - Review what weve covered with Redux thus far (reducers.js and actions.js)
   - Show typical file structure for a Redux app (https://github.com/reactjs/react-router-redux/tree/master/examples/basic)
@@ -130,10 +132,26 @@ redux-auth
   - Import Provider
   - Wrap routes in Provider and pass it the store
   - Note that nothing is different. Cause we havent "connected" any components
-  - **Currently here. No components to connect. Debate should I have created the Login/Register components before this section? That introduces Firebase though. Im tired.
+  - Now when handleAuth returns the user, we want to be able to tell Redux about it. So we need to "connect" AuthenticateContainer to use dispatch
+  - Walk through tying up connect. Use mapStateToProps to show the state change.
+  - Now go back and look at the User reducer. There are three actions. We need to tell redux of all of them
+  - Before auth() gets invoked dispatch 'FETCH_USER'
+  - in .catch dispatch 'FETCH_USER_FAILURE'
+  - in .then dispatch 'FETCH_USER_SUCCESS' and talk about each prop these fns are expecting
+  - Talk about actionCreators make it so we can invoke functions instead of worrying about constants.
+  - import fetchUser, fetchUserFailure, fetchUserSuccess and wrap them in dispatch
+  - console.log(state) in mapStateToProps to show how the state is changing each time.
+  - Now mention wrapping all the action creatos in dispath is kind of a pain. Introduce bindActionCreators
+  - "Turns an object whose values are action creators, into an object with the same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly."
+  - We already have an object whose values are action creators (userActionCreators)
+  - import bindActionCreators
+  - Create mapDispatchToProps function
+  - Add mapDispatchToProps to connect
+  - Remove this.props.dispatch and instead invoke this.props.fnName
+  - Show that everything is working the same.
 
   - Do this later
   - First, add a index.js file to /reducers just like we did for /components and /containers which exports every reducer well make
   - create index.js in /reducers and have it export users.js
-  - Now in /app/index.js import all reducers with import * as reducers from 'redux/reducers'
+  - Now in /app/index.js import all reducers with import * as reducers from 'redux/modules'
   - DONT use combine reducers yet
