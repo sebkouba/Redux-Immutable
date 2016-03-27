@@ -93,16 +93,16 @@ home
   - Build Navigation.js (no styling)
   - Add <Navigation isAuthed={true} to MainContainer
   - Style Home and Navigation components
-login-register-mocks
-  - Create Register folder in containers, registerContainer.js file
-  - Create Register folder in components, Register.js file
+authenticate-mocks
+  - Create Authenticate folder in containers, registerContainer.js file
+  - Create Authenticate folder in components, Authenticate.js file
   - Add both to both index.js files
-  - Add styling for Register component
+  - Add styling for Authenticate component
   - Create shared folder in components for FacebookAuthBtn
   - Create FacebookAuthBtn component and style it
   - Create index.js file in shared folder which exports FacebookAuthBtn
-  - Import and use FacebookAuthBtn in Register.js
-  - Repeat the above steps with Login
+  - Import and use FacebookAuthBtn in Authenticate.js
+  -
 redux-auth
   - Review what weve covered with Redux thus far (reducers.js and actions.js)
   - Show typical file structure for a Redux app (https://github.com/reactjs/react-router-redux/tree/master/examples/basic)
