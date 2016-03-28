@@ -1,12 +1,14 @@
 import React from 'react'
-import { Home } from 'components'
+import { Landing } from 'components'
 
 const HomeContainer = React.createClass({
   render () {
     return (
-      <Home />
+      <Landing />
     )
   }
 })
 
 export default HomeContainer
+
+// this.props.isAuthenticated ? <Home /> : <Landing />

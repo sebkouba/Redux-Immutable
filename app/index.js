@@ -7,7 +7,25 @@ import getRoutes from 'config/routes'
 import users from 'redux/modules/users'
 
 const store = createStore(users, applyMiddleware(thunk))
-const routes = getRoutes()
+
+function checkAuth (nextState, replace) {
+  const { isAuthed } = store.getState()
+
+  if (nextState.location.pathname === '/') {
+    if (isAuthed === true) {
+      replace('/feed')
+    }
+  } else {
+    if (isAuthed === false) {
+      replace({
+        pathname: '/auth',
+        state: {nextPathName: nextState.location.pathname}
+      })
+    }
+  }
+}
+
+const routes = getRoutes(checkAuth)
 
 ReactDOM.render(
   <Provider store={store}>

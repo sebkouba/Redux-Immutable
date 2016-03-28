@@ -6,8 +6,13 @@ import auth from 'helpers/auth'
 import * as userActionCreators from 'redux/modules/users'
 
 const AuthenticateContainer = React.createClass({
-  handleAuth () {
+  contextTypes: {
+    router: PropTypes.object.isRequired,
+  },
+  handleAuth (e) {
+    e.preventDefault()
     this.props.fetchAndHandleUser()
+      .then(() => this.context.router.replace('feed'))
   },
   render () {
     return (

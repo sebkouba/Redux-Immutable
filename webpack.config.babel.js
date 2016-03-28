@@ -35,7 +35,7 @@ const base = {
   module: {
     loaders: [
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-      {test: /\.css$/,loader: 'style!css-loader?modules'}
+      {test: /\.css$/,loader: 'style!css?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]'}
     ]
   },
   resolve: {
@@ -44,7 +44,7 @@ const base = {
 }
 
 const developmentConfig = {
-  devtool: 'eval',
+  devtool: 'cheap-module-inline-source-map',
   devServer: {
     contentBase: PATHS.build,
     hot: true,

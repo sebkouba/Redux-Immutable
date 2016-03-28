@@ -1,8 +1,22 @@
 import auth from 'helpers/auth'
 
+const AUTH_USER = 'AUTH_USER'
+const UNAUTH_USER = 'UNAUTH_USER'
 const FETCH_USER = 'FETCH_USER'
 const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE'
 const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
+
+function authUser () {
+  return {
+    type: AUTH_USER
+  }
+}
+
+export function unauthUser () {
+  return {
+    type: UNAUTH_USER
+  }
+}
 
 function fetchUser () {
   return {
@@ -29,12 +43,16 @@ function fetchUserSuccess (uid, user, timestamp) {
 export function fetchAndHandleUser () {
   return function (dispatch) {
     dispatch(fetchUser())
-    auth().then((user) => {
-      dispatch(fetchUserSuccess(user.uid, user, Date.now))
-    })
-    .catch((error) => {
-      dispatch(fetchUserFailure(error))
-    })
+    return auth()
+      .then((user) => {
+        dispatch(fetchUserSuccess(user.uid, user, Date.now))
+      })
+      .then(() => {
+        dispatch(authUser())
+      })
+      .catch((error) => {
+        dispatch(fetchUserFailure(error))
+      })
   }
 }
 
@@ -62,22 +80,31 @@ function user (state = initialUserState, action) {
 
 const initialState = {
   isFetching: false,
-  error: ''
+  error: '',
+  isAuthed: false,
 }
 
 export default function users (state = initialState, action) {
   const type = action.type
   switch (type) {
-    case 'FETCH_USER':
+    case AUTH_USER :
+      return Object.assign({}, state, {
+        isAuthed: true,
+      })
+    case UNAUTH_USER :
+      return Object.assign({}, state, {
+        isAuthed: false,
+      })
+    case FETCH_USER:
       return Object.assign({}, state, {
         isFetching: true,
       })
-    case 'FETCH_USER_FAILURE':
+    case FETCH_USER_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error,
       })
-    case 'FETCH_USER_SUCCESS':
+    case FETCH_USER_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         error: '',

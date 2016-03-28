@@ -1,5 +1,6 @@
 {
   users: {
+    isAuthed,
     isFetching,
     error,
     [uid]: {

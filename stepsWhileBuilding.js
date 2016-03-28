@@ -84,11 +84,11 @@ home
   - In containers Make Home folder with HomeContainer.js
   - Build out HomeContainer.js
   - Make components folder
-  - Build out Home.js
-  - Make index.js for components Folder and export Home
+  - Build out Landing.js
+  - Make index.js for components Folder and export Landing
   - Add HomeContainer as IndexRoute in route config
   - Reset on styling using sharedStyles
-  - Add styling to Home.js
+  - Add styling to Landing.js
   - Create Navigation folder in components
   - Build Navigation.js (no styling)
   - Add <Navigation isAuthed={true} to MainContainer
@@ -161,6 +161,7 @@ redux-auth
     - Update Login with facebook button when fetching
   - Enough for this video. (see Tempory UI changes for FacebookAuthBtn commit)
 thunks
+  - see "Thunk for users" commit
   - Show handleAuth and managing all the different phases of the async action is annoying
   - What if...
     - Move auth() to users.js
@@ -168,6 +169,20 @@ thunks
     - create fetchAndHandleUser in users.js and remove exports from other actionCreators
     - Try to run it. Get nice error message about middleware.
     - npm install --save redux-thunk
+    - modify app/index.js to use redux-thunk
+router-auth
+    - Connect MainContainer in order to get isAuthed and pass it to Navigation
+    - Now that our NavigationBar is changing on auth, lets change routes.
+    - Create components/Feed && Feed.js and add to index of component
+    - Create containers/Feed && FeedContainer.js and add to index.js of container and render Feed.js
+    - Add FeedContainer to routes
+    - In AuthenticateContainer route to feed on successful auth
+    - Now protect routes with React Router
+    - Create empty checkAuth function in app/index.js and pass it to getRoutes
+    - Update routes to use onEnter={checkAuth}
+    - Finish checkAuth function
+
+
 
   - Do this later
   - First, add a index.js file to /reducers just like we did for /components and /containers which exports every reducer well make

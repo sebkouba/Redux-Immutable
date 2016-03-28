@@ -1,13 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import 'sharedStyles/styles.css'
 import { container, innerContainer } from './styles.css'
 import { Navigation } from 'components'
+import { checkIfAuthed } from 'helpers/auth'
 
 const MainContainer = React.createClass({
   render () {
+    console.log(this.props.children)
     return (
       <div className={container}>
-        <Navigation isAuthed={false} />
+        <Navigation isAuthed={this.props.isAuthed} />
         <div className={innerContainer}>
           {this.props.children}
         </div>
@@ -16,4 +19,6 @@ const MainContainer = React.createClass({
   },
 })
 
-export default MainContainer
+export default connect(
+  (state) => ({isAuthed: state.isAuthed})
+)(MainContainer)
