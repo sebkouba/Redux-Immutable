@@ -84,11 +84,11 @@ home
   - In containers Make Home folder with HomeContainer.js
   - Build out HomeContainer.js
   - Make components folder
-  - Build out Landing.js
-  - Make index.js for components Folder and export Landing
+  - Build out Home.js
+  - Make index.js for components Folder and export Home
   - Add HomeContainer as IndexRoute in route config
   - Reset on styling using sharedStyles
-  - Add styling to Landing.js
+  - Add styling to Home.js
   - Create Navigation folder in components
   - Build Navigation.js (no styling)
   - Add <Navigation isAuthed={true} to MainContainer
@@ -171,17 +171,48 @@ thunks
     - npm install --save redux-thunk
     - modify app/index.js to use redux-thunk
 router-auth
-    - Connect MainContainer in order to get isAuthed and pass it to Navigation
-    - Now that our NavigationBar is changing on auth, lets change routes.
-    - Create components/Feed && Feed.js and add to index of component
-    - Create containers/Feed && FeedContainer.js and add to index.js of container and render Feed.js
-    - Add FeedContainer to routes
-    - In AuthenticateContainer route to feed on successful auth
-    - Now protect routes with React Router
-    - Create empty checkAuth function in app/index.js and pass it to getRoutes
-    - Update routes to use onEnter={checkAuth}
-    - Finish checkAuth function
-
+  - Connect MainContainer in order to get isAuthed and pass it to Navigation
+  - Now that our NavigationBar is changing on auth, lets change routes.
+  - Create components/Feed && Feed.js and add to index of component
+  - Create containers/Feed && FeedContainer.js and add to index.js of container and render Feed.js
+  - Add FeedContainer to routes
+  - In AuthenticateContainer route to feed on successful auth
+  - Now protect routes with React Router
+  - Create empty checkAuth function in app/index.js and pass it to getRoutes
+  - Update routes to use onEnter={checkAuth}
+  - Finish checkAuth function
+  - Add logout functionality
+  - Create a /containers/Logout container and add it to index.js
+  - Inside of auth.js create a logout mock.
+  - Inside of users.js create a logoutAndUnauth thunk that logs out then dispatches unauthUser
+  - Add LogoutContainer to routes
+  - Back in LogoutContainer call logoutAndUnauth onDidMount after you connect it
+  - Add logout to Navigation
+  - Test Logout works
+firebase-auth
+  - Create account at Firebase.com
+  - Create project (or use mine)
+  - "login & auth" -> Enable Facebook Auth *check
+  - Create new facebook app (https://developers.facebook.com/apps)
+  - Add a New App
+  - Website
+  - Type name -> Create a new app id
+  - Select category then Create App ID
+  - "Skip Quick Start" in top right corner
+  - Copy in AppID and SecretAppId to Firebase
+  - In Facebook "Settings" tab -> Advanced -> Client OAuthSettings -> Paste into Valid OAuth Redirect URIs "https://auth.firebase.com/v2/duckr/auth/facebook/callback"
+  - Save Changes
+  - make file config/constants
+  - npm install --save 'firebase'
+  - Finish config/constants.js with ref
+  - Change the auth function in auth.js
+  - Change the logout function in auth
+  - Change the auth invocation in fetchAndAHandleUser
+  - Change user around to get the correct properties into fetchUserSuccess
+  - Now need to save users info
+  - create saveUser in auth.js and import it into users
+  - Add a .then to saveUser in fetchAndHandleUser promise chain
+  - Make sure user is being saved properly
 
 
   - Do this later

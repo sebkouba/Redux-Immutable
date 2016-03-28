@@ -1,4 +1,4 @@
-import auth from 'helpers/auth'
+import auth, { logout, saveUser } from 'helpers/auth'
 
 const AUTH_USER = 'AUTH_USER'
 const UNAUTH_USER = 'UNAUTH_USER'
@@ -12,9 +12,16 @@ function authUser () {
   }
 }
 
-export function unauthUser () {
+function unauthUser () {
   return {
     type: UNAUTH_USER
+  }
+}
+
+export function logoutAndUnauth () {
+  return function (dispatch) {
+    logout()
+    dispatch(unauthUser())
   }
 }
 
@@ -44,8 +51,16 @@ export function fetchAndHandleUser () {
   return function (dispatch) {
     dispatch(fetchUser())
     return auth()
-      .then((user) => {
-        dispatch(fetchUserSuccess(user.uid, user, Date.now))
+      .then(({uid, facebook}) => {
+        const userInfo = {
+          name: facebook.displayName,
+          avatar: facebook.profileImageURL,
+          uid,
+        }
+        return dispatch(fetchUserSuccess(uid, userInfo, Date.now()))
+      })
+      .then(({user}) => {
+        saveUser(user)
       })
       .then(() => {
         dispatch(authUser())
