@@ -6,7 +6,7 @@ const FETCH_USER = 'FETCH_USER'
 const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE'
 const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
 
-function authUser () {
+export function authUser () {
   return {
     type: AUTH_USER
   }
@@ -38,7 +38,7 @@ function fetchUserFailure (error) {
   }
 }
 
-function fetchUserSuccess (uid, user, timestamp) {
+export function fetchUserSuccess (uid, user, timestamp) {
   return {
     type: 'FETCH_USER_SUCCESS',
     uid,
@@ -47,16 +47,20 @@ function fetchUserSuccess (uid, user, timestamp) {
   }
 }
 
+export function formatUserInfo (name, avatar, uid) {
+  return {
+    name,
+    avatar,
+    uid,
+  }
+}
+
 export function fetchAndHandleUser () {
   return function (dispatch) {
     dispatch(fetchUser())
     return auth()
       .then(({uid, facebook}) => {
-        const userInfo = {
-          name: facebook.displayName,
-          avatar: facebook.profileImageURL,
-          uid,
-        }
+        const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
         return dispatch(fetchUserSuccess(uid, userInfo, Date.now()))
       })
       .then(({user}) => {

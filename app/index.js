@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import getRoutes from 'config/routes'
 import users from 'redux/modules/users'
+import { checkIfAuthed } from 'helpers/auth'
 
 import { ref } from 'config/constants'
 
@@ -16,10 +17,10 @@ const store = createStore(users,
 )
 
 function checkAuth (nextState, replace) {
-  const { isAuthed } = store.getState()
+  const isAuthed = checkIfAuthed(store)
   const nextPath = nextState.location.pathname
-console.log('AYO')
-  if (nextPath === '/') {
+
+  if (nextPath === '/' || nextPath === '/auth') {
     if (isAuthed === true) {
       replace('/feed')
     }
