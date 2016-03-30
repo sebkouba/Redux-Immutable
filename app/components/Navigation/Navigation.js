@@ -43,9 +43,9 @@ export default function Navigation (props) {
   )
 }
 
-Navigation.PropTypes = {
+Navigation.propTypes = {
   isAuthed: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  openModal: PropTypes.func.isRequired,
 }

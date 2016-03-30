@@ -216,7 +216,7 @@ firebase-auth
   - Make sure user is being saved properly
   - Now notice that we're not persisting the authed state since it's in redux. We don't want it in Redux,
     we want the source of truth to be firebase -ref.getAuth- and then update Redux accordingly. See 'Firebase as auth truth' commit for additions
-  - Now update user: users['tylermcginnis'] in AuthenticateContainer if it hasn't been updated yet.
+  - Now update user: users['tylermcginnis'] in AuthenticateContainer if it hasn't been updated yet. See "Add initial Modal and authedId to user state"
 /redux-devtools
   - See "redux-devtools section" commit
   - Mention normal devtools https://github.com/gaearon/redux-devtools
@@ -245,3 +245,4 @@ firebase-auth
   - Now we need to update all of our mapPropToState functions since state is more than just users now.
     - update AuthenicateConainer
     - update MainContainer.js
+  - Now that modal is tied to our state tree, in MainContainer.js grab model.isOpen and finish MainContainer to handle all of <Modals> props
