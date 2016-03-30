@@ -39,3 +39,34 @@
   composes: darkBtn from 'sharedStyles/styles.css';
   text-decoration: none;
 }
+
+.newDuckTop {
+  background: #fff;
+  padding: 11px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.newDuckInputContainer {
+  display: flex;
+  height: 110px;
+  margin: 10px;
+}
+
+.newDuckInput {
+  flex: 1;
+  border-radius: 3px;
+  border-width: 0;
+  padding: 8px 10px;
+  font-size: 14px;
+  resize: none;
+}
+
+.submitDuckBtn {
+  composes: darkBtn;
+  margin: 0px auto;
+  width: 150px;
+  text-align: center;
+  display: block;
+}

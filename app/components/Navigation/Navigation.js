@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { container, navContainer, link, darkBtn } from './styles.css'
+import { container, navContainer, link, darkBtn, newDuckTop, newDuckInputContainer, newDuckInput, submitDuckBtn } from './styles.css'
 import { Link } from 'react-router'
 import Modal from 'react-modal'
 
@@ -15,13 +15,36 @@ function NavLinks ({isAuthed}) {
     : <noscript />
 }
 
+const modalStyles = {
+  content: {
+    width: 350,
+    margin: '0px auto',
+    height: 220,
+    borderRadius: 5,
+    background: '#EBEBEB',
+    padding: 0,
+  }
+}
+
 function ActionLinks ({isAuthed, closeModal, openModal, isOpen}) {
   return isAuthed === true
     ? <ul>
         <li>
           <span className={darkBtn} onClick={openModal}>
             Duck
-            <Modal style={{color: 'red'}} isOpen={isOpen} onRequestClose={closeModal}>Duck</Modal>
+            <Modal style={modalStyles} isOpen={isOpen} onRequestClose={closeModal}>
+              <div className={newDuckTop}>
+                <span>Compose new Duck</span>
+                <span onClick={closeModal} style={{cursor: 'pointer'}}>&#10006;</span>
+              </div>
+              <div className={newDuckInputContainer}>
+                <textarea
+                  maxLength={140} type='text'
+                  className={newDuckInput}
+                  placeholder="What's on your mind?" />
+              </div>
+              <button className={submitDuckBtn}>Duck</button>
+            </Modal>
           </span>
         </li>
         <li><Link to='/logout' className={link}>Logout</Link></li>

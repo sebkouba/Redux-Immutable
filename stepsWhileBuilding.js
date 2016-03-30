@@ -245,4 +245,4 @@ firebase-auth
   - Now we need to update all of our mapPropToState functions since state is more than just users now.
     - update AuthenicateConainer
     - update MainContainer.js
-  - Now that modal is tied to our state tree, in MainContainer.js grab model.isOpen and finish MainContainer to handle all of <Modals> props. See ""Modal is tied but just isnt styled"
+  - Now that modal is tied to our state tree, in MainContainer.js grab model.isOpen and finish MainContainer to handle all of <Modals> props. See "Small update to Modal"
