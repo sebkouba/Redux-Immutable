@@ -63,19 +63,27 @@ function users (state = initialState, action) {
 }
 // Modal
 const initialModalState = {
+  duck: '',
   isOpen: false
 }
 
 function modal (state = initialModalState, action) {
   const type = action.type
   switch (type) {
-    case 'OPEN_MODAL' :
+    case OPEN_MODAL :
       return {
+        ...state,
         isOpen: true,
       }
-    case 'CLOSE_MODAL' :
+    case CLOSE_MODAL :
       return {
+        ...state,
         isOpen: false,
+      }
+    case UPDATE_DUCK :
+      return {
+        ...state,
+        duck: actions.newDuckText
       }
     default :
       return state

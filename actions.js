@@ -35,6 +35,11 @@
   type: 'CLOSE_MODAL'
 }
 
+{
+  type: UPDATE_DUCK,
+  newDuckText
+}
+
 // Followers
 
 {

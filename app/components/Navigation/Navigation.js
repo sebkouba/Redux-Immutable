@@ -26,7 +26,7 @@ const modalStyles = {
   }
 }
 
-function ActionLinks ({isAuthed, closeModal, openModal, isOpen}) {
+function ActionLinks ({isAuthed, closeModal, openModal, isOpen, updateDuck, duck, isSubmitDisabled, submitDuck}) {
   return isAuthed === true
     ? <ul>
         <li>
@@ -39,11 +39,18 @@ function ActionLinks ({isAuthed, closeModal, openModal, isOpen}) {
               </div>
               <div className={newDuckInputContainer}>
                 <textarea
+                  onChange={(e) => updateDuck(e.target.value)}
+                  value={duck}
                   maxLength={140} type='text'
                   className={newDuckInput}
                   placeholder="What's on your mind?" />
               </div>
-              <button className={submitDuckBtn}>Duck</button>
+              <button
+                className={submitDuckBtn}
+                disabled={isSubmitDisabled}
+                onClick={submitDuck}>
+                  Duck
+              </button>
             </Modal>
           </span>
         </li>
@@ -67,8 +74,12 @@ export default function Navigation (props) {
 }
 
 Navigation.propTypes = {
+  duck: PropTypes.string.isRequired,
   isAuthed: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  isSubmitDisabled: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
+  submitDuck: PropTypes.func.isRequired,
+  updateDuck: PropTypes.func.isRequired,
 }

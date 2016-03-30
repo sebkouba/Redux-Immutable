@@ -10,18 +10,27 @@ import * as modalActionCreators from 'redux/modules/modal'
 const MainContainer = React.createClass({
   propTypes: {
     closeModal: PropTypes.func.isRequired,
+    duck: PropTypes.string.isRequired,
     isAuthed: PropTypes.bool.isRequired,
     isOpen: PropTypes.bool.isRequired,
     openModal: PropTypes.func.isRequired,
+    updateDuck: PropTypes.func.isRequired,
+  },
+  submitDuck () {
+    console.log(this.props.duck)
   },
   render () {
     return (
       <div className={container}>
         <Navigation
           closeModal={this.props.closeModal}
+          duck={this.props.duck}
           isAuthed={this.props.isAuthed}
           isOpen={this.props.isOpen}
-          openModal={this.props.openModal} />
+          isSubmitDisabled={this.props.duck.length <= 0 || this.props.duck.length > 140}
+          openModal={this.props.openModal}
+          submitDuck={this.submitDuck}
+          updateDuck={this.props.updateDuck} />
         <div className={innerContainer}>
           {this.props.children}
         </div>
@@ -31,6 +40,10 @@ const MainContainer = React.createClass({
 })
 
 export default connect(
-  ({users, modal}) => ({isAuthed: users.isAuthed, isOpen: modal.isOpen}),
+  ({users, modal}) => ({
+    duck: modal.duck,
+    isAuthed: users.isAuthed,
+    isOpen: modal.isOpen,
+  }),
   (dispatch) => bindActionCreators(modalActionCreators, dispatch)
 )(MainContainer)
