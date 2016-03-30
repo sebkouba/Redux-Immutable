@@ -180,7 +180,7 @@ router-auth
   - Now protect routes with React Router **THIS CHANGES LATER ON. See "new routes" commit for actual <Routes>
   - Create empty checkAuth function in app/index.js and pass it to getRoutes
   - Update routes to use onEnter={checkAuth}
-  - Finish checkAuth function
+  - Finish checkAuth function ***LOGIC CHANGED SINCE PUSH. SEE commit 'Add checkAuth logic'
   - Add logout functionality
   - Create a /containers/Logout container and add it to index.js
   - Inside of auth.js create a logout mock.
@@ -216,6 +216,7 @@ firebase-auth
   - Make sure user is being saved properly
   - Now notice that we're not persisting the authed state since it's in redux. We don't want it in Redux,
     we want the source of truth to be firebase -ref.getAuth- and then update Redux accordingly. See 'Firebase as auth truth' commit for additions
+  - Now update user: users['tylermcginnis'] in AuthenticateContainer if it hasn't been updated yet.
 /redux-devtools
   - See "redux-devtools section" commit
   - Mention normal devtools https://github.com/gaearon/redux-devtools
@@ -224,10 +225,23 @@ firebase-auth
   - Go to Redux tab. See "No store found"
   - Initialize devToolsExtension in app/index.js *Talk about compose cause youll need it.
   - Go through auth flow again and show Redux Dev Tools
-**Next step is probably being able to make new ducks
-
-  - Do this later
+*At this point make sure code matches commit "Add checkAuth logic"
+/add-ducks
+  - npm install --save react-modal
+  - We need more state in our app. Specifically, the isOpen state on the model. That doesn't make sense to go in our users reducer though.
+  - Our state tree is currently just users. We need more state than that though.
+  - Create redux/modules/modal.js
+  - Move over actions from actions.js and create constants
+  - Move over reducer from reducers.js
+  - modal.js should be finished.
+  - in Navigation.js Navigation/ActionLinks add Modal with props and everyting *that will be made in the future.
+  - Now, we need to use our modal state in MainContainer. But, we havent tied up the model reducer to our store. We need more than just the user reducer now, we need to combine reducers.
   - First, add a index.js file to /reducers just like we did for /components and /containers which exports every reducer well make
-  - create index.js in /reducers and have it export users.js
-  - Now in /app/index.js import all reducers with import * as reducers from 'redux/modules'
-  - DONT use combine reducers yet
+  - create index.js in /reducers and have it export users and modal
+  - Now in /app/index.js, instead of importing just users,*  import all reducers with import * as reducers from 'redux/modules'
+  - import combineReducers from 'redux' and change our createStore invocation to use it with all our reducers
+  - Talk about how combineReducers will divy out each state to the correct reducer (through key names)
+  - Now check out the new state with Redux Dev Tools
+  - Now we need to update all of our mapPropToState functions since state is more than just users now.
+    - update AuthenicateConainer
+    - update MainContainer.js

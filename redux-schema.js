@@ -12,6 +12,9 @@
       }
     }
   },
+  modal: {
+    isOpen
+  }
   // followers: {
   //   error,
   //   isLoading,

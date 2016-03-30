@@ -24,27 +24,59 @@ function user (state = initialUserState, action) {
 
 const initialUsersState = {
   isFetching: false,
-  error: ''
+  error: '',
+  isAuthed: false,
+  authedId: '',
 }
 
-function users (state = {}, action) {
+function users (state = initialState, action) {
   const type = action.type
   switch (type) {
-    case 'FETCH_USER':
+    case AUTH_USER :
+      return Object.assign({}, state, {
+        isAuthed: true,
+        authedId: action.uid,
+      })
+    case UNAUTH_USER :
+      return Object.assign({}, state, {
+        isAuthed: false,
+        authedId: '',
+      })
+    case FETCH_USER:
       return Object.assign({}, state, {
         isFetching: true,
       })
-    case 'FETCH_USER_FAILURE':
+    case FETCH_USER_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error,
       })
-    case 'FETCH_USER_SUCCESS':
+    case FETCH_USER_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         error: '',
         [action.uid]: user(state[action.uid], action)
       })
+    default :
+      return state
+  }
+}
+// Modal
+const initialModalState = {
+  isOpen: false
+}
+
+function modal (state = initialModalState, action) {
+  const type = action.type
+  switch (type) {
+    case 'OPEN_MODAL' :
+      return {
+        isOpen: true,
+      }
+    case 'CLOSE_MODAL' :
+      return {
+        isOpen: false,
+      }
     default :
       return state
   }

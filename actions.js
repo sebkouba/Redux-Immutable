@@ -1,6 +1,15 @@
 // Users
 
 {
+  type: AUTH_USER,
+  uid
+}
+
+{
+  type: UNAUTH_USER
+}
+
+{
   type: 'FETCH_USER'
 }
 
@@ -14,6 +23,16 @@
   uid,
   user,
   timestamp
+}
+
+// Modal
+
+{
+  type: 'OPEN_MODAL'
+}
+
+{
+  type: 'CLOSE_MODAL'
 }
 
 // Followers

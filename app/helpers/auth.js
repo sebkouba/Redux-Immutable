@@ -20,7 +20,7 @@ export function checkIfAuthed (store) {
   } else {
     const { facebook, uid } = authData
     const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
-    store.dispatch(authUser())
+    store.dispatch(authUser(uid))
     store.dispatch(fetchUserSuccess(uid, userInfo, Date.now()))
     // If ^ is common, you can use https://github.com/tshelburne/redux-batched-actions
     return true

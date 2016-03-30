@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { container, navContainer, link, darkBtn } from './styles.css'
 import { Link } from 'react-router'
+import Modal from 'react-modal'
 
 function NavLinks ({isAuthed}) {
   return isAuthed === true
@@ -14,10 +15,15 @@ function NavLinks ({isAuthed}) {
     : <noscript />
 }
 
-function ActionLinks ({isAuthed}) {
+function ActionLinks ({isAuthed, closeModal, openModal, isOpen}) {
   return isAuthed === true
     ? <ul>
-        <li><Link to='/' className={darkBtn}>Duck</Link></li>
+        <li>
+          <span className={darkBtn}>
+            <span onClick={openModal}>Duck</span>
+            <Modal style={{color: 'red'}} isOpen={isOpen} onRequestClose={closeModal}>Duck</Modal>
+          </span>
+        </li>
         <li><Link to='/logout' className={link}>Logout</Link></li>
       </ul>
     : <ul>
@@ -26,12 +32,12 @@ function ActionLinks ({isAuthed}) {
       </ul>
 }
 
-export default function Navigation ({isAuthed}) {
+export default function Navigation (props) {
   return (
     <div className={container}>
       <nav className={navContainer}>
-        <NavLinks isAuthed={isAuthed}/>
-        <ActionLinks isAuthed={isAuthed}/>
+        <NavLinks isAuthed={props.isAuthed} />
+        <ActionLinks {...props} />
       </nav>
     </div>
   )
@@ -39,4 +45,7 @@ export default function Navigation ({isAuthed}) {
 
 Navigation.PropTypes = {
   isAuthed: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 }

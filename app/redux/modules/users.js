@@ -6,9 +6,10 @@ const FETCH_USER = 'FETCH_USER'
 const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE'
 const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
 
-export function authUser () {
+export function authUser (uid) {
   return {
-    type: AUTH_USER
+    type: AUTH_USER,
+    uid
   }
 }
 
@@ -101,6 +102,7 @@ const initialState = {
   isFetching: false,
   error: '',
   isAuthed: false,
+  authedId: '',
 }
 
 export default function users (state = initialState, action) {
@@ -109,10 +111,12 @@ export default function users (state = initialState, action) {
     case AUTH_USER :
       return Object.assign({}, state, {
         isAuthed: true,
+        authedId: action.uid,
       })
     case UNAUTH_USER :
       return Object.assign({}, state, {
         isAuthed: false,
+        authedId: '',
       })
     case FETCH_USER:
       return Object.assign({}, state, {

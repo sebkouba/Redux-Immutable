@@ -26,6 +26,6 @@ const AuthenticateContainer = React.createClass({
 })
 
 export default connect(
-  (state) => ({isFetching: state.isFetching, error: state.error, user: state['tylermcginnis']}),
+  ({users}) => ({isFetching: users.isFetching, error: users.error, user: users[users.authedId]}),
   (dispatch) => bindActionCreators(userActionCreators, dispatch)
 )(AuthenticateContainer)
