@@ -214,6 +214,8 @@ firebase-auth
   - create saveUser in auth.js and import it into users
   - Add a .then to saveUser in fetchAndHandleUser promise chain
   - Make sure user is being saved properly
+  - Now notice that we're not persisting the authed state since it's in redux. We don't want it in Redux,
+    we want the source of truth to be firebase -ref.getAuth- and then update Redux accordingly. See 'Firebase as auth truth' commit for additions
 /redux-devtools
   - See "redux-devtools section" commit
   - Mention normal devtools https://github.com/gaearon/redux-devtools
