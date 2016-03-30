@@ -6,6 +6,8 @@ import thunk from 'redux-thunk'
 import getRoutes from 'config/routes'
 import users from 'redux/modules/users'
 
+import { ref } from 'config/constants'
+
 const store = createStore(users,
   compose(
     applyMiddleware(thunk),
@@ -15,19 +17,26 @@ const store = createStore(users,
 
 function checkAuth (nextState, replace) {
   const { isAuthed } = store.getState()
-
-  if (nextState.location.pathname === '/') {
+  const nextPath = nextState.location.pathname
+console.log('CHECK')
+  if (nextPath === '/') {
     if (isAuthed === true) {
       replace('/feed')
     }
-  } else {
-    if (isAuthed === false) {
-      replace({
-        pathname: '/auth',
-        state: {nextPathName: nextState.location.pathname}
-      })
-    }
   }
+
+  // if (nextState.location.pathname === '/') {
+  //   if (isAuthed === true) {
+  //     replace('/feed')
+  //   }
+  // } else {
+  //   if (isAuthed === false) {
+  //     replace({
+  //       pathname: '/auth',
+  //       state: {nextPathName: nextState.location.pathname}
+  //     })
+  //   }
+  // }
 }
 
 const routes = getRoutes(checkAuth)

@@ -52,124 +52,124 @@ function users (state = {}, action) {
 
 // Followers
 
-function follower (state = {}, action) {
-  const type = action.type
-  switch (type) {
-    case 'FETCH_FOLLOWERS_SUCCESS' :
-      return Object.assign({}, state, {
-        followerIds: action.followerIds,
-        lastUpdated: action.timestamp
-      })
-    case 'ADD_FOLLOWER_SUCCESS' :
-      return Object.assign({}, state, {
-        followerIds: action.followerIds.concat([action.authedUid]),
-      })
-    case 'REMOVE_FOLLOWER_SUCCESS' :
-      return Object.assign({}, state, {
-        followerIds: state.followerIds.filter((uid) => uid !== action.authedUid)
-      })
-    default :
-      return state
-  }
-}
+// function follower (state = {}, action) {
+//   const type = action.type
+//   switch (type) {
+//     case 'FETCH_FOLLOWERS_SUCCESS' :
+//       return Object.assign({}, state, {
+//         followerIds: action.followerIds,
+//         lastUpdated: action.timestamp
+//       })
+//     case 'ADD_FOLLOWER_SUCCESS' :
+//       return Object.assign({}, state, {
+//         followerIds: action.followerIds.concat([action.authedUid]),
+//       })
+//     case 'REMOVE_FOLLOWER_SUCCESS' :
+//       return Object.assign({}, state, {
+//         followerIds: state.followerIds.filter((uid) => uid !== action.authedUid)
+//       })
+//     default :
+//       return state
+//   }
+// }
 
-const initialFollowersState = {
-  isLoading: false,
-  error: ''
-}
+// const initialFollowersState = {
+//   isLoading: false,
+//   error: ''
+// }
 
-function followers (state  = initialFollowersState, action) {
-  const type = action.type
-  switch (type) {
-    case 'FETCH_FOLLOWERS' :
-    case 'ADD_FOLLOWER' :
-    case 'REMOVE_FOLLOWER' :
-      return Object.assign({}, state, {
-        isLoading: true,
-        error: '',
-      })
-    case 'FETCH_FOLLOWERS_FAILURE' :
-    case 'ADD_FOLLOWER_FAILURE' :
-    case 'REMOVE_FOLLOWER_FAILURE' :
-      return Object.assign({}, state, {
-        isLoading: false,
-        error: action.error,
-      })
-    case 'FETCH_FOLLOWERS_SUCCESS' :
-      return Object.assign({}, state, {
-        isLoading: false,
-        error: '',
-        [action.uid]: follower(state[action.uid], action),
-      })
-    case 'ADD_FOLLOWER_SUCCESS' :
-    case 'REMOVE_FOLLOWER_SUCCESS' :
-      return typeof state[action.otherUid] === 'undefined'
-        ? state
-        : Object.assign({}, state, {
-            isLoading: false,
-            error: '',
-            [action.otherUid]: follower(state[action.otherUid], action),
-          })
-    default :
-      return state
-  }
-}
+// function followers (state  = initialFollowersState, action) {
+//   const type = action.type
+//   switch (type) {
+//     case 'FETCH_FOLLOWERS' :
+//     case 'ADD_FOLLOWER' :
+//     case 'REMOVE_FOLLOWER' :
+//       return Object.assign({}, state, {
+//         isLoading: true,
+//         error: '',
+//       })
+//     case 'FETCH_FOLLOWERS_FAILURE' :
+//     case 'ADD_FOLLOWER_FAILURE' :
+//     case 'REMOVE_FOLLOWER_FAILURE' :
+//       return Object.assign({}, state, {
+//         isLoading: false,
+//         error: action.error,
+//       })
+//     case 'FETCH_FOLLOWERS_SUCCESS' :
+//       return Object.assign({}, state, {
+//         isLoading: false,
+//         error: '',
+//         [action.uid]: follower(state[action.uid], action),
+//       })
+//     case 'ADD_FOLLOWER_SUCCESS' :
+//     case 'REMOVE_FOLLOWER_SUCCESS' :
+//       return typeof state[action.otherUid] === 'undefined'
+//         ? state
+//         : Object.assign({}, state, {
+//             isLoading: false,
+//             error: '',
+//             [action.otherUid]: follower(state[action.otherUid], action),
+//           })
+//     default :
+//       return state
+//   }
+// }
 
-// Following
+// // Following
 
-function following (state = {}, action) {
-  const type = action.type
-  switch (type) {
-    case 'FETCH_FOLLOWING_SUCCESS' :
-      return Object.assign({}, state, {
-        followingIds: action.followingIds,
-        lastUpdated: action.timestamp
-      })
-    case 'ADD_FOLLOWING_SUCCESS' :
-      return Object.assign({}, state, {
-        followingIds: state.followingIds.concat([action.otherUid])
-      })
-    case 'REMOVE_FOLLOWING_SUCCESS' :
-      return Object.assign({}, state, {
-        followingIds: state.followingIds.filter((uid) => uid !== action.otherUid)
-      })
-    default :
-      return state
-  }
-}
+// function following (state = {}, action) {
+//   const type = action.type
+//   switch (type) {
+//     case 'FETCH_FOLLOWING_SUCCESS' :
+//       return Object.assign({}, state, {
+//         followingIds: action.followingIds,
+//         lastUpdated: action.timestamp
+//       })
+//     case 'ADD_FOLLOWING_SUCCESS' :
+//       return Object.assign({}, state, {
+//         followingIds: state.followingIds.concat([action.otherUid])
+//       })
+//     case 'REMOVE_FOLLOWING_SUCCESS' :
+//       return Object.assign({}, state, {
+//         followingIds: state.followingIds.filter((uid) => uid !== action.otherUid)
+//       })
+//     default :
+//       return state
+//   }
+// }
 
-const initialFollowingState = {
-  isLoading: false,
-  error: '',
-}
+// const initialFollowingState = {
+//   isLoading: false,
+//   error: '',
+// }
 
-function followings (state  = initialFollowingState, action) {
-  const type = action.type
-  switch (type) {
-    case 'FETCH_FOLLOWING' :
-    case 'REMOVE_FOLLOWING' :
-      return Object.assign({}, state, {
-        isLoading: true,
-        error: '',
-      })
-    case 'FETCH_FOLLOWING_FAILURE' :
-    case 'REMOVE_FOLLOWING_FAILURE' :
-      return Object.assign({}, state, {
-        isLoading: false,
-        error: action.error,
-      })
-    case 'FETCH_FOLLOWING_SUCCESS' :
-    case 'ADD_FOLLOWING_SUCCESS' :
-    case 'REMOVE_FOLLOWING_SUCCESS'
-      return Object.assign({}, state, {
-        isLoading: false,
-        error: '',
-        [action.uid]: following(state[action.uid], action)
-      })
-    default :
-      return state
-  }
-}
+// function followings (state  = initialFollowingState, action) {
+//   const type = action.type
+//   switch (type) {
+//     case 'FETCH_FOLLOWING' :
+//     case 'REMOVE_FOLLOWING' :
+//       return Object.assign({}, state, {
+//         isLoading: true,
+//         error: '',
+//       })
+//     case 'FETCH_FOLLOWING_FAILURE' :
+//     case 'REMOVE_FOLLOWING_FAILURE' :
+//       return Object.assign({}, state, {
+//         isLoading: false,
+//         error: action.error,
+//       })
+//     case 'FETCH_FOLLOWING_SUCCESS' :
+//     case 'ADD_FOLLOWING_SUCCESS' :
+//     case 'REMOVE_FOLLOWING_SUCCESS'
+//       return Object.assign({}, state, {
+//         isLoading: false,
+//         error: '',
+//         [action.uid]: following(state[action.uid], action)
+//       })
+//     default :
+//       return state
+//   }
+// }
 
 // All Ducks
 

@@ -215,13 +215,14 @@ firebase-auth
   - Add a .then to saveUser in fetchAndHandleUser promise chain
   - Make sure user is being saved properly
 /redux-devtools
+  - See "redux-devtools section" commit
   - Mention normal devtools https://github.com/gaearon/redux-devtools
   - Talk about this one and pros of it https://github.com/zalmoxisus/redux-devtools-extension
   - Add to Chrome
   - Go to Redux tab. See "No store found"
   - Initialize devToolsExtension in app/index.js *Talk about compose cause youll need it.
+  - Go through auth flow again and show Redux Dev Tools
 **Next step is probably being able to make new ducks
-** Actually maybe time travel/Redux dev tools can come next?
 
   - Do this later
   - First, add a index.js file to /reducers just like we did for /components and /containers which exports every reducer well make
