@@ -226,7 +226,7 @@ firebase-auth
   - Initialize devToolsExtension in app/index.js *Talk about compose cause youll need it.
   - Go through auth flow again and show Redux Dev Tools
 *At this point make sure code matches commit "Add checkAuth logic"
-/add-ducks
+/add-duck-modal
   - npm install --save react-modal
   - We need more state in our app. Specifically, the isOpen state on the model. That doesn't make sense to go in our users reducer though.
   - Our state tree is currently just users. We need more state than that though.
@@ -245,4 +245,4 @@ firebase-auth
   - Now we need to update all of our mapPropToState functions since state is more than just users now.
     - update AuthenicateConainer
     - update MainContainer.js
-  - Now that modal is tied to our state tree, in MainContainer.js grab model.isOpen and finish MainContainer to handle all of <Modals> props
+  - Now that modal is tied to our state tree, in MainContainer.js grab model.isOpen and finish MainContainer to handle all of <Modals> props. See ""Modal is tied but just isnt styled"

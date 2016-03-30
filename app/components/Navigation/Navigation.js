@@ -19,8 +19,8 @@ function ActionLinks ({isAuthed, closeModal, openModal, isOpen}) {
   return isAuthed === true
     ? <ul>
         <li>
-          <span className={darkBtn}>
-            <span onClick={openModal}>Duck</span>
+          <span className={darkBtn} onClick={openModal}>
+            Duck
             <Modal style={{color: 'red'}} isOpen={isOpen} onRequestClose={closeModal}>Duck</Modal>
           </span>
         </li>
