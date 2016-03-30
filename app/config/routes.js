@@ -4,14 +4,12 @@ import { MainContainer, HomeContainer, AuthenticateContainer, FeedContainer, Log
 
 export default function getRoutes (checkAuth) {
   return (
-    <Router history={hashHistory}>
+    <Router history={hashHistory} onEnter={checkAuth}>
       <Route path='/' component={MainContainer}>
-        <Route onEnter={checkAuth}>
-          <Route path='feed' component={FeedContainer} onEnter={checkAuth} />
-          <Route path='logout' component={LogoutContainer} />
-          <Route path='auth' component={AuthenticateContainer}  onEnter={checkAuth}/>
-          <IndexRoute component={HomeContainer}  onEnter={checkAuth}/>
-        </Route>
+        <Route path='feed' component={FeedContainer} onEnter={checkAuth}/>
+        <Route path='logout' component={LogoutContainer} />
+        <Route path='auth' component={AuthenticateContainer} onEnter={checkAuth}/>
+        <IndexRoute component={HomeContainer} onEnter={checkAuth}/>
       </Route>
     </Router>
   )

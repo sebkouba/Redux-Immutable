@@ -18,11 +18,13 @@ const store = createStore(users,
 function checkAuth (nextState, replace) {
   const { isAuthed } = store.getState()
   const nextPath = nextState.location.pathname
-console.log('CHECK')
+console.log('AYO')
   if (nextPath === '/') {
     if (isAuthed === true) {
       replace('/feed')
     }
+  } else if (nextPath === '/') {
+
   }
 
   // if (nextState.location.pathname === '/') {

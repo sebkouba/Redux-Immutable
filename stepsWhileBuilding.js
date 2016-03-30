@@ -177,7 +177,7 @@ router-auth
   - Create containers/Feed && FeedContainer.js and add to index.js of container and render Feed.js
   - Add FeedContainer to routes
   - In AuthenticateContainer route to feed on successful auth
-  - Now protect routes with React Router
+  - Now protect routes with React Router **THIS CHANGES LATER ON. See "Updates to routes" commit for actual <Routes>
   - Create empty checkAuth function in app/index.js and pass it to getRoutes
   - Update routes to use onEnter={checkAuth}
   - Finish checkAuth function
