@@ -7,8 +7,11 @@ import { Navigation } from 'components'
 import { checkIfAuthed } from 'helpers/auth'
 import * as modalActionCreators from 'redux/modules/modal'
 
+import { saveDuck } from 'helpers/api'
+
 const MainContainer = React.createClass({
   propTypes: {
+    authedUser: PropTypes.object.isRequired,
     closeModal: PropTypes.func.isRequired,
     duck: PropTypes.string.isRequired,
     isAuthed: PropTypes.bool.isRequired,
@@ -16,8 +19,20 @@ const MainContainer = React.createClass({
     openModal: PropTypes.func.isRequired,
     updateDuck: PropTypes.func.isRequired,
   },
+  formatDuck (text) {
+    const { name, uid, avatar } = this.props.authedUser
+    return {
+      avatar,
+      name,
+      uid,
+      text,
+      numberOfLikes: 0,
+      numberOfReplies: 0,
+      timestamp: Date.now()
+    }
+  },
   submitDuck () {
-    console.log(this.props.duck)
+    saveDuck(this.formatDuck(this.props.duck))
   },
   render () {
     return (
@@ -41,6 +56,7 @@ const MainContainer = React.createClass({
 
 export default connect(
   ({users, modal}) => ({
+    authedUser: users[users.authedId].info,
     duck: modal.duck,
     isAuthed: users.isAuthed,
     isOpen: modal.isOpen,

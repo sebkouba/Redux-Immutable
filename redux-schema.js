@@ -3,6 +3,7 @@
     isAuthed,
     isFetching,
     error,
+    authedId,
     [uid]: {
       lastUpdated,
       info: {
@@ -13,24 +14,9 @@
     }
   },
   modal: {
+    duck,
     isOpen
-  }
-  // followers: {
-  //   error,
-  //   isLoading,
-  //   [uid]: {
-  //     lastUpdated,
-  //     followerIds: [uid, uid, uid]
-  //   }
-  // },
-  // following: {
-  //   error,
-  //   isLoading,
-  //   [uid]: {
-  //     lastUpdated,
-  //     followingIds: [uid, uid, uid]
-  //   }
-  // },
+  },
   ducks: {
     isLoading,
     error,
@@ -72,13 +58,6 @@
       }
     }
   },
-  // **feed: {
-  //     duckIds: [duckId, duckId, duckId],
-  //     newDucksAvailable,
-  //     newDucksToAdd,
-  //     isLoading,
-  //     error
-  // },
   **notifications: {
       notifs: [{
         [notificationId]: {

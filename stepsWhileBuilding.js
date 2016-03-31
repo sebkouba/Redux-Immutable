@@ -245,4 +245,11 @@ firebase-auth
   - Now we need to update all of our mapPropToState functions since state is more than just users now.
     - update AuthenicateConainer
     - update MainContainer.js
-  - Up to this point, the modal is working great. In the next vid well make it so you can actually submit the new duck.
+  - Up to this point, the modal is working great. In the next vid well make it so you can actually submit the new duck. (see commit "All new duck/modal stuff besides adding")
+/adding-ducks
+  * at this point you should be able to click "Duck", have the modal popup, type in something, then on submit it logs that.
+  * Make a api.js file in /helpers
+  * Refer to firebase-schema about multple places ducks should go.
+  * Build out api.js with saveToDucks, saveToUsersDucks, saveToDucksId, and saveDuck.
+  * Update MainContainer to receive the authedUser and create the actual formatted duck then call saveDuck in api to test it.
+  *

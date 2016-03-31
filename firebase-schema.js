@@ -5,16 +5,6 @@
     avatar
     email
 
-/feed
-  uid
-    duckId
-      avatar
-      name
-      text
-      timestamp
-      uid (of author)
-      duckId
-
 /notifications
   uid
     notificationId
@@ -24,20 +14,6 @@
       uid (of author)
       duckId
       timestamp
-
-/followers
-  uid
-    follower uid
-      avatar
-      name
-      uid (of follower)
-
-/following
-  uid
-    user following uid
-      avatar
-      name
-      uid (of user following)
 
 /ducks
   duckId
