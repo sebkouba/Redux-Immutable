@@ -248,6 +248,7 @@ firebase-auth
   - Up to this point, the modal is working great. In the next vid well make it so you can actually submit the new duck. (see commit "All new duck/modal stuff besides adding")
   - jk ^ stuff plus make it when you close the modal it resets the state of the duck. All I did was add duck: '' to CLOSE_MODAL in modal.js
 /adding-ducks
+  commit: 'Add ability to add ducks'
   * at this point you should be able to click "Duck", have the modal popup, type in something, then on submit it logs that.
   * Make a api.js file in /helpers
   * Refer to firebase-schema about multple places ducks should go.
@@ -275,4 +276,8 @@ firebase-auth
   * add to index.js of modules
   * uncomment addNewDuckIdToFeed in ducks.js
   * Add a new duck, examine the state to make sure were all good.
-/feed-ui
+/listeners
+  * create redux/modules/listeners.js
+  * Move listener reducer over
+  * Move listener action creator over
+  * add to index.js of modules
