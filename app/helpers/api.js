@@ -21,5 +21,5 @@ export function saveDuck (duck) {
     ducksRef,
     saveToUsersDucks(duck, duckId),
     saveToDucksId(duckId)
-  ])
+  ]).then(() => duckId)
 }

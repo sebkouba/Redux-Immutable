@@ -92,32 +92,20 @@ function modal (state = initialModalState, action) {
 
 // All Ducks
 
-const initialDuckState = {
-  error: false,
-  isLoading: false,
-}
-
-function ducks (state = initialDuckState, action) {
+function ducks (state = {}, action) {
   const type = action.type
   switch (action.type) {
-    case 'FETCH_DUCK' :
     case 'ADD_DUCK' :
       return Object.assign({}, state, {
-        isLoading: true,
+        [action.duck.duckId]: action.duck
       })
-    case 'FETCH_DUCK_FAILURE' :
-    case 'ADD_DUCK_FAILURE' :
-      return Object.assign({}, state, {
-        isLoading: false,
-        error: action.error
-      })
-    case 'FETCH_DUCK_SUCCESS' :
-    case 'ADD_DUCK_SUCCESS' :
-      return Object.assign({}, state, {
-        isLoading: false,
-        error: '',
-        [action.duckId]: action.duck
-      })
+    case 'REMOVE_DUCK' :
+      return Object.keys(state)
+        .filter((key) => key !== action.duckIdToRemove)
+        .reduce((prev, current) => {
+          prev[current] = state[current]
+          return prev
+        }, {})
     default :
       return state
   }

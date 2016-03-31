@@ -18,8 +18,6 @@
     isOpen
   },
   ducks: {
-    isLoading,
-    error,
     [duckId]: {
       lastUpdated,
       info: {
@@ -42,6 +40,11 @@
       duckIds: [duckId, duckId, duckId]
     }
   },
+  feed: {
+    isFetching,
+    error,
+    duckIds: [duckid, duckId, duckId]
+  }
   replies: {
     isLoading,
     error,

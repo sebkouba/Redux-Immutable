@@ -6,14 +6,14 @@ import { container, innerContainer } from './styles.css'
 import { Navigation } from 'components'
 import { checkIfAuthed } from 'helpers/auth'
 import * as modalActionCreators from 'redux/modules/modal'
-
-import { saveDuck } from 'helpers/api'
+import * as ducksActionCreators from 'redux/modules/ducks'
 
 const MainContainer = React.createClass({
   propTypes: {
     authedUser: PropTypes.object.isRequired,
     closeModal: PropTypes.func.isRequired,
     duck: PropTypes.string.isRequired,
+    duckFanout: PropTypes.func.isRequired,
     isAuthed: PropTypes.bool.isRequired,
     isOpen: PropTypes.bool.isRequired,
     openModal: PropTypes.func.isRequired,
@@ -32,7 +32,7 @@ const MainContainer = React.createClass({
     }
   },
   submitDuck () {
-    saveDuck(this.formatDuck(this.props.duck))
+    this.props.duckFanout(this.formatDuck(this.props.duck))
   },
   render () {
     return (
@@ -61,5 +61,5 @@ export default connect(
     isAuthed: users.isAuthed,
     isOpen: modal.isOpen,
   }),
-  (dispatch) => bindActionCreators(modalActionCreators, dispatch)
+  (dispatch) => bindActionCreators({...modalActionCreators, ...ducksActionCreators}, dispatch)
 )(MainContainer)

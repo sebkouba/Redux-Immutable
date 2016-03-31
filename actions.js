@@ -40,133 +40,17 @@
   newDuckText
 }
 
-// Followers
-
-{
-  type: 'FETCH_FOLLOWERS',
-}
-
-{
-  type: 'FETCH_FOLLOWERS_FAILURE',
-  error
-}
-
-{
-  type: 'FETCH_FOLLOWERS_SUCCESS',
-  uid,
-  followerIds,
-  timestamp
-}
-
-{
-  type: 'ADD_FOLLOWER',
-}
-
-{
-  type: 'ADD_FOLLOWER_FAILURE',
-  error
-}
-
-{
-  type: 'ADD_FOLLOWER_SUCCESS',
-  otherUid,
-  authedUid,
-  timestamp
-}
-
-{
-  type: 'REMOVE_FOLLOWER',
-}
-
-{
-  type: 'REMOVE_FOLLOWER_FAILURE',
-  error
-}
-
-{
-  type: 'REMOVE_FOLLOWER_SUCCESS',
-  otherUid,
-  authedUid,
-  timestamp
-}
-
-// Following
-
-{
-  type: 'FETCH_FOLLOWING',
-}
-
-{
-  type: 'FETCH_FOLLOWING_FAILURE',
-  error
-}
-
-{
-  type: 'FETCH_FOLLOWING_SUCCESS',
-  uid,
-  followingIds,
-  timestamp
-}
-
-{
-  type: 'ADD_FOLLOWING',
-}
-
-{
-  type: 'ADD_FOLLOWING_FAILURE',
-  error
-}
-
-{
-  type: 'ADD_FOLLOWING_SUCCESS',
-  uid,
-  otherUid
-}
-
-{
-  type: 'REMOVE_FOLLOWING',
-}
-
-{
-  type: 'REMOVE_FOLLOWING_FAILURE',
-  error
-}
-
-{
-  type: 'REMOVE_FOLLOWING_SUCCESS',
-  uidToRemove
-}
-
 // All Ducks
 
 {
-  type: 'FETCH_DUCK',
-}
-
-{
-  type: 'FETCH_DUCK_FAILURE',
-  error
-}
-
-{
-  type: 'FETCH_DUCK_SUCCESS',
-  duckId,
-  duck
-}
-
-{
   type: 'ADD_DUCK',
-}
-
-{
-  type: 'ADD_DUCK_FAILURE',
-  error
-}
-
-{
-  type: 'ADD_DUCK_SUCCESS',
   duck,
   duckId
+}
+
+{
+  type: 'REMOVE_DUCK',
+  duckIdToRemove
 }
 
 

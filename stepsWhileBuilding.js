@@ -246,10 +246,18 @@ firebase-auth
     - update AuthenicateConainer
     - update MainContainer.js
   - Up to this point, the modal is working great. In the next vid well make it so you can actually submit the new duck. (see commit "All new duck/modal stuff besides adding")
+  - jk ^ stuff plus make it when you close the modal it resets the state of the duck. All I did was add duck: '' to CLOSE_MODAL in modal.js
 /adding-ducks
   * at this point you should be able to click "Duck", have the modal popup, type in something, then on submit it logs that.
   * Make a api.js file in /helpers
   * Refer to firebase-schema about multple places ducks should go.
   * Build out api.js with saveToDucks, saveToUsersDucks, saveToDucksId, and saveDuck.
   * Update MainContainer to receive the authedUser and create the actual formatted duck then call saveDuck in api to test it.
-  *
+  * See "Create api.js" commit for where you should be at.
+  * Now we dont want MainContainer to call saveDuck, we want to it dispatch a thunk and the thunk handle all of that.
+  * create redux/modules/ducks.js
+  * Move over actions from actions.js
+  * Move over reducer from reducers.
+  * Update constants
+  * export all functions
+  * export ducks from index.js

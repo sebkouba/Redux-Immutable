@@ -3,7 +3,6 @@
     name
     uid
     avatar
-    email
 
 /notifications
   uid

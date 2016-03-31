@@ -36,7 +36,7 @@ export default function modal (state = initialState, action) {
       }
     case CLOSE_MODAL :
       return {
-        ...state,
+        duck: '',
         isOpen: false,
       }
     case UPDATE_DUCK :
