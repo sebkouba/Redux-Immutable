@@ -83,7 +83,7 @@ function modal (state = initialModalState, action) {
     case UPDATE_DUCK :
       return {
         ...state,
-        duck: actions.newDuckText
+        duck: action.newDuckText
       }
     default :
       return state
@@ -99,13 +99,6 @@ function ducks (state = {}, action) {
       return Object.assign({}, state, {
         [action.duck.duckId]: action.duck
       })
-    case 'REMOVE_DUCK' :
-      return Object.keys(state)
-        .filter((key) => key !== action.duckIdToRemove)
-        .reduce((prev, current) => {
-          prev[current] = state[current]
-          return prev
-        }, {})
     default :
       return state
   }
@@ -113,14 +106,26 @@ function ducks (state = {}, action) {
 
 //  User Ducks
 
-const initialUserDucksState = {
+function userDuck (state = {}, action) {
+  const type = action.type
+  switch (type) {
+    case 'ADD_SINGLE_USERS_DUCK' :
+      return Object.assign({}, state, {
+        duckIds: state.duckIds.concat([action.duckId])
+      })
+    default :
+      return state
+  }
+}
+
+const initialState = {
   isFetching: false,
   error: false,
 }
 
-function userDucks (state  = initialUserDucksState, actions) {
+export default function usersDucks (state  = initialState, action) {
   const type = action.type
-  switch (action.type) {
+  switch (type) {
     case 'FETCH_USERS_DUCKS' :
       return Object.assign({}, state, {
         isFetching: true,
@@ -139,6 +144,14 @@ function userDucks (state  = initialUserDucksState, actions) {
           duckIds: action.duckIds
         }
       })
+    case 'ADD_SINGLE_USERS_DUCK' :
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: '',
+        [action.uid]: userDuck(state[action.uid], action)
+      })
+    default :
+      return state
   }
 }
 
@@ -203,26 +216,26 @@ function replies (state = {}, action) {
 const initialFeedState = {
   newDucksAvailable: false,
   newDucksToAdd: [],
-  isLoading: false,
+  isFetching: false,
   error: '',
   duckIds: []
 }
 
-function feed (state, action) {
+function feed (intialFeedState, action) {
   const type = action.type
   switch (type) {
-    case 'SET_FEED_LISTENER' :
+    case 'FETCH_FEED' :
       return Object.assign({}, state, {
-        isLoading: true,
+        isFetching: true,
       })
-    case 'SET_FEED_LISTENER_ERROR' :
+    case 'FETCH_FEED_ERROR' :
       return Object.assign({}, state, {
-        isLoading: false,
+        isFetching: false,
         error: action.error
       })
-    case 'SET_FEED_LISTENER_SUCCESS' :
+    case 'FETCH_FEED_SUCCESS' :
       return Object.assign({}, state, {
-        isLoading: false,
+        isFetching: false,
         error: '',
         duckIds: action.duckIds
       })
@@ -234,12 +247,13 @@ function feed (state, action) {
       return Object.assign({}, state, {
         newDucksAvailable: false,
       })
-    case 'NEW_DUCK' :
+    case 'ADD_NEW_DUCK_ID_TO_FEED' :
       return Object.assign({}, state, {
         newDucksToAdd: state.newDucksToAdd.concat([action.duckId])
       })
     case 'RESET_NEW_DUCKS_TO_ADD' :
       return Object.assign({}, state, {
+        duckIds: state.duckIds.concat(state.newDucksToAdd),
         newDucksToAdd: []
       })
     default :

@@ -1,5 +1,7 @@
 import { saveDuck } from 'helpers/api'
 import { closeModal } from './modal'
+import { addSigleUsersDuck } from './usersDucks'
+import { addNewDuckIdToFeed } from './feed'
 
 const ADD_DUCK = 'ADD_DUCK'
 const REMOVE_DUCK = 'REMOVE_DUCK'
@@ -12,21 +14,17 @@ function addDuck (duck, duckId) {
   }
 }
 
-function removeDuck (duckIdToRemove) {
-  return {
-    type: REMOVE_DUCK,
-    duckIdToRemove
-  }
-}
-
 export function duckFanout (duck) {
   return function (dispatch) {
     saveDuck(duck)
       .then((duckId) => {
         dispatch(addDuck(duck, duckId))
         dispatch(closeModal())
-        // dispatch(addUserDuck(duck))
-        // dispatch(addDuckToFeed(duck))
+        dispatch(addSigleUsersDuck(duck, duckId))
+        dispatch(addNewDuckIdToFeed(duckId))
+      })
+      .catch((err) => {
+        console.warn('Error in duckFanout', err)
       })
   }
 }
@@ -39,13 +37,6 @@ export default function ducks (state = {}, action) {
         ...state,
         [action.duckId]: action.duck
       }
-    case REMOVE_DUCK :
-      return Object.keys(state)
-        .filter((key) => key !== action.duckIdToRemove)
-        .reduce((prev, current) => {
-          prev[current] = state[current]
-          return prev
-        }, {})
     default :
       return state
   }

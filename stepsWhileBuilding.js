@@ -260,4 +260,19 @@ firebase-auth
   * Move over reducer from reducers.
   * Update constants
   * export all functions
-  * export ducks from index.js
+  * export ducks from index.js **Maybe dont need removeDuck. Check when all done
+  * create duckFanout in ducks.js and finish with it looking like this "Initial duckFanout"
+  * Now add in usersDucks
+  * create usersDucks.js in redux/modules/
+  * move over reducer
+  * move over actions
+  * add to index.js of redux/modules
+  * uncomment addSingleUserDuck in duckFanout. Note nothing will change in our state yet since the usersDucks is undefined - for future
+  * Now add in Feed reducer
+  * create feed.js in redux/modules
+  * import reducer from reducers.js
+  * import actions from actions.js
+  * add to index.js of modules
+  * uncomment addNewDuckIdToFeed in ducks.js
+  * Add a new duck, examine the state to make sure were all good.
+/feed-ui

@@ -43,6 +43,8 @@
   feed: {
     isFetching,
     error,
+    newDucksAvailable,
+    newDucksToAdd: [duckId, duckId],
     duckIds: [duckid, duckId, duckId]
   }
   replies: {

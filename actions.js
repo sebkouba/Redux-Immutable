@@ -48,11 +48,6 @@
   duckId
 }
 
-{
-  type: 'REMOVE_DUCK',
-  duckIdToRemove
-}
-
 
 // Users Ducks
 
@@ -70,7 +65,13 @@
   type: 'FETCH_USERS_DUCKS_SUCCESS',
   uid,
   duckIds,
-  timestamp
+  lastUpdated
+}
+
+{
+  type: 'ADD_SINGLE_USER_DUCK',
+  uid,
+  duckId,
 }
 
 // Replies
@@ -111,17 +112,17 @@
 // Feed
 
 {
-  type: 'SET_FEED_LISTENER',
+  type: 'FETCH_FEED',
   uid
 }
 
 {
-  type: 'SET_FEED_LISTENER_ERROR',
+  type: 'FETCH_FEED_ERROR',
   error
 }
 
 {
-  type: 'SET_FEED_LISTENER_SUCCESS',
+  type: 'FETCH_FEED_SUCCESS',
   duckIds
 }
 
@@ -134,7 +135,7 @@
 }
 
 {
-  type: 'NEW_DUCK',
+  type: 'ADD_NEW_DUCK_ID_TO_FEED',
   duckId
 }
 
