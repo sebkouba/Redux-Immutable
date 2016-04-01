@@ -1,16 +1,23 @@
 import { saveDuck } from 'helpers/api'
 import { closeModal } from './modal'
 import { addSigleUsersDuck } from './usersDucks'
-import { addNewDuckIdToFeed } from './feed'
 
 const ADD_DUCK = 'ADD_DUCK'
 const REMOVE_DUCK = 'REMOVE_DUCK'
+const ADD_MULTIPLE_DUCKS = 'ADD_MULTIPLE_DUCKS'
 
 function addDuck (duck, duckId) {
   return {
     type: ADD_DUCK,
     duck,
     duckId,
+  }
+}
+
+export function addMultipleDucks (ducks) {
+  return {
+    type: ADD_MULTIPLE_DUCKS,
+    ducks,
   }
 }
 
@@ -21,7 +28,6 @@ export function duckFanout (duck) {
         dispatch(addDuck(duck, duckId))
         dispatch(closeModal())
         dispatch(addSigleUsersDuck(duck, duckId))
-        dispatch(addNewDuckIdToFeed(duckId))
       })
       .catch((err) => {
         console.warn('Error in duckFanout', err)
@@ -36,6 +42,11 @@ export default function ducks (state = {}, action) {
       return {
         ...state,
         [action.duckId]: action.duck
+      }
+    case ADD_MULTIPLE_DUCKS :
+      return {
+        ...state,
+        ...action.ducks
       }
     default :
       return state

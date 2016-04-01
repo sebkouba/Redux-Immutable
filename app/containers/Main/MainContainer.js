@@ -56,7 +56,7 @@ const MainContainer = React.createClass({
 
 export default connect(
   ({users, modal}) => ({
-    authedUser: users[users.authedId].info,
+    authedUser: users[users.authedId] ? users[users.authedId].info : {},
     duck: modal.duck,
     isAuthed: users.isAuthed,
     isOpen: modal.isOpen,

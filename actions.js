@@ -112,31 +112,22 @@
 // Feed
 
 {
-  type: 'FETCH_FEED',
+  type: 'SET_FEED_LISTENER',
   uid
 }
 
 {
-  type: 'FETCH_FEED_ERROR',
+  type: 'SET_FEED_LISTENER_ERROR',
   error
 }
 
 {
-  type: 'FETCH_FEED_SUCCESS',
+  type: 'SET_FEED_LISTENER_SUCCESS',
   duckIds
 }
 
 {
-  type: 'NEW_DUCKS_AVAILABLE'
-}
-
-{
   type: 'RESET_NEW_DUCKS_AVAILABLE'
-}
-
-{
-  type: 'ADD_NEW_DUCK_ID_TO_FEED',
-  duckId
 }
 
 {
@@ -182,7 +173,7 @@
 {
   type: 'ADD_LISTENER',
   listenerId,
-  listener
+  off
 }
 
 {

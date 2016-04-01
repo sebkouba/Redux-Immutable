@@ -1,48 +1,60 @@
-const FETCH_FEED = 'FETCH_FEED'
-const FETCH_FEED_ERROR = 'FETCH_FEED_ERROR'
-const FETCH_FEED_SUCCESS = 'FETCH_FEED_SUCCESS'
-const NEW_DUCKS_AVAILABLE = 'NEW_DUCKS_AVAILABLE'
-const RESET_NEW_DUCKS_AVAILABLE = 'RESET_NEW_DUCKS_AVAILABLE'
+import { listenToFeed } from 'helpers/api'
+import { addMultipleDucks } from 'redux/modules/ducks'
+import { addListener } from 'redux/modules/listeners'
+
+const SET_FEED_LISTENER = 'SET_FEED_LISTENER'
+const SET_FEED_LISTENER_ERROR = 'SET_FEED_LISTENER_ERROR'
+const SET_FEED_LISTENER_SUCCESS = 'SET_FEED_LISTENER_SUCCESS'
 const ADD_NEW_DUCK_ID_TO_FEED = 'ADD_NEW_DUCK_ID_TO_FEED'
+const RESET_NEW_DUCKS_AVAILABLE = 'RESET_NEW_DUCKS_AVAILABLE'
 const RESET_NEW_DUCKS_TO_ADD = 'RESET_NEW_DUCKS_TO_ADD'
 
-function fetchFeed (uid) {
+function setFeedListener () {
   return {
-    type: FETCH_FEED,
-    uid
+    type: SET_FEED_LISTENER,
   }
 }
 
-function fetchFeedError (error) {
+function setFeedListenerError (error) {
   return {
-    type: FETCH_FEED_ERROR,
+    type: SET_FEED_LISTENER_ERROR,
     error
   }
 }
 
-function fetchFeedSuccess (duckIds) {
+function setFeedListenerSuccess (duckIds) {
   return {
-    type: FETCH_FEED_SUCCESS,
+    type: SET_FEED_LISTENER_SUCCESS,
     duckIds
   }
 }
 
-function newDucksAvailable () {
+function addNewDuckIdToFeed (duckId) {
   return {
-    type: NEW_DUCKS_AVAILABLE,
+    type: ADD_NEW_DUCK_ID_TO_FEED,
+    duckId
+  }
+}
+
+export function setAndHandleFeedListener () {
+  let initialFetch = true
+  return function (dispatch) {
+    dispatch(setFeedListener())
+    const off = listenToFeed((feed) => {
+      const duckIds = Object.keys(feed)
+      dispatch(addMultipleDucks(feed))
+      initialFetch === true
+        ? dispatch(setFeedListenerSuccess(duckIds))
+        : dispatch(addNewDuckIdToFeed(duckIds[duckIds.length - 1]))
+      initialFetch = false
+    }, (error) => dispatch(setFeedListenerError(error)))
+    dispatch(addListener('feed', off))
   }
 }
 
 function resetNewDucksAvailable () {
   return {
     type: RESET_NEW_DUCKS_AVAILABLE,
-  }
-}
-
-export function addNewDuckIdToFeed (duckId) {
-  return {
-    type: ADD_NEW_DUCK_ID_TO_FEED,
-    duckId
   }
 }
 
@@ -63,40 +75,36 @@ const initialState = {
 export default function feed (state = initialState, action) {
   const type = action.type
   switch (type) {
-    case 'FETCH_FEED' :
+    case SET_FEED_LISTENER :
       return {
         ...state,
         isFetching: true,
       }
-    case 'FETCHFEED_ERROR' :
+    case SET_FEED_LISTENER_ERROR :
       return {
         ...state,
         isFetching: false,
         error: action.error
       }
-    case 'FETCHFEED_SUCCESS' :
+    case SET_FEED_LISTENER_SUCCESS :
       return {
         ...state,
         isFetching: false,
         error: '',
-        duckIds: action.duckIds
-      }
-    case 'NEW_DUCKS_AVAILABLE' :
-      return {
-        ...state,
-        newDucksAvailable: true,
-      }
-    case 'RESET_NEW_DUCKS_AVAILABLE' :
-      return {
-        ...state,
+        duckIds: action.duckIds,
         newDucksAvailable: false,
       }
-    case 'ADD_NEW_DUCK_ID_TO_FEED' :
+    case ADD_NEW_DUCK_ID_TO_FEED :
       return {
         ...state,
         newDucksToAdd: state.newDucksToAdd.concat([action.duckId])
       }
-    case 'RESET_NEW_DUCKS_TO_ADD' :
+    case RESET_NEW_DUCKS_AVAILABLE :
+      return {
+        ...state,
+        newDucksAvailable: false,
+      }
+    case RESET_NEW_DUCKS_TO_ADD :
       return {
         ...state,
         duckIds: state.duckIds.concat(state.newDucksToAdd),

@@ -1,7 +1,13 @@
 import { ref } from 'config/constants'
 
 function saveToDucks (duck) {
-  return ref.child('ducks').push(duck)
+  const newRef = ref.child('ducks').push()
+  const duckId = newRef.key()
+  const duckPromise = newRef.set({...duck, duckId})
+  return {
+    duckId,
+    duckPromise
+  }
 }
 
 function saveToUsersDucks (duck, duckId) {
@@ -9,17 +15,21 @@ function saveToUsersDucks (duck, duckId) {
   return ref.child(endpoint).set({...duck, duckId})
 }
 
-function saveToDucksId (duckId) {
-  return ref.child(`ducks/${duckId}/duckId`).set(duckId)
-}
-
 export function saveDuck (duck) {
-  const ducksRef = saveToDucks(duck)
-  const duckId = ducksRef.key()
+  const { duckId, duckPromise } = saveToDucks(duck)
 
   return Promise.all([
-    ducksRef,
+    duckPromise,
     saveToUsersDucks(duck, duckId),
-    saveToDucksId(duckId)
   ]).then(() => duckId)
+}
+
+export function listenToFeed (cb, errorCB) {
+  return ref.child('ducks').on('value', (snapshot) => {
+    cb(snapshot.val())
+  }, errorCB)
+}
+
+export function removeFirebaseListener (cb) {
+  ref.off('value', cb)
 }

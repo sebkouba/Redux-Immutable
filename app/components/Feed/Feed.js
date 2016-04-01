@@ -5,3 +5,10 @@ export default function Feed (props) {
     <div>FEED</div>
   )
 }
+
+Feed.propTypes = {
+  newDucksAvailable: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  ducks: PropTypes.array.isRequired,
+}

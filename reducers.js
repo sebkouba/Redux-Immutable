@@ -224,32 +224,25 @@ const initialFeedState = {
 function feed (intialFeedState, action) {
   const type = action.type
   switch (type) {
-    case 'FETCH_FEED' :
+    case 'SET_FEED_LISTENER' :
       return Object.assign({}, state, {
         isFetching: true,
       })
-    case 'FETCH_FEED_ERROR' :
+    case 'SET_FEED_LISTENER_ERROR' :
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
       })
-    case 'FETCH_FEED_SUCCESS' :
+    case 'SET_FEED_LISTENER_SUCCESS' :
       return Object.assign({}, state, {
         isFetching: false,
         error: '',
-        duckIds: action.duckIds
-      })
-    case 'NEW_DUCKS_AVAILABLE' :
-      return Object.assign({}, state, {
+        newDucksToAdd: state.newDucksToAdd.concat(action.duckIds),
         newDucksAvailable: true,
       })
     case 'RESET_NEW_DUCKS_AVAILABLE' :
       return Object.assign({}, state, {
         newDucksAvailable: false,
-      })
-    case 'ADD_NEW_DUCK_ID_TO_FEED' :
-      return Object.assign({}, state, {
-        newDucksToAdd: state.newDucksToAdd.concat([action.duckId])
       })
     case 'RESET_NEW_DUCKS_TO_ADD' :
       return Object.assign({}, state, {
@@ -317,7 +310,7 @@ function listeners (state = {}, action) {
   switch (type) {
     case 'ADD_LISTENER' :
       return Object.assign({}, state, {
-        [action.listenerId]: action.listener
+        [action.listenerId]: action.off
       })
     case 'REMOVE_LISTENER' :
       const listenersClone = Object.assign({}, state)

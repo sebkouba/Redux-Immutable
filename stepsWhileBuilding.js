@@ -1,6 +1,6 @@
 firebase-schema - Make firebase-schema.js
 redux-schema - Make redux-schema.js
-actions - Make actions.js file add all actions to it for now.
+actions - Make actions.js file add all actions to it for now. **Dont refer to actions.js. Make a new one going through all actions. Same for Reducers.
 reducers - Make reducers.js file and add all reducers to it for now.
 hello-world - Build Hello World
     - npm init -y
@@ -252,7 +252,7 @@ firebase-auth
   * at this point you should be able to click "Duck", have the modal popup, type in something, then on submit it logs that.
   * Make a api.js file in /helpers
   * Refer to firebase-schema about multple places ducks should go.
-  * Build out api.js with saveToDucks, saveToUsersDucks, saveToDucksId, and saveDuck.
+  * Build out api.js with saveToDucks, saveToUsersDucks, saveToDucksId, and saveDuck. ** this changed later on. See update file.
   * Update MainContainer to receive the authedUser and create the actual formatted duck then call saveDuck in api to test it.
   * See "Create api.js" commit for where you should be at.
   * Now we dont want MainContainer to call saveDuck, we want to it dispatch a thunk and the thunk handle all of that.
@@ -274,10 +274,19 @@ firebase-auth
   * import reducer from reducers.js
   * import actions from actions.js
   * add to index.js of modules
-  * uncomment addNewDuckIdToFeed in ducks.js
   * Add a new duck, examine the state to make sure were all good.
 /listeners
+  commit "add listeners.js"
   * create redux/modules/listeners.js
   * Move listener reducer over
   * Move listener action creator over
   * add to index.js of modules
+/feed-ui
+  * connect FeedContainer to redux and get feed state
+  * Add propTypes for newDucksAvailable, error, isFetching, and ducks
+  * Pass those props to Feed
+  * Create setAndHandleFeedListener inside of feed.js which will lead to
+  * Create listenToFeed inside of api.js
+  * Now onMount of FeedContainer call this.props.setAndHandleFeedListener
+  - Commit at this point.
+  * Now build the UI for Feed

@@ -44,7 +44,7 @@
     isFetching,
     error,
     newDucksAvailable,
-    newDucksToAdd: [duckId, duckId],
+    duckIdsToAdd: [duckId, duckId],
     duckIds: [duckid, duckId, duckId]
   }
   replies: {

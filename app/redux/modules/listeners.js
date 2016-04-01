@@ -1,15 +1,18 @@
+import { removeFirebaseListener } from 'helpers/api'
+
 const ADD_LISTENER = 'ADD_LISTENER'
 const REMOVE_LISTENER = 'REMOVE_LISTENER'
 
-function addListener (listenerId, listener) {
+export function addListener (listenerId, off) {
   return {
     type: ADD_LISTENER,
     listenerId,
-    listener,
+    off,
   }
 }
 
-function removeListener (listenerId) {
+export function removeListener (listenerId, off) {
+  removeFirebaseListener(off)
   return {
     type: REMOVE_LISTENER,
     listenerId,
@@ -22,7 +25,7 @@ export default function listeners (state = {}, action) {
     case ADD_LISTENER :
       return {
         ...state,
-        [action.listenerId]: action.listener
+        [action.listenerId]: action.off
       }
     case REMOVE_LISTENER :
       return Object.keys(state)
