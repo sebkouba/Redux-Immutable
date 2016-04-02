@@ -12,14 +12,19 @@ function NewDucksAvailable ({handleClick}) {
 
 export default function Feed ({ducks, error, isFetching, newDucksAvailable, resetNewDucksAvailable}) {
   return isFetching === true
-  ? (<h1 className={header}> Fetching </h1>)
-  : (
-    <div>
-      {newDucksAvailable ? <NewDucksAvailable handleClick={resetNewDucksAvailable} /> : null}
-      {ducks.length === 0 ? <p className={header}>This is unfortunate. <br /> It appears there are no ducks yet 😞</p> : null}
-      {ducks.map((duck) => <Duck duck={duck} key={duck.uid + duck.timestamp}/>)}
-    </div>
-  )
+    ? <h1 className={header}> Fetching </h1>
+    : <div>
+        {newDucksAvailable ? <NewDucksAvailable handleClick={resetNewDucksAvailable} /> : null}
+        {ducks.length === 0 ? <p className={header}>This is unfortunate. <br /> It appears there are no ducks yet 😞</p> : null}
+        {ducks.map((duck) => (
+          <Duck
+            duck={duck}
+            handleClick={() => ({})}
+            handleReply={() => ({})}
+            handleStar={() => ({})}
+            key={duck.uid + duck.timestamp}/>
+        ))}
+      </div>
 }
 
 Feed.propTypes = {

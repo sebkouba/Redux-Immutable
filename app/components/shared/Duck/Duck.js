@@ -8,7 +8,7 @@ import {
 } from './styles.css'
 
 
-export default function Duck ({duck, handleClick = () => ({}), handleReply = () => ({}), handleStar = () => ({})}) {
+export default function Duck ({duck, handleClick, handleReply, handleStar}) {
   return (
     <div className={duckContainer} onClick={handleClick}>
       <img src={duck.avatar} className={avatar}/>
