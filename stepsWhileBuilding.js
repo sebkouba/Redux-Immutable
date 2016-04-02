@@ -289,6 +289,6 @@ firebase-auth
   * Now onMount of FeedContainer call this.props.setAndHandleFeedListener
   - Commit at this point. "Progress on FeedContainer"
   * Now build the UI for Feed
-  - Commit at this point "Progress on Fee UI"
+  - Commit at this point "Progress on Fee UI" && "Small change"
 /replies
   *

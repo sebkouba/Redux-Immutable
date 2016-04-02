@@ -4,7 +4,7 @@ import Reply from 'react-icons/lib/fa/reply'
 import Star from 'react-icons/lib/fa/star-o'
 import {
   duckContainer, contentContainer, avatar, action,
-  content, header, text, likeReplyContainer, icon
+  content, header, text, actionContainer, icon
 } from './styles.css'
 
 
@@ -18,9 +18,15 @@ export default function Duck ({duck, handleClick, handleReply, handleStar}) {
           <div>{formatTimestamp(duck.timestamp)}</div>
         </div>
         <div className={text}>{duck.text}</div>
-        <div className={likeReplyContainer}>
-          <Reply className={icon} onClick={handleReply} />
-          <Star className={icon} onClick={handleStar} />
+        <div className={actionContainer}>
+          <div className={action}>
+            <Reply className={icon} onClick={handleReply} />
+            <span>{duck.numberOfReplies}</span>
+          </div>
+          <div className={action}>
+            <Star className={icon} onClick={handleStar} />
+            <span>{duck.numberOfLikes}</span>
+          </div>
         </div>
       </div>
     </div>
