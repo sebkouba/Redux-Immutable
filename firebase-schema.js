@@ -19,11 +19,14 @@
     avatar
     duckId
     name
-    numberOfLikes
-    numberOfReplies
     text
     timestamp
     uid (of duck author)
+
+/likeAndReplyCount
+  duckId
+    numberOfLikes
+    numberOfReplies
 
 /usersDucks
   uid
@@ -31,8 +34,6 @@
       avatar
       duckId
       name
-      numberOfLikes
-      numberOfReplies
       text
       timestamp
       uid (of duck author)
@@ -44,3 +45,7 @@
     uid
     timestamp
     avatar
+
+/usersLikes
+  uid
+    duckId: true

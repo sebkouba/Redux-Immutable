@@ -40,18 +40,11 @@
   line-height: 25px;
 }
 
-.actionContainer {
+.likeReplyContainer {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-}
-
-.action {
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  font-size: 20px;
 }
 
 .icon {
@@ -62,4 +55,9 @@
 
 .icon:hover {
   color: #4a90e2;
+}
+
+.likedIcon {
+  composes: icon;
+  color: #4a90e2;;
 }

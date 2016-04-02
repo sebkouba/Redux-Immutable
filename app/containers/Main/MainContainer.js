@@ -26,8 +26,6 @@ const MainContainer = React.createClass({
       name,
       uid,
       text,
-      numberOfLikes: 0,
-      numberOfReplies: 0,
       timestamp: Date.now()
     }
   },

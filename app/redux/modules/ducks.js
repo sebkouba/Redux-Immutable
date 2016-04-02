@@ -6,11 +6,10 @@ const ADD_DUCK = 'ADD_DUCK'
 const REMOVE_DUCK = 'REMOVE_DUCK'
 const ADD_MULTIPLE_DUCKS = 'ADD_MULTIPLE_DUCKS'
 
-function addDuck (duck, duckId) {
+function addDuck (duck) {
   return {
     type: ADD_DUCK,
     duck,
-    duckId,
   }
 }
 
@@ -22,12 +21,13 @@ export function addMultipleDucks (ducks) {
 }
 
 export function duckFanout (duck) {
-  return function (dispatch) {
+  return function (dispatch, getState) {
+    const uid = getState().users.authedId
     saveDuck(duck)
-      .then((duckId) => {
-        dispatch(addDuck(duck, duckId))
+      .then((duckWithID) => {
+        dispatch(addDuck(duckWithID))
         dispatch(closeModal())
-        dispatch(addSigleUsersDuck(duck, duckId))
+        dispatch(addSigleUsersDuck(uid, duckWithID.duckId))
       })
       .catch((err) => {
         console.warn('Error in duckFanout', err)
@@ -41,7 +41,7 @@ export default function ducks (state = {}, action) {
     case ADD_DUCK :
       return {
         ...state,
-        [action.duckId]: action.duck
+        [action.duck.duckId]: action.duck
       }
     case ADD_MULTIPLE_DUCKS :
       return {

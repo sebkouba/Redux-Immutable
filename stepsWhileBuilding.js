@@ -289,6 +289,16 @@ firebase-auth
   * Now onMount of FeedContainer call this.props.setAndHandleFeedListener
   - Commit at this point. "Progress on FeedContainer"
   * Now build the UI for Feed
-  - Commit at this point "Progress on Fee UI" && "Small change"
-/replies
-  *
+  - Commit at this point "Progress on Fee UI" && "Small change" && "Add numbers to like and reply" && see next commit to for minor changes
+/likes
+  * Create redux/modules/usersLikes
+  * Add actions
+  * add reducer
+  * add to index
+  * Create fetchLikes in api.js
+  * import fetchLikes into usersLikes.js
+  * Create saveToLikes and deleteFromLikes in api.js
+  * import saveToLikes and deleteFromLikes from api into usersLikes.js
+  * Create addAndHandleLike function and finish it
+  * Create handleDeleteLike function and finish it.
+  * DO a bunch of stuff. Meh.

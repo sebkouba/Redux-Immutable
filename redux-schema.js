@@ -24,12 +24,16 @@
         avatar,
         duckId,
         name,
-        numberOfLikes,
-        numberOfReplies,
         text,
         timestamp,
         uid,
       }
+    }
+  },
+  likeAndReplyCount: {
+    [duckId]: {
+      numberOfLikes,
+      numberOfReplies
     }
   },
   usersDucks: {
@@ -40,6 +44,9 @@
       duckIds: [duckId, duckId, duckId]
     }
   },
+  usersLikes: {
+    duckid: true,
+  }
   feed: {
     isFetching,
     error,
