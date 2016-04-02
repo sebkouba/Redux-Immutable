@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { centeredContainer, pageHeader } from 'sharedStyles/styles.css'
-import { FacebookAuthButton } from 'components/shared'
+import { FacebookAuthButton } from 'components'
 
 export default function Authenticate ({onAuth, isFetching, error, user}) {
   return (

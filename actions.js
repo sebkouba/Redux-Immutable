@@ -130,10 +130,6 @@
   type: 'RESET_NEW_DUCKS_AVAILABLE'
 }
 
-{
-  type: 'RESET_NEW_DUCKS_TO_ADD'
-}
-
 // Notifications
 
 {

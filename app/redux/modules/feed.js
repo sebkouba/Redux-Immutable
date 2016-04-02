@@ -7,7 +7,6 @@ const SET_FEED_LISTENER_ERROR = 'SET_FEED_LISTENER_ERROR'
 const SET_FEED_LISTENER_SUCCESS = 'SET_FEED_LISTENER_SUCCESS'
 const ADD_NEW_DUCK_ID_TO_FEED = 'ADD_NEW_DUCK_ID_TO_FEED'
 const RESET_NEW_DUCKS_AVAILABLE = 'RESET_NEW_DUCKS_AVAILABLE'
-const RESET_NEW_DUCKS_TO_ADD = 'RESET_NEW_DUCKS_TO_ADD'
 
 function setFeedListener () {
   return {
@@ -41,6 +40,7 @@ export function setAndHandleFeedListener () {
   return function (dispatch) {
     dispatch(setFeedListener())
     const off = listenToFeed((feed) => {
+      feed = feed === null ? {} : feed
       const duckIds = Object.keys(feed)
       dispatch(addMultipleDucks(feed))
       initialFetch === true
@@ -52,15 +52,9 @@ export function setAndHandleFeedListener () {
   }
 }
 
-function resetNewDucksAvailable () {
+export function resetNewDucksAvailable () {
   return {
     type: RESET_NEW_DUCKS_AVAILABLE,
-  }
-}
-
-function resetNewDucksToAdd () {
-  return {
-    type: RESET_NEW_DUCKS_TO_ADD,
   }
 }
 
@@ -97,18 +91,15 @@ export default function feed (state = initialState, action) {
     case ADD_NEW_DUCK_ID_TO_FEED :
       return {
         ...state,
-        newDucksToAdd: state.newDucksToAdd.concat([action.duckId])
+        newDucksToAdd: state.newDucksToAdd.concat([action.duckId]),
+        newDucksAvailable: true,
       }
     case RESET_NEW_DUCKS_AVAILABLE :
       return {
         ...state,
-        newDucksAvailable: false,
-      }
-    case RESET_NEW_DUCKS_TO_ADD :
-      return {
-        ...state,
         duckIds: state.duckIds.concat(state.newDucksToAdd),
-        newDucksToAdd: []
+        newDucksToAdd: [],
+        newDucksAvailable: false,
       }
     default :
       return state

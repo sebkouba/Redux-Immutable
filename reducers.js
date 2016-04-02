@@ -242,12 +242,9 @@ function feed (intialFeedState, action) {
       })
     case 'RESET_NEW_DUCKS_AVAILABLE' :
       return Object.assign({}, state, {
-        newDucksAvailable: false,
-      })
-    case 'RESET_NEW_DUCKS_TO_ADD' :
-      return Object.assign({}, state, {
         duckIds: state.duckIds.concat(state.newDucksToAdd),
-        newDucksToAdd: []
+        newDucksToAdd: [],
+        newDucksAvailable: false
       })
     default :
       return state

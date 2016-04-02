@@ -1,1 +1,1 @@
-export FacebookAuthButton from './FacebookAuthButton/FacebookAuthButton'
+export Duck from './Duck/Duck'

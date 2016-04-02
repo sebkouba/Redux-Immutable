@@ -1,0 +1,61 @@
+.duckContainer {
+  composes: baseDuckContainer from 'sharedStyles/styles.css';
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.duckContainer:hover {
+  background: #F1F1F1;
+}
+
+.avatar {
+  width: 75px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.text {
+  padding: 8px 0;
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.likeReplyContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.action {
+  margin-right: 10px;
+}
+
+.icon {
+  height: 25px;
+  width: 25px;
+}
+
+.icon:hover {
+  color: #4a90e2;
+}

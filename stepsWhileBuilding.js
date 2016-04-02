@@ -98,9 +98,8 @@ authenticate-mocks
   - Create Authenticate folder in components, Authenticate.js file
   - Add both to both index.js files
   - Add styling for Authenticate component
-  - Create shared folder in components for FacebookAuthBtn
+  - Create FacebookAuthBtn folder in components
   - Create FacebookAuthBtn component and style it
-  - Create index.js file in shared folder which exports FacebookAuthBtn
   - Import and use FacebookAuthBtn in Authenticate.js
   - Create helpers folder and then helpers/auth.js
   - Create mock auth.js
@@ -288,5 +287,5 @@ firebase-auth
   * Create setAndHandleFeedListener inside of feed.js which will lead to
   * Create listenToFeed inside of api.js
   * Now onMount of FeedContainer call this.props.setAndHandleFeedListener
-  - Commit at this point.
+  - Commit at this point. "Progress on FeedContainer"
   * Now build the UI for Feed
