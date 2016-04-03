@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Duck } from 'components'
-import { container, content, repliesContainer, replyTextAreaContainer, replyTextArea } from './styles.css'
+import { mainContainer, container, content, repliesContainer, replyTextAreaContainer, replyTextArea } from './styles.css'
 import { pageHeader, darkBtn } from 'sharedStyles/styles.css'
 import { RepliesContainer } from 'containers'
 
@@ -35,7 +35,7 @@ function makeReply ({name, uid, avatar}, reply) {
 
 export default function DuckView (props) {
   return (
-    <div>
+    <div className={mainContainer}>
       {props.isFetching === true
         ? <p className={pageHeader}> Fetching </p>
         : <div className={container}>

@@ -40,7 +40,7 @@ html, body {
 .baseDuckContainer {
   border-radius: 5px;
   max-width: 450px;
-  margin: 10px auto;
+  margin: 15px auto;
   padding: 10px;
   cursor: pointer;
 }
@@ -57,4 +57,10 @@ html, body {
   padding: 8px 10px;
   font-size: 18px;
   resize: none;
+}
+
+.baseAvatar {
+  width: 75px;
+  border-radius: 3px;
+  margin-right: 10px;
 }

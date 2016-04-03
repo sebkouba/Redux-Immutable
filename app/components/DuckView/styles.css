@@ -1,17 +1,19 @@
+.mainContainer {
+  padding: 20px;
+  margin: 20px;
+}
+
 .container {
   display: flex;
   flex-direction: row;
-
 }
 
 .content {
-  flex: 3;
-  /*background-color: green;*/
+  flex: 4;
 }
 
 .repliesContainer {
-  flex: 2;
-  background-color: red;
+  flex: 3;
 }
 
 .replyTextAreaContainer {

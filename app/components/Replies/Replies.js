@@ -1,43 +1,43 @@
 import React, { PropTypes } from 'react'
+import { repliesContainer, avatar, replyContainer, header, content, cushion } from './styles.css'
+import { Duck } from 'components'
 const { bool, string, number, object, func } = PropTypes
+import { formatTimestamp } from 'helpers/utils'
 
 function Reply ({comment}) {
   return (
-    <div>
-      <p>{comment.name}</p>
-      <p>{comment.reply}</p>
-      <p>{comment.uid}</p>
-      <p>{comment.timestamp}</p>
-      <p>{comment.avatar}</p>
+    <div className={replyContainer}>
+      <img src={comment.avatar} alt={comment.name} className={avatar}/>
+      <div className={cushion}>{comment.name}</div>
+      <div className={cushion}>{formatTimestamp(comment.timestamp)}</div>
+      <div className={cushion}>{comment.reply}</div>
     </div>
   )
 }
 
-const Replies = React.createClass({
-  propTypes: {
-    isFetching: bool.isRequired,
-    error: string.isRequired,
-    lastUpdated: number,
-    replies: object,
-    fetchAndHandleReplies: func,
-    duckId: string,
-  },
-  componentDidMount () {
-    this.props.fetchAndHandleReplies(this.props.duckId)
-  },
-  render () {
-    console.log(this.props)
-    return (
-      <div>
-        {this.props.error === true ? <div>ERROR</div> : null}
-        {this.props.isFetching === true
-          ? <p>FETCHING</p>
-          : Object.keys(this.props.replies).map((replyId) => (
-              <Reply key={replyId} comment={this.props.replies[replyId]} />
+function Replies (props) {
+  return (
+    <div>
+      {props.error === true ? <div>ERROR</div> : null}
+      {props.isFetching === true
+        ? <p>FETCHING</p>
+        : <div>
+            <h1 className={header}>Replies</h1>
+            {Object.keys(props.replies).map((replyId) => (
+              <Reply key={replyId} comment={props.replies[replyId]} />
             ))}
-      </div>
-    )
-  },
-})
+          </div>}
+    </div>
+  )
+}
+
+Replies.propTypes = {
+  isFetching: bool.isRequired,
+  error: string.isRequired,
+  lastUpdated: number,
+  replies: object,
+  fetchAndHandleReplies: func,
+  duckId: string,
+}
 
 export default Replies

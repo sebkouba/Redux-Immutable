@@ -1,6 +1,5 @@
 .duckContainer {
   composes: baseDuckContainer from 'sharedStyles/styles.css';
-  border: 1px solid #ccc;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -12,9 +11,7 @@
 }
 
 .avatar {
-  width: 75px;
-  border-radius: 3px;
-  margin-right: 10px;
+  composes: baseAvatar from 'sharedStyles/styles.css';
 }
 
 .actionContainer {
