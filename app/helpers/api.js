@@ -15,11 +15,8 @@ function saveToUsersDucks (duck, duckId) {
   return ref.child(endpoint).set({...duck, duckId})
 }
 
-function saveLikeAndReplyCount (duckId) {
-  return ref.child(`likeAndReplyCount/${duckId}`).set({
-    numberOfLikes: 0,
-    numberOfReplies: 0,
-  })
+function saveLikeCount (duckId) {
+  return ref.child(`likeCount/${duckId}`).set(0)
 }
 
 export function saveDuck (duck) {
@@ -28,7 +25,7 @@ export function saveDuck (duck) {
   return Promise.all([
     duckPromise,
     saveToUsersDucks(duck, duckId),
-    saveLikeAndReplyCount(duckId)
+    saveLikeCount(duckId)
   ]).then(() => ({...duck, duckId}))
 }
 
@@ -55,17 +52,22 @@ export function deleteFromUsersLikes (uid, duckId) {
   return ref.child(`usersLikes/${uid}/${duckId}`).set(null)
 }
 
-export function fetchLikeAndReplyCount (duckId) {
-  return ref.child(`likeAndReplyCount/${duckId}`).once('value')
-    .then((snapshot) => snapshot.val() || {numberOfLikes: 0, numberOfReplies: 0})
+export function fetchLikeCount (duckId) {
+  return ref.child(`likeCount/${duckId}`).once('value')
+    .then((snapshot) => snapshot.val() || 0)
 }
 
 export function incrementNumberOfLikes (duckId) {
-  return ref.child(`likeAndReplyCount/${duckId}/numberOfLikes`)
+  return ref.child(`likeCount/${duckId}`)
     .transaction((currentValue = 0) => currentValue + 1)
 }
 
 export function decrementNumberOfLikes (duckId) {
-  return ref.child(`likeAndReplyCount/${duckId}/numberOfLikes`)
+  return ref.child(`likeCount/${duckId}`)
     .transaction((currentValue = 0) => currentValue - 1)
+}
+
+export function fetchDuck (duckId) {
+  return ref.child(`ducks/${duckId}`).once('value')
+    .then((snapshot) => snapshot.val())
 }

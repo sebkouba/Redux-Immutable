@@ -53,7 +53,8 @@ export function setUsersLikes () {
   }
 }
 
-export function addAndHandleLike (duckId) {
+export function addAndHandleLike (duckId, event) {
+  event.stopPropagation()
   return function (dispatch, getState) {
     dispatch(addLike(duckId))
 
@@ -69,7 +70,8 @@ export function addAndHandleLike (duckId) {
   }
 }
 
-export function handleDeleteLike (duckId) {
+export function handleDeleteLike (duckId, event) {
+  event.stopPropagation()
   return function (dispatch, getState) {
     dispatch(removeLike(duckId))
 

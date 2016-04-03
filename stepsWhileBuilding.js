@@ -302,3 +302,14 @@ firebase-auth
   * Create addAndHandleLike function and finish it
   * Create handleDeleteLike function and finish it.
   * DO a bunch of stuff. Meh.
+  * This was a mess. Here's the commit "Like and Unlike are working"
+/duck-view-likes
+  * Create a DuckContainer folder
+  * Create DuckView in components
+  * Create a /duck/:duckId route
+  * Connect FeedContainer to Context to get router
+  * Create goToDuckPath method and pass it down to Duck
+  * Make like works on both routes.
+
+
+  ** Code Review. There is probably a lot of fluff that can be deleted or old code from refactors that wasn't deleted.

@@ -8,8 +8,6 @@ function NavLinks ({isAuthed}) {
     ? (
         <ul>
           <li><Link to='/' className={link}>Home</Link></li>
-          <li><Link to='/' className={link}>Notifications</Link></li>
-          <li><Link to='/' className={link}>Discover</Link></li>
         </ul>
       )
     : <noscript />

@@ -1,10 +1,48 @@
-import { saveDuck } from 'helpers/api'
+import { saveDuck, fetchDuck } from 'helpers/api'
 import { closeModal } from './modal'
 import { addSigleUsersDuck } from './usersDucks'
 
+const FETCHING_DUCK = 'FETCHING_DUCK'
+const FETCHING_DUCK_ERROR = 'FETCHING_DUCK_ERROR'
+const FETCHING_DUCK_SUCCESS = 'FETCHING_DUCK_SUCCESS'
 const ADD_DUCK = 'ADD_DUCK'
-const REMOVE_DUCK = 'REMOVE_DUCK'
 const ADD_MULTIPLE_DUCKS = 'ADD_MULTIPLE_DUCKS'
+const REMOVE_FETCHING = 'REMOVE_FETCHING'
+
+export function removeFetching () {
+  return {
+    type: REMOVE_FETCHING
+  }
+}
+
+function fetchingDuck () {
+  return {
+    type: FETCHING_DUCK,
+  }
+}
+
+function fetchingDuckError (error) {
+  return {
+    type: FETCHING_DUCK_ERROR,
+    error,
+  }
+}
+
+function fetchingDuckSuccess (duck) {
+  return {
+    type: FETCHING_DUCK_SUCCESS,
+    duck
+  }
+}
+
+export function fetchAndHandleDuck (duckId) {
+  return function (dispatch, getState) {
+    dispatch(fetchingDuck())
+    fetchDuck(duckId)
+      .then((duck) => dispatch(fetchingDuckSuccess(duck)))
+      .catch((error) => dispatch(fetchingDuckError(error)))
+  }
+}
 
 function addDuck (duck) {
   return {
@@ -35,13 +73,37 @@ export function duckFanout (duck) {
   }
 }
 
-export default function ducks (state = {}, action) {
+const initialState = {
+  isFetching: true,
+  error: ''
+}
+
+export default function ducks (state = initialState, action) {
   const type = action.type
   switch (type) {
-    case ADD_DUCK :
+    case FETCHING_DUCK :
       return {
         ...state,
+        isFetching: true,
+      }
+    case ADD_DUCK :
+    case FETCHING_DUCK_SUCCESS :
+      return {
+        ...state,
+        isFetching: false,
+        error: '',
         [action.duck.duckId]: action.duck
+      }
+    case FETCHING_DUCK_ERROR :
+      return {
+        ...state,
+        isFetching: false,
+        error: action.error
+      }
+    case REMOVE_FETCHING :
+      return {
+        ...state,
+        isFetching: false,
       }
     case ADD_MULTIPLE_DUCKS :
       return {

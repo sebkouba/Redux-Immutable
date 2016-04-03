@@ -23,10 +23,9 @@
     timestamp
     uid (of duck author)
 
-/likeAndReplyCount
+/likeCount
   duckId
-    numberOfLikes
-    numberOfReplies
+    0
 
 /usersDucks
   uid

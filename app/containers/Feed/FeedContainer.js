@@ -7,6 +7,9 @@ import * as listenerActionCreators from 'redux/modules/listeners'
 import * as usersActionCreators from 'redux/modules/usersLikes'
 
 const FeedContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object
+  },
   propTypes: {
     addAndHandleLike: PropTypes.func.isRequired,
     ducks: PropTypes.array.isRequired,
@@ -28,9 +31,12 @@ const FeedContainer = React.createClass({
   componentWillUnmount () {
     this.props.removeListener('feed', this.props.off)
   },
+  goToDuckPath (duck) {
+    this.context.router.push('/duck/' + duck.duckId)
+  },
   render () {
     return (
-      <Feed {...this.props} />
+      <Feed {...this.props} goToDuckPath={this.goToDuckPath} />
     )
   },
 })
@@ -41,7 +47,7 @@ function mapStateToProps ({feed, ducks, listeners, usersLikes}) {
     newDucksAvailable,
     error,
     isFetching,
-    ducks: duckIds.map((id) => ducks[id]).sort((a,b) => a.timestamp < b.timestamp),
+    ducks: duckIds.map((id) => ducks[id]).sort((a, b) => a.timestamp < b.timestamp),
     off: listeners.feed,
     likes: usersLikes,
   }

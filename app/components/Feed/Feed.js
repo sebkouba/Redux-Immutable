@@ -19,12 +19,12 @@ export default function Feed (props) {
         {props.ducks.map((duck) => (
           <Duck
             duck={duck}
-            handleClick={() => ({})}
+            handleClick={(e) => props.goToDuckPath(duck, e)}
             handleReply={() => ({})}
-            likeStar={() => props.addAndHandleLike(duck.duckId)}
+            favorite={(e) => props.addAndHandleLike(duck.duckId, e)}
             key={duck.duckId}
             isLiked={props.likes[duck.duckId] === true}
-            unlikeStar={() => props.handleDeleteLike(duck.duckId)}/>
+            unfavorite={(e) => props.handleDeleteLike(duck.duckId, e)}/>
         ))}
       </div>
 }

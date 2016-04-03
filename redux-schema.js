@@ -30,11 +30,8 @@
       }
     }
   },
-  likeAndReplyCount: {
-    [duckId]: {
-      numberOfLikes,
-      numberOfReplies
-    }
+  likeCount: {
+    [duckId]: 0
   },
   usersDucks: {
     isFetching,

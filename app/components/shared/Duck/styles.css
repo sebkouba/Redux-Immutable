@@ -17,6 +17,14 @@
   margin-right: 10px;
 }
 
+.actionContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 18px
+}
+
 .contentContainer {
   display: flex;
   flex-direction: column;
@@ -50,11 +58,13 @@
 .icon {
   height: 25px;
   width: 25px;
-  margin-right: 5px
+  margin-right: 5px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
 }
 
 .icon:hover {
-  color: #4a90e2;
+  transform: scale(1.2);
 }
 
 .likedIcon {

@@ -1,32 +1,15 @@
 import React, { PropTypes } from 'react'
 import { formatTimestamp } from 'helpers/utils'
 import Reply from 'react-icons/lib/fa/reply'
-import Star from 'react-icons/lib/fa/star-o'
+import Star from 'react-icons/lib/fa/star'
 import {
-  duckContainer, contentContainer, avatar, action,
-  content, header, text, likeReplyContainer, icon, likedIcon
+  duckContainer, contentContainer, avatar, actionContainer,
+  header, text, likeReplyContainer, icon, likedIcon
 } from './styles.css'
 
-
-export default function Duck ({duck, handleClick, handleReply, likeStar, isLiked, unlikeStar}) {
-  const starIcon = isLiked === true ? likedIcon : icon
-  const starFn = isLiked === true ? unlikeStar : likeStar
-  return (
-    <div className={duckContainer} onClick={handleClick}>
-      <img src={duck.avatar} className={avatar}/>
-      <div className={contentContainer}>
-        <div className={header}>
-          <div>{duck.name}</div>
-          <div>{formatTimestamp(duck.timestamp)}</div>
-        </div>
-        <div className={text}>{duck.text}</div>
-        <div className={likeReplyContainer}>
-          <Reply className={icon} onClick={handleReply} />
-          <Star className={starIcon} onClick={starFn} />
-        </div>
-      </div>
-    </div>
-  )
+Duck.defaultProps = {
+  hideReplyBtn: false,
+  hideLikeCount: true,
 }
 
 Duck.propTypes = {
@@ -38,8 +21,41 @@ Duck.propTypes = {
     timestamp: PropTypes.number.isRequired,
     uid: PropTypes.string.isRequired,
   }),
-  handleClick: PropTypes.func.isRequired,
-  handleReply: PropTypes.func.isRequired,
-  likeStar: PropTypes.func.isRequired,
-  unlikeStar: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
+  handleReply: PropTypes.func,
+  isLiked: PropTypes.bool.isRequired,
+  favorite: PropTypes.func.isRequired,
+  unfavorite: PropTypes.func.isRequired,
+  numberOfLikes: PropTypes.number,
+  hideReplyBtn: PropTypes.bool.isRequired,
+  hideLikeCount: PropTypes.bool.isRequired,
+}
+
+export default function Duck (props) {
+  const starIcon = props.isLiked === true ? likedIcon : icon
+  const starFn = props.isLiked === true ? props.unfavorite : props.favorite
+  return (
+    <div
+      className={duckContainer}
+      style={{cursor: props.handleReply ? 'pointer' : 'default'}}
+      onClick={props.handleClick}>
+        <img src={props.duck.avatar} className={avatar}/>
+        <div className={contentContainer}>
+          <div className={header}>
+            <div>{props.duck.name}</div>
+            <div>{formatTimestamp(props.duck.timestamp)}</div>
+          </div>
+          <div className={text}>{props.duck.text}</div>
+          <div className={likeReplyContainer}>
+            {props.hideReplyBtn === true
+              ? null
+              : <Reply className={icon} onClick={props.handleReply} />}
+            <div className={actionContainer}>
+              <Star className={starIcon} onClick={starFn} />
+              {props.hideLikeCount === true ? null : <div>{props.numberOfLikes}</div>}
+            </div>
+          </div>
+        </div>
+    </div>
+  )
 }

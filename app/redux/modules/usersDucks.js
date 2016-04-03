@@ -52,7 +52,7 @@ const initialState = {
   error: false,
 }
 
-export default function usersDucks (state  = initialState, action) {
+export default function usersDucks (state = initialState, action) {
   const type = action.type
   switch (type) {
     case FETCH_USERS_DUCKS :
@@ -80,11 +80,11 @@ export default function usersDucks (state  = initialState, action) {
       return typeof state[action.uid] === 'undefined'
         ? state
         : {
-        ...state,
-        isFetching: false,
-        error: '',
-        [action.uid]: usersDuck(state[action.uid], action)
-      }
+          ...state,
+          isFetching: false,
+          error: '',
+          [action.uid]: usersDuck(state[action.uid], action)
+        }
     default :
       return state
   }
