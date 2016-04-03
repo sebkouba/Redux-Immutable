@@ -26,7 +26,6 @@ const FeedContainer = React.createClass({
   },
   componentDidMount () {
     this.props.setAndHandleFeedListener()
-    this.props.setUsersLikes()
   },
   componentWillUnmount () {
     this.props.removeListener('feed', this.props.off)

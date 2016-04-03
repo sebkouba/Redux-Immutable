@@ -7,6 +7,7 @@ import { Navigation } from 'components'
 import { checkIfAuthed } from 'helpers/auth'
 import * as modalActionCreators from 'redux/modules/modal'
 import * as ducksActionCreators from 'redux/modules/ducks'
+import * as usersLikesActionCreators from 'redux/modules/usersLikes'
 
 const MainContainer = React.createClass({
   propTypes: {
@@ -31,6 +32,11 @@ const MainContainer = React.createClass({
   },
   submitDuck () {
     this.props.duckFanout(this.formatDuck(this.props.duck))
+  },
+  componentDidMount () {
+    if (this.props.isAuthed) {
+      this.props.setUsersLikes()
+    }
   },
   render () {
     return (
@@ -59,5 +65,5 @@ export default connect(
     isAuthed: users.isAuthed,
     isOpen: modal.isOpen,
   }),
-  (dispatch) => bindActionCreators({...modalActionCreators, ...ducksActionCreators}, dispatch)
+  (dispatch) => bindActionCreators({...modalActionCreators, ...ducksActionCreators, ...usersLikesActionCreators}, dispatch)
 )(MainContainer)
