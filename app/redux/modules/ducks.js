@@ -22,6 +22,7 @@ function fetchingDuck () {
 }
 
 function fetchingDuckError (error) {
+  console.log(error)
   return {
     type: FETCHING_DUCK_ERROR,
     error,

@@ -1,9 +1,8 @@
 import { ref } from 'config/constants'
 
 function saveToDucks (duck) {
-  const newRef = ref.child('ducks').push()
-  const duckId = newRef.key()
-  const duckPromise = newRef.set({...duck, duckId})
+  const duckId = ref.child('ducks').push().key()
+  const duckPromise = ref.child(`ducks/${duckId}`).set({...duck, duckId})
   return {
     duckId,
     duckPromise
@@ -54,7 +53,7 @@ export function deleteFromUsersLikes (uid, duckId) {
 
 export function fetchLikeCount (duckId) {
   return ref.child(`likeCount/${duckId}`).once('value')
-    .then((snapshot) => snapshot.val() || 0)
+    .then((snapshot) => console.log(snapshot.val()) || 0)
 }
 
 export function incrementNumberOfLikes (duckId) {
@@ -69,5 +68,21 @@ export function decrementNumberOfLikes (duckId) {
 
 export function fetchDuck (duckId) {
   return ref.child(`ducks/${duckId}`).once('value')
+    .then((snapshot) => snapshot.val())
+}
+
+export function postReply (duckId, reply) {
+  const replyId = ref.child(`replies/${duckId}`).push().key()
+  const replyWithId = {...reply, replyId}
+  const replyPromise = ref.child(`replies/${duckId}/${replyId}`).set(replyWithId)
+
+  return {
+    replyWithId,
+    replyPromise,
+  }
+}
+
+export function fetchReplies (duckId) {
+  return ref.child(`replies/${duckId}`).once('value')
     .then((snapshot) => snapshot.val())
 }

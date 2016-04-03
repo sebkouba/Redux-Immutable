@@ -67,21 +67,6 @@
       }
     }
   },
-  **notifications: {
-      notifs: [{
-        [notificationId]: {
-          type,
-          author,
-          authorAvatar,
-          authorUid,
-          duckId,
-          timestamp
-      }],
-      newNotificationAvailable,
-      newNotificationsToAdd,
-      error,
-      isLoading,
-  },
   listeners: {
     [listenerId]: true
   }

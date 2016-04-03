@@ -39,7 +39,8 @@ function ActionLinks ({isAuthed, closeModal, openModal, isOpen, updateDuck, duck
                 <textarea
                   onChange={(e) => updateDuck(e.target.value)}
                   value={duck}
-                  maxLength={140} type='text'
+                  maxLength={140}
+                  type='text'
                   className={newDuckInput}
                   placeholder="What's on your mind?" />
               </div>

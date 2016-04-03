@@ -14,7 +14,7 @@ function fetchCount () {
 function fetchCountError (error) {
   return {
     type: FETCH_COUNT_ERROR,
-    error,
+    error: `Error fetching duck's like count`,
   }
 }
 

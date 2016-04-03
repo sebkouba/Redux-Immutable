@@ -50,18 +50,12 @@
 }
 
 .newDuckInputContainer {
-  display: flex;
-  height: 110px;
-  margin: 10px;
+  composes: baseTextAreaContainer from 'sharedStyles/styles.css';
 }
 
 .newDuckInput {
-  flex: 1;
-  border-radius: 3px;
+  composes: baseTextArea from 'sharedStyles/styles.css';
   border-width: 0;
-  padding: 8px 10px;
-  font-size: 14px;
-  resize: none;
 }
 
 .submitDuckBtn {

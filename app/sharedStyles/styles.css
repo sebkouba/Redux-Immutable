@@ -18,6 +18,7 @@ html, body {
   color: #4a90e2;
   font-size: 85px;
   font-weight: 100;
+  text-align: center;
 }
 
 .darkBtn {
@@ -42,4 +43,18 @@ html, body {
   margin: 10px auto;
   padding: 10px;
   cursor: pointer;
+}
+
+.baseTextAreaContainer {
+  display: flex;
+  height: 110px;
+  margin: 10px;
+}
+
+.baseTextArea {
+  flex: 1;
+  border-radius: 3px;
+  padding: 8px 10px;
+  font-size: 18px;
+  resize: none;
 }

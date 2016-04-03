@@ -5,17 +5,20 @@ import { bindActionCreators } from 'redux'
 import { fetchAndHandleDuck, removeFetching } from 'redux/modules/ducks'
 import { initLikeFetch } from 'redux/modules/likeCount'
 import { addAndHandleLike, handleDeleteLike } from 'redux/modules/usersLikes'
+import { addAndHandleReply } from 'redux/modules/replies'
+const { func, object, string, bool } = PropTypes
 
 const DuckContainer = React.createClass({
   propTypes: {
-    duck: PropTypes.object,
-    error: PropTypes.string.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    likes: PropTypes.object.isRequired,
-    fetchAndHandleDuck: PropTypes.func.isRequired,
-    removeFetching: PropTypes.func.isRequired,
-    addAndHandleLike: PropTypes.func.isRequired,
-    handleDeleteLike: PropTypes.func.isRequired,
+    duck: object,
+    error: string.isRequired,
+    isFetching: bool.isRequired,
+    likes: object.isRequired,
+    fetchAndHandleDuck: func.isRequired,
+    removeFetching: func.isRequired,
+    addAndHandleLike: func.isRequired,
+    handleDeleteLike: func.isRequired,
+    addAndHandleReply: func.isRequired
   },
   componentDidMount () {
     this.props.initLikeFetch(this.props.routeParams.duckId)
@@ -29,6 +32,8 @@ const DuckContainer = React.createClass({
     const duckId = this.props.routeParams.duckId
     return (
       <DuckView
+        addAndHandleReply={this.props.addAndHandleReply}
+        authedUser={this.props.authedUser}
         favorite={(event) => this.props.addAndHandleLike(duckId, event)}
         unfavorite={(event) => this.props.handleDeleteLike(duckId, event)}
         isLiked={this.props.likes[duckId] === true}
@@ -40,7 +45,7 @@ const DuckContainer = React.createClass({
   },
 })
 
-function mapStateToProps ({ducks, likeCount, usersLikes}, props) {
+function mapStateToProps ({ducks, likeCount, usersLikes, users}, props) {
   const duckId = props.routeParams.duckId
   return {
     duck: ducks[duckId],
@@ -48,6 +53,7 @@ function mapStateToProps ({ducks, likeCount, usersLikes}, props) {
     error: ducks.error,
     likeCount: likeCount[duckId],
     likes: usersLikes,
+    authedUser: users[users.authedId].info
   }
 }
 
@@ -58,6 +64,7 @@ function mapDispatchToProps (dispatch) {
     initLikeFetch,
     addAndHandleLike,
     handleDeleteLike,
+    addAndHandleReply,
   }, dispatch)
 }
 

@@ -310,6 +310,7 @@ firebase-auth
   * Connect FeedContainer to Context to get router
   * Create goToDuckPath method and pass it down to Duck
   * Make like works on both routes.
+  * see ""Move setUsersLikes to index"" and one before it.
 
 
   ** Code Review. There is probably a lot of fluff that can be deleted or old code from refactors that wasn't deleted.
