@@ -33,9 +33,13 @@ const FeedContainer = React.createClass({
   goToDuckPath (duck) {
     this.context.router.push('/duck/' + duck.duckId)
   },
+  goToProfile (uid, event) {
+    event.stopPropagation()
+    this.context.router.push('/user/' + uid)
+  },
   render () {
     return (
-      <Feed {...this.props} goToDuckPath={this.goToDuckPath} />
+      <Feed {...this.props} goToDuckPath={this.goToDuckPath} goToProfile={this.goToProfile} />
     )
   },
 })

@@ -20,7 +20,7 @@ export default function Feed (props) {
           <Duck
             duck={duck}
             handleClick={(e) => props.goToDuckPath(duck, e)}
-            handleReply={() => ({})}
+            goToProfile={(e) => props.goToProfile(duck.uid, e)}
             favorite={(e) => props.addAndHandleLike(duck.duckId, e)}
             key={duck.duckId}
             isLiked={props.likes[duck.duckId] === true}

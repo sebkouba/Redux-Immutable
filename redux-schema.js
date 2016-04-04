@@ -52,7 +52,7 @@
     duckIds: [duckid, duckId, duckId]
   }
   replies: {
-    isLoading,
+    isFetching,
     error,
     [duckId]: {
       lastUpdated,
@@ -71,13 +71,3 @@
     [listenerId]: true
   }
 }
-
-if undefined, show loading
-if empty array, show no data
-if not empty array, show data
-
-** Real time. Set listener
-
-Notes
-  Every time you get anyones followers, throw them in users then reference those by id anywhere else.
-  Every time you get a duck, throw it in ducks then reference those by id anywhere else.

@@ -6,6 +6,9 @@ import { RepliesContainer } from 'containers'
 
 function Reply ({submit}) {
   const handleSubmit = (e) => {
+    if (Reply.ref.value.length === 0) {
+      return
+    }
     submit(Reply.ref.value, e)
     Reply.ref.value = ''
   }
@@ -18,7 +21,9 @@ function Reply ({submit}) {
         maxLength={140}
         type='text'
         placeholder='Your reponse'/>
-      <button onClick={handleSubmit} className={darkBtn}>Submit</button>
+      <button
+        onClick={handleSubmit}
+        className={darkBtn}>Submit</button>
     </div>
   )
 }
@@ -45,6 +50,7 @@ export default function DuckView (props) {
                 unfavorite={props.unfavorite}
                 hideReplyBtn={true}
                 hideLikeCount={false}
+                goToProfile={(e) => props.goToProfile(e)}
                 isLiked={props.isLiked}
                 numberOfLikes={props.numberOfLikes}
                 duck={props.duck} />

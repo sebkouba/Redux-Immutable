@@ -6,6 +6,7 @@ import * as repliesActionCreators from 'redux/modules/replies'
 
 const RepliesContainer = React.createClass({
   componentDidMount () {
+    // Maybe dont fetch every time? Check redux for cache
     this.props.fetchAndHandleReplies(this.props.duckId)
   },
   render () {
@@ -20,8 +21,8 @@ function mapStateToProps (state, props) {
   return {
     isFetching: state.replies.isFetching,
     error: state.replies.error,
-    lastUpdated,
-    replies,
+    lastUpdated: lastUpdated || 0,
+    replies: replies || {},
   }
 }
 

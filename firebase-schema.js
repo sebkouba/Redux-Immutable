@@ -39,11 +39,12 @@
 
 /replies
   duckId
-    name
-    comment
-    uid
-    timestamp
-    avatar
+    replyId
+      name
+      comment
+      uid
+      timestamp
+      avatar
 
 /usersLikes
   uid

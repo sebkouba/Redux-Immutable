@@ -9,6 +9,9 @@ import { addAndHandleReply } from 'redux/modules/replies'
 const { func, object, string, bool } = PropTypes
 
 const DuckContainer = React.createClass({
+  contextTypes: {
+    router: PropTypes.object.isRequired,
+  },
   propTypes: {
     duck: object,
     error: string.isRequired,
@@ -28,6 +31,10 @@ const DuckContainer = React.createClass({
       this.props.removeFetching()
     }
   },
+  goToProfile (event) {
+    event.stopPropagation()
+    this.context.router.push('/user/' + this.props.duck.uid)
+  },
   render () {
     const duckId = this.props.routeParams.duckId
     return (
@@ -39,6 +46,7 @@ const DuckContainer = React.createClass({
         isLiked={this.props.likes[duckId] === true}
         numberOfLikes={this.props.likeCount}
         duck={this.props.duck}
+        goToProfile={this.goToProfile}
         error={this.props.error}
         isFetching={this.props.isFetching} />
     )

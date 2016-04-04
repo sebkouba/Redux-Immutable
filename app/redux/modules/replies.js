@@ -36,9 +36,9 @@ export function addAndHandleReply (duckId, reply) {
     dispatch(addReply(duckId, replyWithId))
 
     replyPromise.catch((error) => {
-        dispatch(removeReply(duckId, replyWithId.replyId))
-        dispatch(addReplyError(error))
-      })
+      dispatch(removeReply(duckId, replyWithId.replyId))
+      dispatch(addReplyError(error))
+    })
   }
 }
 

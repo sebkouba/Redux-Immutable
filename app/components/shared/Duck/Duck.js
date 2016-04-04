@@ -4,7 +4,7 @@ import Reply from 'react-icons/lib/fa/reply'
 import Star from 'react-icons/lib/fa/star'
 import {
   duckContainer, contentContainer, avatar, actionContainer,
-  header, text, likeReplyContainer, icon, likedIcon
+  header, text, likeReplyContainer, icon, likedIcon, author
 } from './styles.css'
 
 Duck.defaultProps = {
@@ -22,13 +22,13 @@ Duck.propTypes = {
     uid: PropTypes.string.isRequired,
   }),
   handleClick: PropTypes.func,
-  handleReply: PropTypes.func,
   isLiked: PropTypes.bool.isRequired,
   favorite: PropTypes.func.isRequired,
   unfavorite: PropTypes.func.isRequired,
   numberOfLikes: PropTypes.number,
   hideReplyBtn: PropTypes.bool.isRequired,
   hideLikeCount: PropTypes.bool.isRequired,
+  goToProfile: PropTypes.func.isRequired,
 }
 
 export default function Duck (props) {
@@ -37,19 +37,19 @@ export default function Duck (props) {
   return (
     <div
       className={duckContainer}
-      style={{cursor: props.handleReply ? 'pointer' : 'default'}}
+      style={{cursor: props.handleClick ? 'pointer' : 'default'}}
       onClick={props.handleClick}>
         <img src={props.duck.avatar} className={avatar}/>
         <div className={contentContainer}>
           <div className={header}>
-            <div>{props.duck.name}</div>
+            <div onClick={props.goToProfile} className={author}>{props.duck.name}</div>
             <div>{formatTimestamp(props.duck.timestamp)}</div>
           </div>
           <div className={text}>{props.duck.text}</div>
           <div className={likeReplyContainer}>
             {props.hideReplyBtn === true
               ? null
-              : <Reply className={icon} onClick={props.handleReply} />}
+              : <Reply className={icon} />}
             <div className={actionContainer}>
               <Star className={starIcon} onClick={starFn} />
               {props.hideLikeCount === true ? null : <div>{props.numberOfLikes}</div>}

@@ -1,5 +1,6 @@
 import { ref } from 'config/constants'
-import { formatUserInfo, fetchUserSuccess, authUser } from 'redux/modules/users'
+import { fetchingUserSuccess, authUser } from 'redux/modules/users'
+import { formatUserInfo } from 'helpers/utils'
 
 export default function auth () {
   return ref.authWithOAuthPopup('facebook')
@@ -21,7 +22,7 @@ export function checkIfAuthed (store) {
     const { facebook, uid } = authData
     const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
     store.dispatch(authUser(uid))
-    store.dispatch(fetchUserSuccess(uid, userInfo, Date.now()))
+    store.dispatch(fetchingUserSuccess(uid, userInfo, Date.now()))
     // If ^ is common, you can use https://github.com/tshelburne/redux-batched-actions
     return true
   }

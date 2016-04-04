@@ -1,37 +1,14 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import 'sharedStyles/styles.css'
 import { container, innerContainer } from './styles.css'
 import { Navigation } from 'components'
-import { checkIfAuthed } from 'helpers/auth'
-import * as modalActionCreators from 'redux/modules/modal'
-import * as ducksActionCreators from 'redux/modules/ducks'
 import * as usersLikesActionCreators from 'redux/modules/usersLikes'
 
 const MainContainer = React.createClass({
   propTypes: {
-    authedUser: PropTypes.object.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    duck: PropTypes.string.isRequired,
-    duckFanout: PropTypes.func.isRequired,
     isAuthed: PropTypes.bool.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    openModal: PropTypes.func.isRequired,
-    updateDuck: PropTypes.func.isRequired,
-  },
-  formatDuck (text) {
-    const { name, uid, avatar } = this.props.authedUser
-    return {
-      avatar,
-      name,
-      uid,
-      text,
-      timestamp: Date.now()
-    }
-  },
-  submitDuck () {
-    this.props.duckFanout(this.formatDuck(this.props.duck))
+    setUsersLikes: PropTypes.func.isRequired,
   },
   componentDidMount () {
     if (this.props.isAuthed) {
@@ -41,15 +18,7 @@ const MainContainer = React.createClass({
   render () {
     return (
       <div className={container}>
-        <Navigation
-          closeModal={this.props.closeModal}
-          duck={this.props.duck}
-          isAuthed={this.props.isAuthed}
-          isOpen={this.props.isOpen}
-          isSubmitDisabled={this.props.duck.length <= 0 || this.props.duck.length > 140}
-          openModal={this.props.openModal}
-          submitDuck={this.submitDuck}
-          updateDuck={this.props.updateDuck} />
+        <Navigation isAuthed={this.props.isAuthed} />
         <div className={innerContainer}>
           {this.props.children}
         </div>
@@ -59,11 +28,6 @@ const MainContainer = React.createClass({
 })
 
 export default connect(
-  ({users, modal}) => ({
-    authedUser: users[users.authedId] ? users[users.authedId].info : {},
-    duck: modal.duck,
-    isAuthed: users.isAuthed,
-    isOpen: modal.isOpen,
-  }),
-  (dispatch) => bindActionCreators({...modalActionCreators, ...ducksActionCreators, ...usersLikesActionCreators}, dispatch)
+  ({users}) => ({isAuthed: users.isAuthed}),
+  (dispatch) => bindActionCreators(usersLikesActionCreators, dispatch)
 )(MainContainer)

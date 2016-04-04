@@ -1,21 +1,22 @@
 import auth, { logout, saveUser } from 'helpers/auth'
+import { formatUserInfo } from 'helpers/utils'
 
 const AUTH_USER = 'AUTH_USER'
 const UNAUTH_USER = 'UNAUTH_USER'
-const FETCH_USER = 'FETCH_USER'
-const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE'
-const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
+const FETCHING_USER = 'FETCHING_USER'
+const FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
+const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
 
 export function authUser (uid) {
   return {
     type: AUTH_USER,
-    uid
+    uid,
   }
 }
 
 function unauthUser () {
   return {
-    type: UNAUTH_USER
+    type: UNAUTH_USER,
   }
 }
 
@@ -26,53 +27,40 @@ export function logoutAndUnauth () {
   }
 }
 
-function fetchUser () {
+function fetchingUser () {
   return {
-    type: 'FETCH_USER'
+    type: FETCHING_USER,
   }
 }
 
-function fetchUserFailure (error) {
+function fetchingUserFailure (error) {
+  console.warn(error)
   return {
-    type: 'FETCH_USER_FAILURE',
-    error
+    type: FETCHING_USER_FAILURE,
+    error: 'Error authenticating.',
   }
 }
 
-export function fetchUserSuccess (uid, user, timestamp) {
+export function fetchingUserSuccess (uid, user, timestamp) {
   return {
-    type: 'FETCH_USER_SUCCESS',
+    type: FETCHING_USER_SUCCESS,
     uid,
     user,
-    timestamp
-  }
-}
-
-export function formatUserInfo (name, avatar, uid) {
-  return {
-    name,
-    avatar,
-    uid,
+    timestamp,
   }
 }
 
 export function fetchAndHandleUser () {
   return function (dispatch) {
-    dispatch(fetchUser())
+    dispatch(fetchingUser())
     return auth()
       .then(({uid, facebook}) => {
         const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
-        return dispatch(fetchUserSuccess(uid, userInfo, Date.now()))
+        return dispatch(fetchingUserSuccess(uid, userInfo, Date.now()))
       })
-      .then(({user}) => {
-        saveUser(user)
-      })
-      .then(() => {
-        dispatch(authUser())
-      })
-      .catch((error) => {
-        dispatch(fetchUserFailure(error))
-      })
+      .then(({user}) => saveUser(user))
+      .then(() => dispatch(authUser()))
+      .catch((error) => dispatch(fetchingUserFailure(error)))
   }
 }
 
@@ -82,16 +70,16 @@ const initialUserState = {
     name: '',
     uid: '',
     avatar: '',
-  }
+  },
 }
 
 function user (state = initialUserState, action) {
   const type = action.type
   switch (type) {
-    case 'FETCH_USER_SUCCESS' :
+    case 'FETCHING_USER_SUCCESS' :
       return Object.assign({}, state, {
         info: action.user,
-        lastUpdated: action.timestamp
+        lastUpdated: action.timestamp,
       })
     default :
       return state
@@ -118,20 +106,20 @@ export default function users (state = initialState, action) {
         isAuthed: false,
         authedId: '',
       })
-    case FETCH_USER:
+    case FETCHING_USER:
       return Object.assign({}, state, {
         isFetching: true,
       })
-    case FETCH_USER_FAILURE:
+    case FETCHING_USER_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error,
       })
-    case FETCH_USER_SUCCESS:
+    case FETCHING_USER_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         error: '',
-        [action.uid]: user(state[action.uid], action)
+        [action.uid]: user(state[action.uid], action),
       })
     default :
       return state
