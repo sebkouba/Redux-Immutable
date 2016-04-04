@@ -2,7 +2,7 @@ import { repliesExpirationLength } from 'config/constants'
 
 export function formatTimestamp (timestamp) {
   const date = new Date(timestamp)
-  return (date.getMonth() + 1) + '/' + date.getFullYear()
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 }
 
 export function formatUserInfo (name, avatar, uid) {
