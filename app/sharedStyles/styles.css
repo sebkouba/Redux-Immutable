@@ -14,11 +14,19 @@ html, body {
   flex-direction: column;
 }
 
-.pageHeader {
+.largeHeader {
   color: #4a90e2;
-  font-size: 85px;
   font-weight: 100;
+  font-size: 100px;
+  margin-bottom: 20px;
+}
+
+.subHeader {
+  color: #4a90e2;
+  font-size: 35px;
   text-align: center;
+  line-height: 55px;
+  font-weight: 100;
 }
 
 .darkBtn {
@@ -73,4 +81,8 @@ html, body {
 
 .clickable:hover {
   transform: scale(1.1);
+}
+
+.center {
+  text-align: center;
 }

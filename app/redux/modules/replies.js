@@ -60,6 +60,7 @@ function fetchingRepliesSuccess (duckId, replies) {
     type: FETCHING_REPLIES_SUCCESS,
     replies,
     duckId,
+    lastUpdated: Date.now(),
   }
 }
 

@@ -12,6 +12,7 @@ function fetchCount () {
 }
 
 function fetchCountError (error) {
+  console.warn(error)
   return {
     type: FETCH_COUNT_ERROR,
     error: 'Error fetching duck\'s like count',

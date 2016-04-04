@@ -31,7 +31,7 @@
 }
 
 .center {
-  text-align: center;
+  composes: center from 'sharedStyles/styles.css';
 }
 
 .replyHeader {

@@ -4,25 +4,20 @@ import { bindActionCreators } from 'redux'
 import { Feed } from 'components'
 import * as feedActionCreators from 'redux/modules/feed'
 import * as listenerActionCreators from 'redux/modules/listeners'
-import * as usersActionCreators from 'redux/modules/usersLikes'
 
 const FeedContainer = React.createClass({
   contextTypes: {
     router: React.PropTypes.object
   },
   propTypes: {
-    addAndHandleLike: PropTypes.func.isRequired,
     ducks: PropTypes.array.isRequired,
     error: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    handleDeleteLike: PropTypes.func.isRequired,
-    likes: PropTypes.object.isRequired,
     newDucksAvailable: PropTypes.bool.isRequired,
     off: PropTypes.func,
     removeListener: PropTypes.func.isRequired,
     resetNewDucksAvailable: PropTypes.func.isRequired,
     setAndHandleFeedListener: PropTypes.func.isRequired,
-    setUsersLikes: PropTypes.func.isRequired,
   },
   componentDidMount () {
     this.props.setAndHandleFeedListener()
@@ -30,21 +25,24 @@ const FeedContainer = React.createClass({
   componentWillUnmount () {
     this.props.removeListener('feed', this.props.off)
   },
-  goToDuckPath (duck) {
-    this.context.router.push('/duck/' + duck.duckId)
-  },
-  goToProfile (uid, event) {
-    event.stopPropagation()
-    this.context.router.push('/user/' + uid)
+  goToDuckPath (duck, e) {
+    e.preventDefault()
+    this.context.router.push('/duckDetail/' + duck.duckId)
   },
   render () {
     return (
-      <Feed {...this.props} goToDuckPath={this.goToDuckPath} goToProfile={this.goToProfile} />
+      <Feed
+        ducks={this.props.ducks}
+        error={this.props.error}
+        goToDuckPath={this.goToDuckPath}
+        isFetching={this.props.isFetching}
+        newDucksAvailable={this.props.newDucksAvailable}
+        resetNewDucksAvailable={this.props.resetNewDucksAvailable} />
     )
   },
 })
 
-function mapStateToProps ({feed, ducks, listeners, usersLikes}) {
+function mapStateToProps ({feed, ducks, listeners}) {
   const { newDucksAvailable, error, isFetching, duckIds } = feed
   return {
     newDucksAvailable,
@@ -52,7 +50,6 @@ function mapStateToProps ({feed, ducks, listeners, usersLikes}) {
     isFetching,
     ducks: duckIds.map((id) => ducks[id]).sort((a, b) => a.timestamp < b.timestamp),
     off: listeners.feed,
-    likes: usersLikes,
   }
 }
 
@@ -60,7 +57,6 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     ...feedActionCreators,
     ...listenerActionCreators,
-    ...usersActionCreators,
   }, dispatch)
 }
 

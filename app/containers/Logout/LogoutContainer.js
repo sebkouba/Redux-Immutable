@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { text } from './styles.css'
 import { logoutAndUnauth } from 'redux/modules/users'
 
 const LogoutContainer = React.createClass({
@@ -11,7 +12,7 @@ const LogoutContainer = React.createClass({
   },
   render () {
     return (
-      <p style={{textAlign: 'center'}}>{'You are now logged out'}</p>
+      <p className={text}>{'You are now logged out'}</p>
     )
   },
 })

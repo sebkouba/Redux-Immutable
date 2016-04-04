@@ -1,3 +1,5 @@
+import { repliesExpirationLength } from 'config/constants'
+
 export function formatTimestamp (timestamp) {
   const date = new Date(timestamp)
   return (date.getMonth() + 1) + '/' + date.getFullYear()
@@ -19,4 +21,18 @@ export function formatDuck (text, {name, uid, avatar}) {
     uid,
     timestamp: Date.now(),
   }
+}
+
+export function formatReply ({name, uid, avatar}, reply) {
+  return {
+    name,
+    reply,
+    uid,
+    timestamp: Date.now(),
+    avatar,
+  }
+}
+
+export function staleReplies (timestamp) {
+  return new Date().getTime() - new Date(timestamp).getTime() > repliesExpirationLength
 }

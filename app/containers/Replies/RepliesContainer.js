@@ -1,28 +1,48 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Replies } from 'components'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as repliesActionCreators from 'redux/modules/replies'
+import { staleReplies } from 'helpers/utils'
 
 const RepliesContainer = React.createClass({
+  propTypes: {
+    isFetching: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
+    lastUpdated: PropTypes.number.isRequired,
+    replies: PropTypes.object
+  },
+  getDefaultProps () {
+    return {
+      lastUpdated: 0,
+      replies: {},
+    }
+  },
   componentDidMount () {
-    // Maybe dont fetch every time? Check redux for cache
-    this.props.fetchAndHandleReplies(this.props.duckId)
+    if (staleReplies(this.props.lastUpdated)) {
+      console.log('stale')
+      this.props.fetchAndHandleReplies(this.props.duckId)
+    }
   },
   render () {
-    return <Replies {...this.props}/>
-  }
+    return (
+      <Replies
+        isFetching={this.props.isFetching}
+        error={this.props.error}
+        lastUpdated={this.props.lastUpdated}
+        replies={this.props.replies} />
+    )
+  },
 })
 
 function mapStateToProps (state, props) {
   const duckRepliesInfo = state.replies[props.duckId] || {}
   const { lastUpdated, replies } = duckRepliesInfo
-
   return {
     isFetching: state.replies.isFetching,
     error: state.replies.error,
-    lastUpdated: lastUpdated || 0,
-    replies: replies || {},
+    lastUpdated,
+    replies,
   }
 }
 

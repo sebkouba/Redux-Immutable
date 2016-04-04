@@ -1,79 +1,51 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { DuckView } from 'components'
 import { bindActionCreators } from 'redux'
-import { fetchAndHandleDuck, removeFetching } from 'redux/modules/ducks'
-import { initLikeFetch } from 'redux/modules/likeCount'
-import { addAndHandleLike, handleDeleteLike } from 'redux/modules/usersLikes'
-import { addAndHandleReply } from 'redux/modules/replies'
-const { func, object, string, bool } = PropTypes
+import { connect } from 'react-redux'
+import { Duck } from 'components'
+import * as usersLikesAction from 'redux/modules/usersLikes'
+const { func, object, bool, number } = PropTypes
 
 const DuckContainer = React.createClass({
   contextTypes: {
     router: PropTypes.object.isRequired,
   },
   propTypes: {
-    duck: object,
-    error: string.isRequired,
-    isFetching: bool.isRequired,
-    likes: object.isRequired,
-    fetchAndHandleDuck: func.isRequired,
-    removeFetching: func.isRequired,
+    duck: object.isRequired,
+    handleClick: func,
+    hideLikeCount: bool.isRequired,
+    hideReplyBtn: bool.isRequired,
+    isLiked: bool.isRequired,
+    numberOfLikes: number,
     addAndHandleLike: func.isRequired,
     handleDeleteLike: func.isRequired,
-    addAndHandleReply: func.isRequired
   },
-  componentDidMount () {
-    this.props.initLikeFetch(this.props.routeParams.duckId)
-    if (typeof this.props.duck === 'undefined') {
-      this.props.fetchAndHandleDuck(this.props.routeParams.duckId)
-    } else {
-      this.props.removeFetching()
+  getDefaultProps () {
+    return {
+      hideReplyBtn: false,
+      hideLikeCount: true,
     }
   },
-  goToProfile (event) {
-    event.stopPropagation()
+  goToProfile (e) {
+    e.stopPropagation()
     this.context.router.push('/user/' + this.props.duck.uid)
   },
   render () {
-    const duckId = this.props.routeParams.duckId
-    return (
-      <DuckView
-        addAndHandleReply={this.props.addAndHandleReply}
-        authedUser={this.props.authedUser}
-        favorite={(event) => this.props.addAndHandleLike(duckId, event)}
-        unfavorite={(event) => this.props.handleDeleteLike(duckId, event)}
-        isLiked={this.props.likes[duckId] === true}
-        numberOfLikes={this.props.likeCount}
-        duck={this.props.duck}
-        goToProfile={this.goToProfile}
-        error={this.props.error}
-        isFetching={this.props.isFetching} />
-    )
-  },
+    return <Duck goToProfile={this.goToProfile} {...this.props} />
+  }
 })
 
-function mapStateToProps ({ducks, likeCount, usersLikes, users}, props) {
-  const duckId = props.routeParams.duckId
+function mapStateToProps ({ducks, likeCount, user, usersLikes}, props) {
   return {
-    duck: ducks[duckId],
-    isFetching: ducks.isFetching || likeCount.isFetching,
-    error: ducks.error,
-    likeCount: likeCount[duckId],
-    likes: usersLikes,
-    authedUser: users[users.authedId].info
+    duck: ducks[props.duckId],
+    hideLikeCount: props.hideLikeCount,
+    hideReplyBtn: props.hideReplyBtn,
+    isLiked: usersLikes[props.duckId] === true,
+    numberOfLikes: likeCount[props.duckId],
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    fetchAndHandleDuck,
-    removeFetching,
-    initLikeFetch,
-    addAndHandleLike,
-    handleDeleteLike,
-    addAndHandleReply,
-  }, dispatch)
+function mapDispatchToProps (dispatch, props) {
+  return bindActionCreators(usersLikesAction, dispatch)
 }
 
 export default connect(

@@ -53,7 +53,7 @@ export function deleteFromUsersLikes (uid, duckId) {
 
 export function fetchLikeCount (duckId) {
   return ref.child(`likeCount/${duckId}`).once('value')
-    .then((snapshot) => console.log(snapshot.val()) || 0)
+    .then((snapshot) => snapshot.val() || 0)
 }
 
 export function incrementNumberOfLikes (duckId) {
@@ -84,5 +84,5 @@ export function postReply (duckId, reply) {
 
 export function fetchReplies (duckId) {
   return ref.child(`replies/${duckId}`).once('value')
-    .then((snapshot) => snapshot.val())
+    .then((snapshot) => snapshot.val() || {})
 }

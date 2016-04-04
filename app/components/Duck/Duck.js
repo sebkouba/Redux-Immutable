@@ -7,11 +7,6 @@ import {
   header, text, likeReplyContainer, icon, likedIcon, author
 } from './styles.css'
 
-Duck.defaultProps = {
-  hideReplyBtn: false,
-  hideLikeCount: true,
-}
-
 Duck.propTypes = {
   duck: PropTypes.shape({
     avatar: PropTypes.string.isRequired,
@@ -23,8 +18,8 @@ Duck.propTypes = {
   }),
   handleClick: PropTypes.func,
   isLiked: PropTypes.bool.isRequired,
-  favorite: PropTypes.func.isRequired,
-  unfavorite: PropTypes.func.isRequired,
+  addAndHandleLike: PropTypes.func.isRequired,
+  handleDeleteLike: PropTypes.func.isRequired,
   numberOfLikes: PropTypes.number,
   hideReplyBtn: PropTypes.bool.isRequired,
   hideLikeCount: PropTypes.bool.isRequired,
@@ -33,7 +28,7 @@ Duck.propTypes = {
 
 export default function Duck (props) {
   const starIcon = props.isLiked === true ? likedIcon : icon
-  const starFn = props.isLiked === true ? props.unfavorite : props.favorite
+  const starFn = props.isLiked === true ? props.handleDeleteLike : props.addAndHandleLike
   return (
     <div
       className={duckContainer}
@@ -51,7 +46,7 @@ export default function Duck (props) {
               ? null
               : <Reply className={icon} />}
             <div className={actionContainer}>
-              <Star className={starIcon} onClick={starFn} />
+              <Star className={starIcon} onClick={(e) => starFn(props.duck.duckId, e)} />
               {props.hideLikeCount === true ? null : <div>{props.numberOfLikes}</div>}
             </div>
           </div>

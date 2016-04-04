@@ -1,12 +1,4 @@
-import React from 'react'
+import { connect } from 'react-redux'
 import { Home } from 'components'
 
-const HomeContainer = React.createClass({
-  render () {
-    return (
-      <Home />
-    )
-  }
-})
-
-export default HomeContainer
+export default connect()(Home)
