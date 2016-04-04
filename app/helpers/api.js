@@ -86,3 +86,13 @@ export function fetchReplies (duckId) {
   return ref.child(`replies/${duckId}`).once('value')
     .then((snapshot) => snapshot.val() || {})
 }
+
+export function fetchUsersDucks (uid) {
+  return ref.child(`usersDucks/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}
+
+export function fetchUser (uid) {
+  return ref.child(`users/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}

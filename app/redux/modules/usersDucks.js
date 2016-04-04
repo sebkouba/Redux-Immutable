@@ -1,28 +1,43 @@
-const FETCH_USERS_DUCKS = 'FETCH_USERS_DUCKS'
-const FETCH_USERS_DUCKS_FAILURE = 'FETCH_USERS_DUCKS_FAILURE'
-const FETCH_USERS_DUCKS_SUCCESS = 'FETCH_USERS_DUCKS_SUCCESS'
+import { fetchUsersDucks } from 'helpers/api'
+import { addMultipleDucks } from 'redux/modules/ducks'
+
+const FETCHING_USERS_DUCKS = 'FETCHING_USERS_DUCKS'
+const FETCHING_USERS_DUCKS_ERROR = 'FETCHING_USERS_DUCKS_ERROR'
+const FETCHING_USERS_DUCKS_SUCCESS = 'FETCHING_USERS_DUCKS_SUCCESS'
 const ADD_SINGLE_USERS_DUCK = 'ADD_SINGLE_USERS_DUCK'
 
-export function fetchUsersDucks (uid) {
+function fetchingUsersDucks (uid) {
   return {
-    type: FETCH_USERS_DUCKS,
-    uid
+    type: FETCHING_USERS_DUCKS,
+    uid,
   }
 }
 
-export function fetchUsersDucksFailure (error) {
+function fetchingUsersDucksError (error) {
+  console.warn(error)
   return {
-    type: FETCH_USERS_DUCKS_FAILURE,
-    error
+    type: FETCHING_USERS_DUCKS_ERROR,
+    error: 'Error fetching Users Duck Ids',
   }
 }
 
-export function fetchUsersDucksSuccess (uid, duckIds, lastUpdated) {
+function fetchingUsersDucksSuccess (uid, duckIds, lastUpdated) {
   return {
-    type: FETCH_USERS_DUCKS_SUCCESS,
+    type: FETCHING_USERS_DUCKS_SUCCESS,
     uid,
     duckIds,
-    lastUpdated
+    lastUpdated,
+  }
+}
+
+export function fetchAndHandleUsersDucks (uid) {
+  return function (dispatch, getState) {
+    dispatch(fetchingUsersDucks())
+
+    fetchUsersDucks(uid)
+      .then((ducks) => dispatch(addMultipleDucks(ducks)))
+      .then(({ducks}) => dispatch(fetchingUsersDucksSuccess(uid, Object.keys(ducks), Date.now())))
+      .catch((error) => dispatch(fetchingUsersDucksError(error)))
   }
 }
 
@@ -34,9 +49,13 @@ export function addSigleUsersDuck (uid, duckId) {
   }
 }
 
-function usersDuck (state = {}, action) {
-  const type = action.type
-  switch (type) {
+const initialUsersDuckState = {
+  lastUpdated: 0,
+  duckIds: [],
+}
+
+function usersDuck (state = initialUsersDuckState, action) {
+  switch (action.type) {
     case ADD_SINGLE_USERS_DUCK :
       return {
         ...state,
@@ -48,31 +67,30 @@ function usersDuck (state = {}, action) {
 }
 
 const initialState = {
-  isFetching: false,
-  error: false,
+  isFetching: true,
+  error: '',
 }
 
 export default function usersDucks (state = initialState, action) {
-  const type = action.type
-  switch (type) {
-    case FETCH_USERS_DUCKS :
+  switch (action.type) {
+    case FETCHING_USERS_DUCKS :
       return {
         ...state,
         isFetching: true,
       }
-    case FETCH_USERS_DUCKS_FAILURE :
+    case FETCHING_USERS_DUCKS_ERROR :
       return {
         ...state,
         isFetching: false,
         error: action.error
       }
-    case FETCH_USERS_DUCKS_SUCCESS :
+    case FETCHING_USERS_DUCKS_SUCCESS :
       return {
         ...state,
         isFetching: false,
         error: '',
         [action.uid]: {
-          lastUpdated: action.timestamp,
+          lastUpdated: action.lastUpdated,
           duckIds: action.duckIds
         }
       }

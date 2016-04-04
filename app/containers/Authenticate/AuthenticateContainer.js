@@ -6,7 +6,7 @@ import * as userActionCreators from 'redux/modules/users'
 
 const AuthenticateContainer = React.createClass({
   propTypes: {
-    fetchAndHandleUser: PropTypes.func.isRequired,
+    fetchAndHandleAuthedUser: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string,
   },
@@ -15,7 +15,7 @@ const AuthenticateContainer = React.createClass({
   },
   handleAuth (e) {
     e.preventDefault()
-    this.props.fetchAndHandleUser()
+    this.props.fetchAndHandleAuthedUser()
       .then(() => this.context.router.replace('feed'))
   },
   render () {

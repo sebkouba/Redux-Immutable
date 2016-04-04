@@ -8,6 +8,7 @@ const FETCHING_DUCK_SUCCESS = 'FETCHING_DUCK_SUCCESS'
 const ADD_DUCK = 'ADD_DUCK'
 const ADD_MULTIPLE_DUCKS = 'ADD_MULTIPLE_DUCKS'
 const REMOVE_FETCHING = 'REMOVE_FETCHING'
+const UPDATE_MULTIPLE_DUCKS = 'UPDATE_MULTIPLE_DUCKS'
 
 export function removeFetching () {
   return {
@@ -106,6 +107,7 @@ export default function ducks (state = initialState, action) {
         ...state,
         isFetching: false,
       }
+
     case ADD_MULTIPLE_DUCKS :
       return {
         ...state,

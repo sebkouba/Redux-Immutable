@@ -20,7 +20,6 @@ const RepliesContainer = React.createClass({
   },
   componentDidMount () {
     if (staleReplies(this.props.lastUpdated)) {
-      console.log('stale')
       this.props.fetchAndHandleReplies(this.props.duckId)
     }
   },

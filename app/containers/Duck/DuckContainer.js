@@ -27,7 +27,7 @@ const DuckContainer = React.createClass({
   },
   goToProfile (e) {
     e.stopPropagation()
-    this.context.router.push('/user/' + this.props.duck.uid)
+    this.context.router.push('/' + this.props.duck.uid)
   },
   render () {
     return <Duck goToProfile={this.goToProfile} {...this.props} />
