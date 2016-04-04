@@ -5,12 +5,12 @@ import * as modalActionCreators from 'redux/modules/modal'
 import * as ducksActionCreators from 'redux/modules/ducks'
 
 function mapStateToProps ({modal, users, authedUser}, props) {
-  const duckLength = modal.duck.length
+  const duckTextLength = modal.duckText.length
   return {
     user: users[users.authedId] ? users[users.authedId].info : {},
-    duck: modal.duck,
+    duckText: modal.duckText,
     isOpen: modal.isOpen,
-    isSubmitDisabled: duckLength <= 0 || duckLength > 140,
+    isSubmitDisabled: duckTextLength <= 0 || duckTextLength > 140,
   }
 }
 

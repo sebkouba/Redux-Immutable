@@ -76,11 +76,12 @@ const initialUserState = {
 function user (state = initialUserState, action) {
   const type = action.type
   switch (type) {
-    case 'FETCHING_USER_SUCCESS' :
-      return Object.assign({}, state, {
+    case FETCHING_USER_SUCCESS :
+      return {
+        ...state,
         info: action.user,
         lastUpdated: action.timestamp,
-      })
+      }
     default :
       return state
   }
@@ -94,33 +95,37 @@ const initialState = {
 }
 
 export default function users (state = initialState, action) {
-  const type = action.type
-  switch (type) {
+  switch (action.type) {
     case AUTH_USER :
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isAuthed: true,
         authedId: action.uid,
-      })
+      }
     case UNAUTH_USER :
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isAuthed: false,
         authedId: '',
-      })
+      }
     case FETCHING_USER:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
-      })
+      }
     case FETCHING_USER_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         error: action.error,
-      })
+      }
     case FETCHING_USER_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         error: '',
         [action.uid]: user(state[action.uid], action),
-      })
+      }
     default :
       return state
   }

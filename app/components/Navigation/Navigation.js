@@ -9,20 +9,16 @@ Navigation.propTypes = ActionLinks.propTypes = NavLinks.propTypes = {
 
 function NavLinks ({isAuthed}) {
   return isAuthed === true
-    ? (
-        <ul>
-          <li><Link to='/' className={link}>{'Home'}</Link></li>
-        </ul>
-      )
+    ? <ul>
+        <li><Link to='/' className={link}>{'Home'}</Link></li>
+      </ul>
     : <noscript />
 }
 
 function ActionLinks ({isAuthed}) {
   return isAuthed === true
     ? <ul>
-        <li>
-          <ModalContainer />
-        </li>
+        <li><ModalContainer /></li>
         <li><Link to='/logout' className={link}>{'Logout'}</Link></li>
       </ul>
     : <ul>

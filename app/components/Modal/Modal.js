@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
+import { default as ReactModal } from 'react-modal'
 import {
   newDuckTop, pointer, newDuckInputContainer,
   newDuckInput, submitDuckBtn, darkBtn } from './styles.css'
-import { default as ReactModal } from 'react-modal'
 import { formatDuck } from 'helpers/utils'
 
 const modalStyles = {
@@ -18,7 +18,7 @@ const modalStyles = {
 
 const { object, string, func, bool } = PropTypes
 Modal.propTypes = {
-  duck: string.isRequired,
+  duckText: string.isRequired,
   closeModal: func.isRequired,
   isOpen: bool.isRequired,
   isSubmitDisabled: bool.isRequired,
@@ -29,7 +29,7 @@ Modal.propTypes = {
 
 export default function Modal (props) {
   function submitDuck () {
-    return props.duckFanout(formatDuck(props.duck, props.user))
+    return props.duckFanout(formatDuck(props.duckText, props.user))
   }
 
   return (
@@ -38,12 +38,12 @@ export default function Modal (props) {
       <ReactModal style={modalStyles} isOpen={props.isOpen} onRequestClose={props.closeModal}>
         <div className={newDuckTop}>
           <span>{'Compose new Duck'}</span>
-          <span onClick={props.closeModal} className={pointer}>{'&#10006;'}</span>
+          <span onClick={props.closeModal} className={pointer}>&#10006;</span>
         </div>
         <div className={newDuckInputContainer}>
           <textarea
             onChange={(e) => props.updateDuck(e.target.value)}
-            value={props.duck}
+            value={props.duckText}
             maxLength={140}
             type='text'
             className={newDuckInput}
