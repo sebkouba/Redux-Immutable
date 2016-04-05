@@ -6,11 +6,7 @@ User.propTypes = {
   name: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  ducksData: PropTypes.shape({
-    lastUpdated: PropTypes.number.isRequired,
-    ducks: PropTypes.array.isRequired,
-  }).isRequired,
-  goToDuckPath: PropTypes.func.isRequired,
+  duckIds: PropTypes.array.isRequired,
 }
 
 export default function User (props) {
@@ -22,13 +18,12 @@ export default function User (props) {
             <div className={userContainer}>
               <div>{props.name}</div>
             </div>
-            {props.ducksData.ducks.map((duck) => (
+            {props.duckIds.map((id) => (
               <DuckContainer
-                duckId={duck.duckId}
-                key={duck.duckId}
-                handleClick={(e) => props.goToDuckPath(duck, e)} />
+                duckId={id}
+                key={id} />
             ))}
-            {props.ducksData.ducks.length === 0
+            {props.duckIds.length === 0
               ? <p className={header}>
                   {`It looks like ${props.name.split(' ')[0]} hasn't made any ducks yet.`}
                 </p>

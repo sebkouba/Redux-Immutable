@@ -6,11 +6,8 @@ import * as feedActionCreators from 'redux/modules/feed'
 import * as listenerActionCreators from 'redux/modules/listeners'
 
 const FeedContainer = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object
-  },
   propTypes: {
-    ducks: PropTypes.array.isRequired,
+    duckIds: PropTypes.array.isRequired,
     error: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
     newDucksAvailable: PropTypes.bool.isRequired,
@@ -25,16 +22,11 @@ const FeedContainer = React.createClass({
   componentWillUnmount () {
     this.props.removeListener('feed', this.props.off)
   },
-  goToDuckPath (duck, e) {
-    e.preventDefault()
-    this.context.router.push('/duckDetail/' + duck.duckId)
-  },
   render () {
     return (
       <Feed
-        ducks={this.props.ducks}
+        duckIds={this.props.duckIds}
         error={this.props.error}
-        goToDuckPath={this.goToDuckPath}
         isFetching={this.props.isFetching}
         newDucksAvailable={this.props.newDucksAvailable}
         resetNewDucksAvailable={this.props.resetNewDucksAvailable} />
@@ -42,13 +34,13 @@ const FeedContainer = React.createClass({
   },
 })
 
-function mapStateToProps ({feed, ducks, listeners}) {
+function mapStateToProps ({feed, listeners}) {
   const { newDucksAvailable, error, isFetching, duckIds } = feed
   return {
     newDucksAvailable,
     error,
     isFetching,
-    ducks: duckIds.map((id) => ducks[id]).sort((a, b) => a.timestamp < b.timestamp),
+    duckIds,
     off: listeners.feed,
   }
 }

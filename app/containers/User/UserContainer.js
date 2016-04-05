@@ -7,33 +7,24 @@ import * as usersActionCreaetors from 'redux/modules/users'
 import { staleDucks, staleUser } from 'helpers/utils'
 
 const UserContainer = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object
-  },
   propTypes: {
     user: PropTypes.object,
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
-    ducksData: PropTypes.shape({
-      lastUpdated: PropTypes.number.isRequired,
-      ducks: PropTypes.array.isRequired,
-    }).isRequired,
+    lastUpdated: PropTypes.number.isRequired,
+    duckIds: PropTypes.array.isRequired,
     routeParams: PropTypes.shape({uid: PropTypes.string.isRequired})
   },
   componentDidMount () {
     const uid = this.props.routeParams.uid
-    const { lastUpdated, duckIds } = this.props.ducksData
-    if (staleDucks(this.props.ducksData.lastUpdated)) {
+
+    if (staleDucks(this.props.lastUpdated)) {
       this.props.fetchAndHandleUsersDucks(uid)
     }
 
-    if (!this.props.user || staleUser(this.props.user.lastUpdated)) {
+    if (!this.props.user || staleUser(this.props.lastUpdated)) {
       this.props.fetchAndHandleUser(uid)
     }
-  },
-  goToDuckPath (duck, e) {
-    e.preventDefault()
-    this.context.router.push('/duckDetail/' + duck.duckId)
   },
   render () {
     return (
@@ -41,30 +32,19 @@ const UserContainer = React.createClass({
         name={this.props.user.info.name}
         isFetching={this.props.isFetching}
         error={this.props.error}
-        ducksData={this.props.ducksData}
-        goToDuckPath={this.goToDuckPath}/>
+        duckIds={this.props.duckIds} />
     )
   }
 })
 
-function getDucksDate (usersDucks, ducks) {
-  return typeof usersDucks === 'undefined'
-    ? {
-        lastUpdated: 0,
-        ducks: [],
-      }
-    : {
-        lastUpdated: usersDucks.lastUpdated,
-        ducks: usersDucks.duckIds.map((duckId) => ducks[duckId]).sort((a,b) => a.timestamp < b.timestamp)
-      }
-}
-
-function mapStateToProps ({users, usersDucks, ducks}, props) {
+function mapStateToProps ({users, usersDucks}, props) {
+  const specificUsersDucks = usersDucks[props.routeParams.uid]
   return {
     user: users[props.routeParams.uid],
     isFetching: users.isFetching || usersDucks.isFetching,
     error: users.error || usersDucks.error,
-    ducksData: getDucksDate(usersDucks[props.routeParams.uid], ducks)
+    lastUpdated: specificUsersDucks ? specificUsersDucks.lastUpdated : 0,
+    duckIds: specificUsersDucks ? specificUsersDucks.duckIds : [],
   }
 }
 

@@ -15,7 +15,7 @@ function NewDucksAvailable ({handleClick}) {
 }
 
 Feed.propTypes = {
-  ducks: PropTypes.array.isRequired,
+  duckIds: PropTypes.array.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   newDucksAvailable: PropTypes.bool.isRequired,
@@ -27,14 +27,13 @@ export default function Feed (props) {
     ? <h1 className={header}> Fetching </h1>
     : <div>
         {props.newDucksAvailable ? <NewDucksAvailable handleClick={props.resetNewDucksAvailable} /> : null}
-        {props.ducks.length === 0
+        {props.duckIds.length === 0
             ? <p className={header}>This is unfortunate. <br /> It appears there are no ducks yet 😞</p>
             : null}
-        {props.ducks.map((duck) => (
+        {props.duckIds.map((id) => (
           <DuckContainer
-            duckId={duck.duckId}
-            key={duck.duckId}
-            handleClick={(e) => props.goToDuckPath(duck, e)} />
+            duckId={id}
+            key={id} />
         ))}
       </div>
 }

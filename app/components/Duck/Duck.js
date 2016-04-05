@@ -16,7 +16,7 @@ Duck.propTypes = {
     timestamp: PropTypes.number.isRequired,
     uid: PropTypes.string.isRequired,
   }),
-  handleClick: PropTypes.func,
+  onClick: PropTypes.func,
   isLiked: PropTypes.bool.isRequired,
   addAndHandleLike: PropTypes.func.isRequired,
   handleDeleteLike: PropTypes.func.isRequired,
@@ -32,8 +32,8 @@ export default function Duck (props) {
   return (
     <div
       className={duckContainer}
-      style={{cursor: props.handleClick ? 'pointer' : 'default'}}
-      onClick={props.handleClick}>
+      style={{cursor: props.hideReplyBtn === true ? 'default' : 'pointer'}}
+      onClick={props.onClick}>
         <img src={props.duck.avatar} className={avatar}/>
         <div className={contentContainer}>
           <div className={header}>
