@@ -11,16 +11,11 @@ const FeedContainer = React.createClass({
     error: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
     newDucksAvailable: PropTypes.bool.isRequired,
-    off: PropTypes.func,
-    removeListener: PropTypes.func.isRequired,
     resetNewDucksAvailable: PropTypes.func.isRequired,
     setAndHandleFeedListener: PropTypes.func.isRequired,
   },
   componentDidMount () {
     this.props.setAndHandleFeedListener()
-  },
-  componentWillUnmount () {
-    this.props.removeListener('feed', this.props.off)
   },
   render () {
     return (
@@ -34,14 +29,13 @@ const FeedContainer = React.createClass({
   },
 })
 
-function mapStateToProps ({feed, listeners}) {
+function mapStateToProps ({feed}) {
   const { newDucksAvailable, error, isFetching, duckIds } = feed
   return {
     newDucksAvailable,
     error,
     isFetching,
     duckIds,
-    off: listeners.feed,
   }
 }
 

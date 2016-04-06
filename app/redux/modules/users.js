@@ -70,7 +70,7 @@ export function fetchAndHandleAuthedUser () {
         return dispatch(fetchingUserSuccess(uid, userInfo, Date.now()))
       })
       .then(({user}) => saveUser(user))
-      .then(() => dispatch(authUser()))
+      .then((user) => dispatch(authUser(user.uid)))
       .catch((error) => dispatch(fetchingUserFailure(error)))
   }
 }

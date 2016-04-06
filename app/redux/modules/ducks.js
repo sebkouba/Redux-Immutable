@@ -1,6 +1,6 @@
 import { saveDuck, fetchDuck } from 'helpers/api'
 import { closeModal } from './modal'
-import { addSigleUsersDuck } from './usersDucks'
+import { addSingleUsersDuck } from './usersDucks'
 
 const FETCHING_DUCK = 'FETCHING_DUCK'
 const FETCHING_DUCK_ERROR = 'FETCHING_DUCK_ERROR'
@@ -67,7 +67,7 @@ export function duckFanout (duck) {
       .then((duckWithID) => {
         dispatch(addDuck(duckWithID))
         dispatch(closeModal())
-        dispatch(addSigleUsersDuck(uid, duckWithID.duckId))
+        dispatch(addSingleUsersDuck(uid, duckWithID.duckId))
       })
       .catch((err) => {
         console.warn('Error in duckFanout', err)

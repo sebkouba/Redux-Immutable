@@ -29,13 +29,11 @@ export function saveDuck (duck) {
 }
 
 export function listenToFeed (cb, errorCB) {
-  return ref.child('ducks').on('value', (snapshot) => {
-    cb(snapshot.val())
+  ref.child('ducks').on('value', (snapshot) => {
+    const feed = snapshot.val() || {}
+    const sortedIds = Object.keys(feed).sort((a,b) => feed[b].timestamp - feed[a].timestamp)
+    cb({feed, sortedIds})
   }, errorCB)
-}
-
-export function removeFirebaseListener (cb) {
-  ref.off('value', cb)
 }
 
 export function fetchUsersLikes (uid) {

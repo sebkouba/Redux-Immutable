@@ -11,7 +11,7 @@ export function logout () {
 }
 
 export function saveUser (user) {
-  return ref.child(`users/${user.uid}`).set(user)
+  return ref.child(`users/${user.uid}`).set(user).then(() => user)
 }
 
 export function checkIfAuthed (store) {

@@ -41,7 +41,7 @@ export function fetchAndHandleUsersDucks (uid) {
   }
 }
 
-export function addSigleUsersDuck (uid, duckId) {
+export function addSingleUsersDuck (uid, duckId) {
   return {
     type: ADD_SINGLE_USERS_DUCK,
     uid,
