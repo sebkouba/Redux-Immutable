@@ -11,28 +11,27 @@ const DuckDetailsContainer = React.createClass({
   propTypes: {
     authedUser: object.isRequired,
     duck: object,
+    duckId: string.isRequired,
     error: string.isRequired,
     isFetching: bool.isRequired,
     fetchAndHandleDuck: func.isRequired,
     removeFetching: func.isRequired,
     addAndHandleReply: func.isRequired,
     initLikeFetch: func.isRequired,
-    routeParams: object.isRequired,
   },
   componentDidMount () {
-    this.props.initLikeFetch(this.props.routeParams.duckId)
+    this.props.initLikeFetch(this.props.duckId)
     if (typeof this.props.duck === 'undefined') {
-      this.props.fetchAndHandleDuck(this.props.routeParams.duckId)
+      this.props.fetchAndHandleDuck(this.props.duckId)
     } else {
       this.props.removeFetching()
     }
   },
   render () {
-    const duckId = this.props.routeParams.duckId
     return (
       <DuckDetails
         authedUser={this.props.authedUser}
-        duckId={duckId}
+        duckId={this.props.duckId}
         error={this.props.error}
         isFetching={this.props.isFetching}
         addAndHandleReply={this.props.addAndHandleReply} />
@@ -40,11 +39,12 @@ const DuckDetailsContainer = React.createClass({
   },
 })
 
-function mapStateToProps ({ducks, likeCount, usersLikes, users}) {
+function mapStateToProps ({ducks, likeCount, usersLikes, users}, props) {
   return {
     isFetching: ducks.isFetching || likeCount.isFetching,
     error: ducks.error,
     authedUser: users[users.authedId].info,
+    duckId: props.routeParams.duckId,
   }
 }
 
