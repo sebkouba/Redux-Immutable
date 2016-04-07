@@ -2,18 +2,25 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
+import { hashHistory } from 'react-router'
+import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import getRoutes from 'config/routes'
 import * as reducers from 'redux/modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 const store = createStore(
-  combineReducers(reducers),
+  combineReducers({
+    ...reducers,
+    routing: routerReducer,
+  }),
   compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : (f) => f
   )
 )
+
+const history = syncHistoryWithStore(hashHistory, store)
 
 function checkAuth (nextState, replace) {
   const isAuthed = checkIfAuthed(store)
@@ -31,7 +38,7 @@ function checkAuth (nextState, replace) {
 
 ReactDOM.render(
   <Provider store={store}>
-    {getRoutes(checkAuth)}
+    {getRoutes(checkAuth, history)}
   </Provider>,
   document.getElementById('app')
 )
