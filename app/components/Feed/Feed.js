@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { newDuckContainer, header } from './styles.css'
 import { DuckContainer } from 'containers'
+import { errorMsg } from 'sharedStyles/styles.css'
 
 NewDucksAvailable.propTypes = {
   handleClick: PropTypes.func.isRequired,
@@ -35,5 +36,6 @@ export default function Feed (props) {
             duckId={id}
             key={id} />
         ))}
+        {props.error ? <p className={errorMsg}>{props.error}</p> : null}
       </div>
 }

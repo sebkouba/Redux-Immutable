@@ -36,7 +36,13 @@ export function fetchAndHandleUsersDucks (uid) {
 
     fetchUsersDucks(uid)
       .then((ducks) => dispatch(addMultipleDucks(ducks)))
-      .then(({ducks}) => dispatch(fetchingUsersDucksSuccess(uid, Object.keys(ducks), Date.now())))
+      .then(({ducks}) => dispatch(
+        fetchingUsersDucksSuccess(
+          uid,
+          Object.keys(ducks).sort((a,b) => ducks[b].timestamp - ducks[a].timestamp),
+          Date.now())
+        )
+      )
       .catch((error) => dispatch(fetchingUsersDucksError(error)))
   }
 }

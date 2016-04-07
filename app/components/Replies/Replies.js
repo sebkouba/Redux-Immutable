@@ -3,6 +3,7 @@ import {
   repliesContainer, avatar, replyContainer, header,
   content, cushion, center, replyHeader, author } from './styles.css'
 import { formatTimestamp } from 'helpers/utils'
+import { errorMsg } from 'sharedStyles/styles.css'
 const { bool, string, number, object, func } = PropTypes
 
 Reply.propTypes = {
@@ -32,7 +33,7 @@ function Replies ({replies, error, isFetching}) {
   const replyIds = Object.keys(replies)
   return (
     <div>
-      {error === true ? <h3 className={center}>Error: {error}</h3> : null}
+      {error ? <h3 className={errorMsg}>{error}</h3> : null}
       {isFetching === true
         ? <p>Fetching Replies</p>
         : <div>

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { DuckContainer } from 'containers'
 import { userContainer, avatar, header } from './styles.css'
+import { errorMsg } from 'sharedStyles/styles.css'
 
 User.propTypes = {
   name: PropTypes.string.isRequired,
@@ -29,7 +30,7 @@ export default function User (props) {
                 </p>
               : null}
           </div>}
-      {props.error ? <p>{props.error}</p> : null}
+      {props.error ? <p className={errorMsg}>{props.error}</p> : null}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { DuckContainer } from 'containers'
 import {
   mainContainer, container, content, repliesContainer,
   replyTextAreaContainer, replyTextArea } from './styles.css'
-import { subHeader, darkBtn } from 'sharedStyles/styles.css'
+import { subHeader, darkBtn, errorMsg } from 'sharedStyles/styles.css'
 import { RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
 
@@ -36,9 +36,10 @@ DuckDetails.propTypes = {
   duckId: PropTypes.string.isRequired,
   addAndHandleReply: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 }
 
-export default function DuckDetails ({addAndHandleReply, duckId, isFetching, authedUser}) {
+export default function DuckDetails ({addAndHandleReply, duckId, isFetching, authedUser, error}) {
   return (
     <div className={mainContainer}>
       {isFetching === true
@@ -52,6 +53,7 @@ export default function DuckDetails ({addAndHandleReply, duckId, isFetching, aut
               <RepliesContainer duckId={duckId}/>
             </div>
           </div>}
+      {error ? <p className={errorMsg}>{error}</p> : null}
     </div>
   )
 }

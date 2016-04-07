@@ -8,7 +8,7 @@ const AuthenticateContainer = React.createClass({
   propTypes: {
     fetchAndHandleAuthedUser: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    error: PropTypes.string,
+    error: PropTypes.string.isRequired,
   },
   contextTypes: {
     router: PropTypes.object.isRequired,
