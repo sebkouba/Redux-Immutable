@@ -15,6 +15,11 @@ const MainContainer = React.createClass({
       this.props.setUsersLikes()
     }
   },
+  componentWillReceiveProps (nextProps) {
+    if (this.props.isAuthed !== nextProps.isAuthed) {
+      this.props.setUsersLikes()
+    }
+  },
   render () {
     return (
       <div className={container}>
