@@ -4,7 +4,7 @@ import Reply from 'react-icons/lib/fa/reply'
 import Star from 'react-icons/lib/fa/star'
 import {
   duckContainer, contentContainer, avatar, actionContainer,
-  header, text, likeReplyContainer, icon, likedIcon, author
+  header, text, likeReplyContainer, icon, likedIcon, author,
 } from './styles.css'
 
 Duck.propTypes = {

@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
 import {
-  repliesContainer, avatar, replyContainer, header,
-  content, cushion, center, replyHeader, author } from './styles.css'
+  avatar, replyContainer, header,
+  cushion, center, author } from './styles.css'
 import { formatTimestamp } from 'helpers/utils'
 import { errorMsg } from 'sharedStyles/styles.css'
-const { bool, string, number, object, func } = PropTypes
+const { bool, string, object } = PropTypes
 
 Reply.propTypes = {
   comment: object.isRequired,
@@ -35,14 +35,14 @@ function Replies ({replies, error, isFetching}) {
     <div>
       {error ? <h3 className={errorMsg}>{error}</h3> : null}
       {isFetching === true
-        ? <p>Fetching Replies</p>
+        ? <p>{'Fetching Replies'}</p>
         : <div>
-            <h1 className={header}>Replies</h1>
+            <h1 className={header}>{'Replies'}</h1>
             {replyIds.map((replyId) => (
               <Reply key={replyId} comment={replies[replyId]} />
             ))}
           </div>}
-      {replyIds.length === 0 ? <h3 className={center}>Be the first to comment.</h3> : null}
+      {replyIds.length === 0 ? <h3 className={center}>{'Be the first to comment. 😎'}</h3> : null}
     </div>
   )
 }

@@ -2,36 +2,37 @@ import { listenToFeed } from 'helpers/api'
 import { addMultipleDucks } from 'redux/modules/ducks'
 import { addListener } from 'redux/modules/listeners'
 
-const SET_FEED_LISTENER = 'SET_FEED_LISTENER'
-const SET_FEED_LISTENER_ERROR = 'SET_FEED_LISTENER_ERROR'
-const SET_FEED_LISTENER_SUCCESS = 'SET_FEED_LISTENER_SUCCESS'
+const SETTING_FEED_LISTENER = 'SETTING_FEED_LISTENER'
+const SETTING_FEED_LISTENER_ERROR = 'SETTING_FEED_LISTENER_ERROR'
+const SETTING_FEED_LISTENER_SUCCESS = 'SETTING_FEED_LISTENER_SUCCESS'
 const ADD_NEW_DUCK_ID_TO_FEED = 'ADD_NEW_DUCK_ID_TO_FEED'
 const RESET_NEW_DUCKS_AVAILABLE = 'RESET_NEW_DUCKS_AVAILABLE'
 
-function setFeedListener () {
+function settingFeedListener () {
   return {
-    type: SET_FEED_LISTENER,
+    type: SETTING_FEED_LISTENER,
   }
 }
 
-function setFeedListenerError (error) {
+function settingFeedListenerError (error) {
+  console.warn(error)
   return {
-    type: SET_FEED_LISTENER_ERROR,
-    error
+    type: SETTING_FEED_LISTENER_ERROR,
+    error: 'Error fetching feeds.',
   }
 }
 
-function setFeedListenerSuccess (duckIds) {
+function settingFeedListenerSuccess (duckIds) {
   return {
-    type: SET_FEED_LISTENER_SUCCESS,
-    duckIds
+    type: SETTING_FEED_LISTENER_SUCCESS,
+    duckIds,
   }
 }
 
 function addNewDuckIdToFeed (duckId) {
   return {
     type: ADD_NEW_DUCK_ID_TO_FEED,
-    duckId
+    duckId,
   }
 }
 
@@ -43,14 +44,14 @@ export function setAndHandleFeedListener () {
     }
 
     dispatch(addListener('feed'))
-    dispatch(setFeedListener())
+    dispatch(settingFeedListener())
     listenToFeed(({feed, sortedIds}) => {
       dispatch(addMultipleDucks(feed))
       initialFetch === true
-        ? dispatch(setFeedListenerSuccess(sortedIds))
+        ? dispatch(settingFeedListenerSuccess(sortedIds))
         : dispatch(addNewDuckIdToFeed(sortedIds[0]))
       initialFetch = false
-    }, (error) => dispatch(setFeedListenerError(error)))
+    }, (error) => dispatch(settingFeedListenerError(error)))
   }
 }
 
@@ -65,24 +66,24 @@ const initialState = {
   newDucksToAdd: [],
   isFetching: false,
   error: '',
-  duckIds: []
+  duckIds: [],
 }
 
 export default function feed (state = initialState, action) {
   const type = action.type
   switch (type) {
-    case SET_FEED_LISTENER :
+    case SETTING_FEED_LISTENER :
       return {
         ...state,
         isFetching: true,
       }
-    case SET_FEED_LISTENER_ERROR :
+    case SETTING_FEED_LISTENER_ERROR :
       return {
         ...state,
         isFetching: false,
-        error: action.error
+        error: action.error,
       }
-    case SET_FEED_LISTENER_SUCCESS :
+    case SETTING_FEED_LISTENER_SUCCESS :
       return {
         ...state,
         isFetching: false,

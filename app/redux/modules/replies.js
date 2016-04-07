@@ -16,9 +16,10 @@ function addReply (duckId, reply) {
 }
 
 function addReplyError (error) {
+  console.warn(error)
   return {
     type: ADD_REPLY_ERROR,
-    error,
+    error: 'Error adding reply',
   }
 }
 
@@ -49,9 +50,10 @@ function fetchingReplies () {
 }
 
 function fetchingRepliesError (error) {
+  console.warn(error)
   return {
     type: FETCHING_REPLIES_ERROR,
-    error,
+    error: 'Error fetching replies',
   }
 }
 
@@ -70,7 +72,7 @@ export function fetchAndHandleReplies (duckId) {
 
     fetchReplies(duckId)
       .then((replies) => dispatch(fetchingRepliesSuccess(duckId, replies, Date.now())))
-      .catch((error) => dispatch(fetchingRepliesError))
+      .catch((error) => dispatch(fetchingRepliesError(error)))
   }
 }
 
@@ -93,7 +95,7 @@ function duckReplies (state = initialReply, action) {
     case REMOVE_REPLY :
       return {
         ...state,
-        [action.reply.replyId]: undefined
+        [action.reply.replyId]: undefined,
       }
     default :
       return state
@@ -102,7 +104,7 @@ function duckReplies (state = initialReply, action) {
 
 const initialDuckState = {
   lastUpdated: Date.now(),
-  replies: {}
+  replies: {},
 }
 
 function repliesAndLastUpated (state = initialDuckState, action) {
@@ -117,7 +119,7 @@ function repliesAndLastUpated (state = initialDuckState, action) {
     case REMOVE_REPLY :
       return {
         ...state,
-        replies: duckReplies(state.replies, action)
+        replies: duckReplies(state.replies, action),
       }
     default :
       return state
@@ -126,7 +128,7 @@ function repliesAndLastUpated (state = initialDuckState, action) {
 
 const initialState = {
   isFetching: true,
-  error: ''
+  error: '',
 }
 
 export default function replies (state = initialState, action) {
@@ -134,14 +136,14 @@ export default function replies (state = initialState, action) {
     case FETCHING_REPLIES :
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       }
     case FETCHING_REPLIES_ERROR :
     case ADD_REPLY_ERROR :
       return {
         ...state,
         isFetching: false,
-        error: action.error
+        error: action.error,
       }
     case ADD_REPLY :
     case FETCHING_REPLIES_SUCCESS :
@@ -150,7 +152,7 @@ export default function replies (state = initialState, action) {
         ...state,
         isFetching: false,
         error: '',
-        [action.duckId]: repliesAndLastUpated(state[action.duckId], action)
+        [action.duckId]: repliesAndLastUpated(state[action.duckId], action),
       }
     default :
       return state

@@ -10,7 +10,7 @@ NewDucksAvailable.propTypes = {
 function NewDucksAvailable ({handleClick}) {
   return (
     <div className={newDuckContainer} onClick={handleClick}>
-      New Ducks Available
+      {'New Ducks Available'}
     </div>
   )
 }
@@ -25,11 +25,11 @@ Feed.propTypes = {
 
 export default function Feed (props) {
   return props.isFetching === true
-    ? <h1 className={header}> Fetching </h1>
+    ? <h1 className={header}>{'Fetching'}</h1>
     : <div>
         {props.newDucksAvailable ? <NewDucksAvailable handleClick={props.resetNewDucksAvailable} /> : null}
         {props.duckIds.length === 0
-            ? <p className={header}>This is unfortunate. <br /> It appears there are no ducks yet 😞</p>
+            ? <p className={header}>{'This is unfortunate. <br /> It appears there are no ducks yet 😞'}</p>
             : null}
         {props.duckIds.map((id) => (
           <DuckContainer

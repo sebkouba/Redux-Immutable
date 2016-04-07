@@ -9,11 +9,15 @@ const { func, object, string, bool } = PropTypes
 
 const DuckDetailsContainer = React.createClass({
   propTypes: {
+    authedUser: object.isRequired,
+    duck: object,
     error: string.isRequired,
     isFetching: bool.isRequired,
     fetchAndHandleDuck: func.isRequired,
     removeFetching: func.isRequired,
-    addAndHandleReply: func.isRequired
+    addAndHandleReply: func.isRequired,
+    initLikeFetch: func.isRequired,
+    routeParams: object.isRequired,
   },
   componentDidMount () {
     this.props.initLikeFetch(this.props.routeParams.duckId)
@@ -36,12 +40,11 @@ const DuckDetailsContainer = React.createClass({
   },
 })
 
-function mapStateToProps ({ducks, likeCount, usersLikes, users}, props) {
-  const duckId = props.routeParams.duckId
+function mapStateToProps ({ducks, likeCount, usersLikes, users}) {
   return {
     isFetching: ducks.isFetching || likeCount.isFetching,
     error: ducks.error,
-    authedUser: users[users.authedId].info
+    authedUser: users[users.authedId].info,
   }
 }
 

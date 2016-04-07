@@ -6,9 +6,6 @@ import * as usersLikesAction from 'redux/modules/usersLikes'
 const { func, object, bool, number } = PropTypes
 
 const DuckContainer = React.createClass({
-  contextTypes: {
-    router: PropTypes.object.isRequired,
-  },
   propTypes: {
     duck: object.isRequired,
     handleClick: func,
@@ -18,6 +15,9 @@ const DuckContainer = React.createClass({
     numberOfLikes: number,
     addAndHandleLike: func.isRequired,
     handleDeleteLike: func.isRequired,
+  },
+  contextTypes: {
+    router: PropTypes.object.isRequired,
   },
   getDefaultProps () {
     return {
@@ -40,7 +40,7 @@ const DuckContainer = React.createClass({
         onClick={this.props.hideReplyBtn === true ? null : this.handleClick}
         {...this.props} />
     )
-  }
+  },
 })
 
 function mapStateToProps ({ducks, likeCount, user, usersLikes}, props) {

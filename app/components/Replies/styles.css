@@ -15,14 +15,6 @@
   padding: 5px 0;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex: 1;
-}
-
 .header {
   text-align: center;
   font-weight: 100;
@@ -32,13 +24,6 @@
 
 .center {
   composes: center from 'sharedStyles/styles.css';
-}
-
-.replyHeader {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .author {

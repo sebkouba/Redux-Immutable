@@ -85,8 +85,7 @@ const initialUserState = {
 }
 
 function user (state = initialUserState, action) {
-  const type = action.type
-  switch (type) {
+  switch (action.type) {
     case FETCHING_USER_SUCCESS :
       return {
         ...state,

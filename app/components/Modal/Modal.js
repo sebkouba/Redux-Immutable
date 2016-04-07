@@ -23,7 +23,7 @@ Modal.propTypes = {
   isOpen: bool.isRequired,
   isSubmitDisabled: bool.isRequired,
   openModal: func.isRequired,
-  updateDuck: func.isRequired,
+  updateDuckText: func.isRequired,
   user: object.isRequired,
 }
 
@@ -38,11 +38,11 @@ export default function Modal (props) {
       <ReactModal style={modalStyles} isOpen={props.isOpen} onRequestClose={props.closeModal}>
         <div className={newDuckTop}>
           <span>{'Compose new Duck'}</span>
-          <span onClick={props.closeModal} className={pointer}>&#10006;</span>
+          <span onClick={props.closeModal} className={pointer}>{'X'}</span>
         </div>
         <div className={newDuckInputContainer}>
           <textarea
-            onChange={(e) => props.updateDuck(e.target.value)}
+            onChange={(e) => props.updateDuckText(e.target.value)}
             value={props.duckText}
             maxLength={140}
             type='text'

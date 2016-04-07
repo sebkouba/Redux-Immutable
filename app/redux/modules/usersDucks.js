@@ -39,7 +39,7 @@ export function fetchAndHandleUsersDucks (uid) {
       .then(({ducks}) => dispatch(
         fetchingUsersDucksSuccess(
           uid,
-          Object.keys(ducks).sort((a,b) => ducks[b].timestamp - ducks[a].timestamp),
+          Object.keys(ducks).sort((a, b) => ducks[b].timestamp - ducks[a].timestamp),
           Date.now())
         )
       )
@@ -65,7 +65,7 @@ function usersDuck (state = initialUsersDuckState, action) {
     case ADD_SINGLE_USERS_DUCK :
       return {
         ...state,
-        duckIds: state.duckIds.concat([action.duckId])
+        duckIds: state.duckIds.concat([action.duckId]),
       }
     default :
       return state
@@ -88,7 +88,7 @@ export default function usersDucks (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        error: action.error
+        error: action.error,
       }
     case FETCHING_USERS_DUCKS_SUCCESS :
       return {
@@ -97,8 +97,8 @@ export default function usersDucks (state = initialState, action) {
         error: '',
         [action.uid]: {
           lastUpdated: action.lastUpdated,
-          duckIds: action.duckIds
-        }
+          duckIds: action.duckIds,
+        },
       }
     case ADD_SINGLE_USERS_DUCK :
       return typeof state[action.uid] === 'undefined'
@@ -107,7 +107,7 @@ export default function usersDucks (state = initialState, action) {
           ...state,
           isFetching: false,
           error: '',
-          [action.uid]: usersDuck(state[action.uid], action)
+          [action.uid]: usersDuck(state[action.uid], action),
         }
     default :
       return state

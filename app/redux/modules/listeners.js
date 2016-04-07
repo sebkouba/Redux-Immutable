@@ -8,8 +8,7 @@ export function addListener (listenerId) {
 }
 
 export default function listeners (state = {}, action) {
-  const type = action.type
-  switch (type) {
+  switch (action.type) {
     case ADD_LISTENER :
       return {
         ...state,

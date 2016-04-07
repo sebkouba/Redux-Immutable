@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { DuckContainer } from 'containers'
-import { userContainer, avatar, header } from './styles.css'
+import { userContainer, header } from './styles.css'
 import { errorMsg } from 'sharedStyles/styles.css'
 
 User.propTypes = {
@@ -13,10 +13,10 @@ User.propTypes = {
 
 export default function User (props) {
   return props.noUser === true
-    ? <p className={header}>{`This user doesnt exist. 👽`}</p>
+    ? <p className={header}>{'This user doesnt exist. 👽'}</p>
     : <div>
         {props.isFetching === true
-          ? <p className={header}>Loading</p>
+          ? <p className={header}>{'Loading'}</p>
           : <div>
               <div className={userContainer}>
                 <div>{props.name}</div>

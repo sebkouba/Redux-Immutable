@@ -1,27 +1,27 @@
 import { fetchLikeCount } from 'helpers/api'
 
 import { ADD_LIKE, REMOVE_LIKE } from './usersLikes'
-const FETCH_COUNT = 'FETCH_COUNT'
-const FETCH_COUNT_ERROR = 'FETCH_COUNT_ERROR'
-const FETCH_COUNT_SUCCESS = 'FETCH_COUNT_SUCCESS'
+const FETCHING_COUNT = 'FETCHING_COUNT'
+const FETCHING_COUNT_ERROR = 'FETCHING_COUNT_ERROR'
+const FETCHING_COUNT_SUCCESS = 'FETCHING_COUNT_SUCCESS'
 
-function fetchCount () {
+function fetchingCount () {
   return {
-    type: FETCH_COUNT,
+    type: FETCHING_COUNT,
   }
 }
 
-function fetchCountError (error) {
+function fetchingCountError (error) {
   console.warn(error)
   return {
-    type: FETCH_COUNT_ERROR,
+    type: FETCHING_COUNT_ERROR,
     error: 'Error fetching duck\'s like count',
   }
 }
 
-function fetchCountSuccess (duckId, count) {
+function fetchingCountSuccess (duckId, count) {
   return {
-    type: FETCH_COUNT_SUCCESS,
+    type: FETCHING_COUNT_SUCCESS,
     duckId,
     count,
   }
@@ -29,17 +29,16 @@ function fetchCountSuccess (duckId, count) {
 
 export function initLikeFetch (duckId) {
   return function (dispatch, getState) {
-    dispatch(fetchCount())
+    dispatch(fetchingCount())
 
     fetchLikeCount(duckId)
-      .then((count) => dispatch(fetchCountSuccess(duckId, count)))
-      .catch((error) => dispatch(fetchCountError(error)))
+      .then((count) => dispatch(fetchingCountSuccess(duckId, count)))
+      .catch((error) => dispatch(fetchingCountError(error)))
   }
 }
 
 function count (state = 0, action) {
-  const type = action.type
-  switch (type) {
+  switch (action.type) {
     case ADD_LIKE :
       return state + 1
     case REMOVE_LIKE :
@@ -55,25 +54,23 @@ const initialState = {
 }
 
 export default function likeCount (state = initialState, action) {
-  const type = action.type
-  switch (type) {
-    case FETCH_COUNT :
+  switch (action.type) {
+    case FETCHING_COUNT :
       return {
         ...state,
         isFetching: true,
       }
-    case FETCH_COUNT_ERROR :
+    case FETCHING_COUNT_ERROR :
       return {
         ...state,
         isFetching: false,
-        error: action.error
+        error: action.error,
       }
-    case FETCH_COUNT_SUCCESS :
+    case FETCHING_COUNT_SUCCESS :
       return {
         ...state,
-        isFetching: false,
-        error: '',
-        [action.duckId]: action.count
+        ...initialState,
+        [action.duckId]: action.count,
       }
     case ADD_LIKE :
     case REMOVE_LIKE :
@@ -81,7 +78,7 @@ export default function likeCount (state = initialState, action) {
         ? state
         : {
           ...state,
-          [action.duckId]: count(state[action.duckId], action)
+          [action.duckId]: count(state[action.duckId], action),
         }
     default :
       return state

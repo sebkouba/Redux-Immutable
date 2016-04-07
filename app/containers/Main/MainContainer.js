@@ -9,6 +9,7 @@ const MainContainer = React.createClass({
   propTypes: {
     isAuthed: PropTypes.bool.isRequired,
     setUsersLikes: PropTypes.func.isRequired,
+    children: PropTypes.object.isRequired,
   },
   componentDidMount () {
     if (this.props.isAuthed) {

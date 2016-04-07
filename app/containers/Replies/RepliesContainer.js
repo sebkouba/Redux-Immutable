@@ -10,7 +10,9 @@ const RepliesContainer = React.createClass({
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     lastUpdated: PropTypes.number.isRequired,
-    replies: PropTypes.object
+    replies: PropTypes.object,
+    fetchAndHandleReplies: PropTypes.func.isRequired,
+    duckId: PropTypes.string.isRequired,
   },
   getDefaultProps () {
     return {

@@ -14,7 +14,9 @@ const UserContainer = React.createClass({
     error: PropTypes.string.isRequired,
     lastUpdated: PropTypes.number.isRequired,
     duckIds: PropTypes.array.isRequired,
-    routeParams: PropTypes.shape({uid: PropTypes.string.isRequired})
+    routeParams: PropTypes.shape({uid: PropTypes.string.isRequired}),
+    fetchAndHandleUsersDucks: PropTypes.func.isRequired,
+    fetchAndHandleUser: PropTypes.func.isRequired,
   },
   componentDidMount () {
     const uid = this.props.routeParams.uid
@@ -35,7 +37,7 @@ const UserContainer = React.createClass({
         error={this.props.error}
         duckIds={this.props.duckIds} />
     )
-  }
+  },
 })
 
 function mapStateToProps ({users, usersDucks}, props) {
@@ -56,7 +58,7 @@ function mapStateToProps ({users, usersDucks}, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     ...usersDucksActionCreators,
-    ...usersActionCreaetors
+    ...usersActionCreaetors,
   }, dispatch)
 }
 

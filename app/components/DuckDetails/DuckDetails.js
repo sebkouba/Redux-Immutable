@@ -7,6 +7,10 @@ import { subHeader, darkBtn, errorMsg } from 'sharedStyles/styles.css'
 import { RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
 
+Reply.propTypes = {
+  submit: PropTypes.func.isRequired,
+}
+
 function Reply ({submit}) {
   const handleSubmit = (e) => {
     if (Reply.ref.value.length === 0) return
@@ -18,7 +22,7 @@ function Reply ({submit}) {
     <div className={replyTextAreaContainer}>
       <textarea
         className={replyTextArea}
-        ref={(ref) => Reply.ref = ref}
+        ref={(ref) => (Reply.ref = ref)}
         maxLength={140}
         type='text'
         placeholder='Your reponse'/>
@@ -43,7 +47,7 @@ export default function DuckDetails ({addAndHandleReply, duckId, isFetching, aut
   return (
     <div className={mainContainer}>
       {isFetching === true
-        ? <p className={subHeader}> Fetching </p>
+        ? <p className={subHeader}>{'Fetching'}</p>
         : <div className={container}>
             <div className={content}>
               <DuckContainer duckId={duckId} hideLikeCount={false} hideReplyBtn={true} />

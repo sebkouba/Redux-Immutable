@@ -8,13 +8,6 @@ const FETCHING_DUCK_SUCCESS = 'FETCHING_DUCK_SUCCESS'
 const ADD_DUCK = 'ADD_DUCK'
 const ADD_MULTIPLE_DUCKS = 'ADD_MULTIPLE_DUCKS'
 const REMOVE_FETCHING = 'REMOVE_FETCHING'
-const UPDATE_MULTIPLE_DUCKS = 'UPDATE_MULTIPLE_DUCKS'
-
-export function removeFetching () {
-  return {
-    type: REMOVE_FETCHING
-  }
-}
 
 function fetchingDuck () {
   return {
@@ -23,17 +16,17 @@ function fetchingDuck () {
 }
 
 function fetchingDuckError (error) {
-  console.log(error)
+  console.warn(error)
   return {
     type: FETCHING_DUCK_ERROR,
-    error,
+    error: 'Error fetching Duck',
   }
 }
 
 function fetchingDuckSuccess (duck) {
   return {
     type: FETCHING_DUCK_SUCCESS,
-    duck
+    duck,
   }
 }
 
@@ -43,6 +36,12 @@ export function fetchAndHandleDuck (duckId) {
     fetchDuck(duckId)
       .then((duck) => dispatch(fetchingDuckSuccess(duck)))
       .catch((error) => dispatch(fetchingDuckError(error)))
+  }
+}
+
+export function removeFetching () {
+  return {
+    type: REMOVE_FETCHING,
   }
 }
 
@@ -77,7 +76,7 @@ export function duckFanout (duck) {
 
 const initialState = {
   isFetching: true,
-  error: ''
+  error: '',
 }
 
 export default function ducks (state = initialState, action) {
@@ -92,26 +91,26 @@ export default function ducks (state = initialState, action) {
     case FETCHING_DUCK_SUCCESS :
       return {
         ...state,
-        isFetching: false,
         error: '',
-        [action.duck.duckId]: action.duck
+        isFetching: false,
+        [action.duck.duckId]: action.duck,
       }
     case FETCHING_DUCK_ERROR :
       return {
         ...state,
         isFetching: false,
-        error: action.error
+        error: action.error,
       }
     case REMOVE_FETCHING :
       return {
         ...state,
+        error: '',
         isFetching: false,
       }
-
     case ADD_MULTIPLE_DUCKS :
       return {
         ...state,
-        ...action.ducks
+        ...action.ducks,
       }
     default :
       return state

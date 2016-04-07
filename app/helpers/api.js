@@ -5,13 +5,13 @@ function saveToDucks (duck) {
   const duckPromise = ref.child(`ducks/${duckId}`).set({...duck, duckId})
   return {
     duckId,
-    duckPromise
+    duckPromise,
   }
 }
 
 function saveToUsersDucks (duck, duckId) {
-  const endpoint = `usersDucks/${duck.uid}/${duckId}`
-  return ref.child(endpoint).set({...duck, duckId})
+  return ref.child(`usersDucks/${duck.uid}/${duckId}`)
+    .set({...duck, duckId})
 }
 
 function saveLikeCount (duckId) {
@@ -24,14 +24,14 @@ export function saveDuck (duck) {
   return Promise.all([
     duckPromise,
     saveToUsersDucks(duck, duckId),
-    saveLikeCount(duckId)
+    saveLikeCount(duckId),
   ]).then(() => ({...duck, duckId}))
 }
 
 export function listenToFeed (cb, errorCB) {
   ref.child('ducks').on('value', (snapshot) => {
     const feed = snapshot.val() || {}
-    const sortedIds = Object.keys(feed).sort((a,b) => feed[b].timestamp - feed[a].timestamp)
+    const sortedIds = Object.keys(feed).sort((a, b) => feed[b].timestamp - feed[a].timestamp)
     cb({feed, sortedIds})
   }, errorCB)
 }
