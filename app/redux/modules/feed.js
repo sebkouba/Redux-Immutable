@@ -93,13 +93,13 @@ export default function feed (state = initialState, action) {
     case ADD_NEW_DUCK_ID_TO_FEED :
       return {
         ...state,
-        newDucksToAdd: state.newDucksToAdd.concat([action.duckId]),
+        newDucksToAdd: [action.duckId, ...state.newDucksToAdd],
         newDucksAvailable: true,
       }
     case RESET_NEW_DUCKS_AVAILABLE :
       return {
         ...state,
-        duckIds: state.duckIds.reverse().concat(state.newDucksToAdd).reverse(),
+        duckIds: [...state.newDucksToAdd, ...state.duckIds],
         newDucksToAdd: [],
         newDucksAvailable: false,
       }
