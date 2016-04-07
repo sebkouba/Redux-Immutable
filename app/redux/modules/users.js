@@ -131,12 +131,18 @@ export default function users (state = initialState, action) {
         error: action.error,
       }
     case FETCHING_USER_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        error: '',
-        [action.uid]: user(state[action.uid], action),
-      }
+      return action.user === null
+        ? {
+          ...state,
+          isFetching: false,
+          error: '',
+        }
+        : {
+          ...state,
+          isFetching: false,
+          error: '',
+          [action.uid]: user(state[action.uid], action),
+        }
     default :
       return state
   }
