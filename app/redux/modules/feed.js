@@ -1,6 +1,7 @@
 import { listenToFeed } from 'helpers/api'
 import { addMultipleDucks } from 'redux/modules/ducks'
 import { addListener } from 'redux/modules/listeners'
+import { fromJS, List } from 'immutable'
 
 const SETTING_FEED_LISTENER = 'SETTING_FEED_LISTENER'
 const SETTING_FEED_LISTENER_ERROR = 'SETTING_FEED_LISTENER_ERROR'
@@ -61,49 +62,41 @@ export function resetNewDucksAvailable () {
   }
 }
 
-const initialState = {
+const initialState = fromJS({
   newDucksAvailable: false,
-  newDucksToAdd: [],
+  newDucksToAdd: List(),
   isFetching: false,
   error: '',
-  duckIds: [],
-}
+  duckIds: List(),
+})
 
 export default function feed (state = initialState, action) {
-  const type = action.type
-  switch (type) {
+  switch (action.type) {
     case SETTING_FEED_LISTENER :
-      return {
-        ...state,
-        isFetching: true,
-      }
+      return state.set('isFetching', true)
     case SETTING_FEED_LISTENER_ERROR :
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: action.error,
-      }
+      })
     case SETTING_FEED_LISTENER_SUCCESS :
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: '',
-        duckIds: action.duckIds,
+        duckIds: state.get('duckIds').concat(action.duckIds),
         newDucksAvailable: false,
-      }
+      })
     case ADD_NEW_DUCK_ID_TO_FEED :
-      return {
-        ...state,
-        newDucksToAdd: [action.duckId, ...state.newDucksToAdd],
+      return state.merge({
+        newDucksToAdd: state.get('newDucksToAdd').unshift(action.duckId),
         newDucksAvailable: true,
-      }
+      })
     case RESET_NEW_DUCKS_AVAILABLE :
-      return {
-        ...state,
-        duckIds: [...state.newDucksToAdd, ...state.duckIds],
-        newDucksToAdd: [],
+      return state.merge({
+        duckIds: state.get('newDucksToAdd').concat(state.get('duckIds')),
+        newDucksToAdd: List(),
         newDucksAvailable: false,
-      }
+      })
     default :
       return state
   }
