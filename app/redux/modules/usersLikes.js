@@ -2,8 +2,7 @@ import {
   fetchUsersLikes, saveToUsersLikes, deleteFromUsersLikes,
   incrementNumberOfLikes, decrementNumberOfLikes,
 } from 'helpers/api'
-
-import { Map, fromJS } from 'immutable'
+import { Map } from 'immutable'
 
 export const ADD_LIKE = 'ADD_LIKE'
 export const REMOVE_LIKE = 'REMOVE_LIKE'
@@ -107,10 +106,8 @@ export default function usersLikes (state = initialState, action) {
     case FETCHING_LIKES_SUCCESS :
       return state.merge(
         action.likes,
-        {
-          isFetching: false,
-          error: ''
-        })
+        {isFetching: false, error: ''}
+      )
     case ADD_LIKE :
       return state.set(action.duckId, true)
     case REMOVE_LIKE :

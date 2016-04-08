@@ -30,7 +30,7 @@ export default function Feed (props) {
     : <div>
         {props.newDucksAvailable ? <NewDucksAvailable handleClick={props.resetNewDucksAvailable} /> : null}
         {props.duckIds.size === 0
-            ? <p className={header}>This is unfortunate. <br /> It appears there are no ducks yet 😞</p>
+            ? <p className={header}>{'This is unfortunate.'} <br /> {'It appears there are no ducks yet 😞'}</p>
             : null}
         {props.duckIds.map((id) => (
           <DuckContainer
