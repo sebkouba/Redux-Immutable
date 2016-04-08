@@ -1,4 +1,5 @@
 import { fetchLikeCount } from 'helpers/api'
+import { Map } from 'immutable'
 
 import { ADD_LIKE, REMOVE_LIKE } from './usersLikes'
 const FETCHING_COUNT = 'FETCHING_COUNT'
@@ -48,38 +49,32 @@ function count (state = 0, action) {
   }
 }
 
-const initialState = {
+const initialState = Map({
   isFetching: false,
   error: '',
-}
+})
 
 export default function likeCount (state = initialState, action) {
   switch (action.type) {
     case FETCHING_COUNT :
-      return {
-        ...state,
-        isFetching: true,
-      }
+      return state.set('isFetching', true)
     case FETCHING_COUNT_ERROR :
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: action.error,
-      }
+      })
     case FETCHING_COUNT_SUCCESS :
-      return {
-        ...state,
-        ...initialState,
-        [action.duckId]: action.count,
-      }
+      return state.merge(
+        initialState,
+        {[action.duckId]: action.count},
+      )
     case ADD_LIKE :
     case REMOVE_LIKE :
-      return typeof state[action.duckId] === 'undefined'
+      return typeof state.get(action.duckId) === 'undefined'
         ? state
-        : {
-          ...state,
-          [action.duckId]: count(state[action.duckId], action),
-        }
+        : state.merge({
+            [action.duckId]: count(state.get(action.duckId), action),
+          })
     default :
       return state
   }
