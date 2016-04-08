@@ -41,8 +41,8 @@ const DuckDetailsContainer = React.createClass({
 
 function mapStateToProps ({ducks, likeCount, usersLikes, users}, props) {
   return {
-    isFetching: ducks.isFetching || likeCount.isFetching,
-    error: ducks.error,
+    isFetching: ducks.get('isFetching') || likeCount.isFetching,
+    error: ducks.get('error'),
     authedUser: users[users.authedId].info,
     duckId: props.routeParams.duckId,
   }
