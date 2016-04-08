@@ -40,7 +40,7 @@ function addNewDuckIdToFeed (duckId) {
 export function setAndHandleFeedListener () {
   let initialFetch = true
   return function (dispatch, getState) {
-    if (getState().listeners.feed === true) {
+    if (getState().listeners.get('feed') === true) {
       return
     }
 
