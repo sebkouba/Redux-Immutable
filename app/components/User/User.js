@@ -2,13 +2,14 @@ import React, { PropTypes } from 'react'
 import { DuckContainer } from 'containers'
 import { userContainer, header } from './styles.css'
 import { errorMsg } from 'sharedStyles/styles.css'
+import { List } from 'immutable'
 
 User.propTypes = {
   noUser: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  duckIds: PropTypes.array.isRequired,
+  duckIds: PropTypes.instanceOf(List),
 }
 
 export default function User (props) {
@@ -26,7 +27,7 @@ export default function User (props) {
                   duckId={id}
                   key={id} />
               ))}
-              {props.duckIds.length === 0
+              {props.duckIds.size === 0
                 ? <p className={header}>
                     {`It looks like ${props.name.split(' ')[0]} hasn't made any ducks yet.`}
                   </p>

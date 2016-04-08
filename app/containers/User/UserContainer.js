@@ -5,6 +5,7 @@ import { User } from 'components'
 import * as usersDucksActionCreators from 'redux/modules/usersDucks'
 import * as usersActionCreaetors from 'redux/modules/users'
 import { staleDucks, staleUser } from 'helpers/utils'
+import { List } from 'immutable'
 
 const UserContainer = React.createClass({
   propTypes: {
@@ -13,7 +14,7 @@ const UserContainer = React.createClass({
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     lastUpdated: PropTypes.number.isRequired,
-    duckIds: PropTypes.array.isRequired,
+    duckIds: PropTypes.instanceOf(List),
     routeParams: PropTypes.shape({uid: PropTypes.string.isRequired}),
     fetchAndHandleUsersDucks: PropTypes.func.isRequired,
     fetchAndHandleUser: PropTypes.func.isRequired,
@@ -41,17 +42,17 @@ const UserContainer = React.createClass({
 })
 
 function mapStateToProps ({users, usersDucks}, props) {
-  const specificUsersDucks = usersDucks[props.routeParams.uid]
+  const specificUsersDucks = usersDucks.get(props.routeParams.uid)
   const user = users.get(props.routeParams.uid)
   const noUser = typeof user === 'undefined'
   const name = noUser ? '' : user.getIn(['info', 'name'])
   return {
     noUser,
     name,
-    isFetching: users.get('isFetching') || usersDucks.isFetching,
-    error: users.get('error') || usersDucks.error,
-    lastUpdated: specificUsersDucks ? specificUsersDucks.lastUpdated : 0,
-    duckIds: specificUsersDucks ? specificUsersDucks.duckIds : [],
+    isFetching: users.get('isFetching') || usersDucks.get('isFetching'),
+    error: users.get('error') || usersDucks.get('error'),
+    lastUpdated: specificUsersDucks ? specificUsersDucks.get('lastUpdated') : 0,
+    duckIds: specificUsersDucks ? specificUsersDucks.get('duckIds') : List(),
   }
 }
 
