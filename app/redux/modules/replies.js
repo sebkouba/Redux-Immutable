@@ -1,4 +1,5 @@
 import { postReply, fetchReplies } from 'helpers/api'
+import { Map, OrderedMap } from 'immutable'
 
 const FETCHING_REPLIES = 'FETCHING_REPLIES'
 const FETCHING_REPLIES_ERROR = 'FETCHING_REPLIES_ERROR'
@@ -35,7 +36,6 @@ export function addAndHandleReply (duckId, reply) {
     const { replyWithId, replyPromise } = postReply(duckId, reply)
 
     dispatch(addReply(duckId, replyWithId))
-
     replyPromise.catch((error) => {
       dispatch(removeReply(duckId, replyWithId.replyId))
       dispatch(addReplyError(error))
@@ -76,84 +76,69 @@ export function fetchAndHandleReplies (duckId) {
   }
 }
 
-const initialReply = {
+const initialReply = Map({
   name: '',
   reply: '',
   uid: '',
   timestamp: 0,
   avatar: '',
   replyId: '',
-}
+})
 
 function duckReplies (state = initialReply, action) {
   switch (action.type) {
     case ADD_REPLY :
-      return {
-        ...state,
-        [action.reply.replyId]: action.reply,
-      }
+      return state.set(action.reply.replyId, action.reply)
     case REMOVE_REPLY :
-      return {
-        ...state,
-        [action.reply.replyId]: undefined,
-      }
+      return state.set(action.replyId, undefined)
     default :
       return state
   }
 }
 
-const initialDuckState = {
+const initialDuckState = Map({
   lastUpdated: Date.now(),
-  replies: {},
-}
+  replies: OrderedMap(),
+})
 
 function repliesAndLastUpated (state = initialDuckState, action) {
   switch (action.type) {
     case FETCHING_REPLIES_SUCCESS :
-      return {
-        ...state,
+      return state.merge({
         lastUpdated: action.lastUpdated,
-        replies: action.replies,
-      }
+        replies: OrderedMap(action.replies),
+      })
     case ADD_REPLY :
     case REMOVE_REPLY :
-      return {
-        ...state,
-        replies: duckReplies(state.replies, action),
-      }
+      return state.set('replies', duckReplies(state.get('replies'), action))
     default :
       return state
   }
 }
 
-const initialState = {
+const initialState = Map({
   isFetching: true,
   error: '',
-}
+})
 
 export default function replies (state = initialState, action) {
   switch (action.type) {
     case FETCHING_REPLIES :
-      return {
-        ...state,
-        isFetching: true,
-      }
+      return state.set('isFetching', true)
     case FETCHING_REPLIES_ERROR :
     case ADD_REPLY_ERROR :
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: action.error,
-      }
+      })
     case ADD_REPLY :
     case FETCHING_REPLIES_SUCCESS :
     case REMOVE_REPLY :
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: '',
-        [action.duckId]: repliesAndLastUpated(state[action.duckId], action),
-      }
+        [action.duckId]: repliesAndLastUpated(state.get(action.duckId), action),
+      })
     default :
       return state
   }

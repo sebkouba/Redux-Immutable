@@ -73,8 +73,8 @@ export default function likeCount (state = initialState, action) {
       return typeof state.get(action.duckId) === 'undefined'
         ? state
         : state.merge({
-            [action.duckId]: count(state.get(action.duckId), action),
-          })
+          [action.duckId]: count(state.get(action.duckId), action),
+        })
     default :
       return state
   }

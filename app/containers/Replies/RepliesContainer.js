@@ -4,20 +4,21 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as repliesActionCreators from 'redux/modules/replies'
 import { staleReplies } from 'helpers/utils'
+import { Map, OrderedMap } from 'immutable'
 
 const RepliesContainer = React.createClass({
   propTypes: {
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     lastUpdated: PropTypes.number.isRequired,
-    replies: PropTypes.object,
+    replies: PropTypes.instanceOf(Map),
     fetchAndHandleReplies: PropTypes.func.isRequired,
     duckId: PropTypes.string.isRequired,
   },
   getDefaultProps () {
     return {
       lastUpdated: 0,
-      replies: {},
+      replies: OrderedMap(),
     }
   },
   componentDidMount () {
@@ -37,13 +38,12 @@ const RepliesContainer = React.createClass({
 })
 
 function mapStateToProps (state, props) {
-  const duckRepliesInfo = state.replies[props.duckId] || {}
-  const { lastUpdated, replies } = duckRepliesInfo
+  const duckRepliesInfo = state.replies.get(props.duckId) || Map()
   return {
-    isFetching: state.replies.isFetching,
-    error: state.replies.error,
-    lastUpdated,
-    replies,
+    isFetching: state.replies.get('isFetching'),
+    error: state.replies.get('error'),
+    lastUpdated: duckRepliesInfo.get('lastUpdated'),
+    replies: duckRepliesInfo.get('replies'),
   }
 }
 

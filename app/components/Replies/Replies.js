@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
+import { OrderedMap } from 'immutable'
 import {
   avatar, replyContainer, header,
   cushion, center, author } from './styles.css'
 import { formatTimestamp } from 'helpers/utils'
 import { errorMsg } from 'sharedStyles/styles.css'
-const { bool, string, object } = PropTypes
+const { bool, string, instanceOf, object } = PropTypes
 
 Reply.propTypes = {
   comment: object.isRequired,
@@ -26,23 +27,22 @@ function Reply ({comment}) {
 Replies.propTypes = {
   isFetching: bool.isRequired,
   error: string.isRequired,
-  replies: object,
+  replies: instanceOf(OrderedMap),
 }
 
 function Replies ({replies, error, isFetching}) {
-  const replyIds = Object.keys(replies)
   return (
     <div>
       {error ? <h3 className={errorMsg}>{error}</h3> : null}
       {isFetching === true
-        ? <p>{'Fetching Replies'}</p>
+        ? <p className={center}>{'Fetching Replies'}</p>
         : <div>
             <h1 className={header}>{'Replies'}</h1>
-            {replyIds.map((replyId) => (
-              <Reply key={replyId} comment={replies[replyId]} />
+            {replies.valueSeq().map((reply) => (
+              <Reply key={reply.timestamp + reply.uid} comment={reply} />
             ))}
           </div>}
-      {replyIds.length === 0 ? <h3 className={center}>{'Be the first to comment. 😎'}</h3> : null}
+      {replies.size === 0 ? <h3 className={center}>{'Be the first to comment. 😎'}</h3> : null}
     </div>
   )
 }
