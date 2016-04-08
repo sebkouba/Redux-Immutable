@@ -13,12 +13,12 @@ export function formatUserInfo (name, avatar, uid) {
   }
 }
 
-export function formatDuck (text, {name, uid, avatar}) {
+export function formatDuck (text, user) {
   return {
     text,
-    name,
-    avatar,
-    uid,
+    name: user.get('name'),
+    avatar: user.get('avatar'),
+    uid: user.get('uid'),
     timestamp: Date.now(),
   }
 }

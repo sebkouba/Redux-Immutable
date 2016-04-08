@@ -5,11 +5,12 @@ import { bindActionCreators } from 'redux'
 import { fetchAndHandleDuck, removeFetching } from 'redux/modules/ducks'
 import { initLikeFetch } from 'redux/modules/likeCount'
 import { addAndHandleReply } from 'redux/modules/replies'
-const { func, object, string, bool } = PropTypes
+const { func, object, string, bool, instanceOf } = PropTypes
+import { Map } from 'immutable'
 
 const DuckDetailsContainer = React.createClass({
   propTypes: {
-    authedUser: object.isRequired,
+    authedUser: instanceOf(Map).isRequired,
     duck: object,
     duckId: string.isRequired,
     error: string.isRequired,
@@ -43,7 +44,7 @@ function mapStateToProps ({ducks, likeCount, usersLikes, users}, props) {
   return {
     isFetching: ducks.get('isFetching') || likeCount.get('isFetching'),
     error: ducks.get('error'),
-    authedUser: users[users.authedId].info,
+    authedUser: users.getIn([users.get('authedId'), 'info']),
     duckId: props.routeParams.duckId,
   }
 }

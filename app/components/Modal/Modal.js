@@ -4,6 +4,7 @@ import {
   newDuckTop, pointer, newDuckInputContainer,
   newDuckInput, submitDuckBtn, darkBtn } from './styles.css'
 import { formatDuck } from 'helpers/utils'
+import { Map } from 'immutable'
 
 const modalStyles = {
   content: {
@@ -16,7 +17,7 @@ const modalStyles = {
   },
 }
 
-const { object, string, func, bool } = PropTypes
+const { string, func, bool, instanceOf } = PropTypes
 Modal.propTypes = {
   duckText: string.isRequired,
   closeModal: func.isRequired,
@@ -24,7 +25,7 @@ Modal.propTypes = {
   isSubmitDisabled: bool.isRequired,
   openModal: func.isRequired,
   updateDuckText: func.isRequired,
-  user: object.isRequired,
+  user: instanceOf(Map),
 }
 
 export default function Modal (props) {

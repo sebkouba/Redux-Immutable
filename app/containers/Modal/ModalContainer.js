@@ -7,7 +7,7 @@ import * as ducksActionCreators from 'redux/modules/ducks'
 function mapStateToProps ({modal, users, authedUser}, props) {
   const duckText = modal.get('duckText')
   return {
-    user: users[users.authedId] ? users[users.authedId].info : {},
+    user: users.getIn([users.get('authedId'), 'info']),
     duckText,
     isOpen: modal.get('isOpen'),
     isSubmitDisabled: duckText.length <= 0 || duckText.length > 140,

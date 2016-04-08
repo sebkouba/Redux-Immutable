@@ -6,6 +6,7 @@ import {
 import { subHeader, darkBtn, errorMsg } from 'sharedStyles/styles.css'
 import { RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
+import { Map } from 'immutable'
 
 Reply.propTypes = {
   submit: PropTypes.func.isRequired,
@@ -36,7 +37,7 @@ function Reply ({submit}) {
 }
 
 DuckDetails.propTypes = {
-  authedUser: PropTypes.object.isRequired,
+  authedUser: PropTypes.instanceOf(Map),
   duckId: PropTypes.string.isRequired,
   addAndHandleReply: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -51,7 +52,7 @@ export default function DuckDetails ({addAndHandleReply, duckId, isFetching, aut
         : <div className={container}>
             <div className={content}>
               <DuckContainer duckId={duckId} hideLikeCount={false} hideReplyBtn={true} />
-              <Reply submit={(replyText) => addAndHandleReply(duckId, formatReply(authedUser, replyText))} />
+              <Reply submit={(replyText) => addAndHandleReply(duckId, formatReply(authedUser.toJS(), replyText))} />
             </div>
             <div className={repliesContainer}>
               <RepliesContainer duckId={duckId}/>

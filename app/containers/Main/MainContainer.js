@@ -34,6 +34,6 @@ const MainContainer = React.createClass({
 })
 
 export default connect(
-  ({users}) => ({isAuthed: users.isAuthed}),
+  ({users}) => ({isAuthed: users.get('isAuthed')}),
   (dispatch) => bindActionCreators(usersLikesActionCreators, dispatch)
 )(MainContainer)
