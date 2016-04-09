@@ -6,6 +6,7 @@ import * as feedActionCreators from 'redux/modules/feed'
 
 const FeedContainer = React.createClass({
   propTypes: {
+    duckIds: PropTypes.array.isRequired,
     newDucksAvailable: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
@@ -18,6 +19,7 @@ const FeedContainer = React.createClass({
   render () {
     return (
       <Feed
+        duckIds={this.props.duckIds}
         newDucksAvailable={this.props.newDucksAvailable}
         error={this.props.error}
         isFetching={this.props.isFetching}
