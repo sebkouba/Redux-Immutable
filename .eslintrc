@@ -23,7 +23,7 @@
     "no-extra-semi": 1,
     "jsx-quotes": [1, "prefer-single"],
     "react/jsx-boolean-value": [1, "always"],
-    "react/jsx-closing-bracket-location": [1, {selfClosing: "after-props", nonEmpty: "after-props"}],
+    # "react/jsx-closing-bracket-location": [1, {selfClosing: "after-props", nonEmpty: "after-props"}],
     "react/jsx-curly-spacing": [1, "never", {"allowMultiline": false}],
     "react/jsx-max-props-per-line": [1, {maximum: 3}],
     # "react/jsx-no-literals": 1,
