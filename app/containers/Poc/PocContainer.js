@@ -20,8 +20,6 @@ const PocContainer = React.createClass({
   }
 })
 
-PocContainer.P
-
 function mapStateToProps ({pocReducer}, props) {
   return {
     inputText: pocReducer.inputText
