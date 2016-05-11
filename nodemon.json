@@ -1,0 +1,7 @@
+{
+    "verbose": true,
+    "watch": [
+      "webpack.config.babel.js"
+    ],
+    "exec": "webpack-dev-server"
+}

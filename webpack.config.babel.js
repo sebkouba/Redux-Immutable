@@ -50,6 +50,8 @@ const developmentConfig = {
     hot: true,
     inline: true,
     progress: true,
+    // display only errors to reduce the amount of output
+    stats: 'errors-only'
   },
   plugins: [HTMLWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()]
 }
