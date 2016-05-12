@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+// import {Parent} from 'components'
 
 export default function Poc (props) {
   return (

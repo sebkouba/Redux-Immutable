@@ -35,8 +35,9 @@ function mapDispatchToProps (dispatch, props) {
 }
 
 // export default PocContainer
+// since the Container has no lifecycle methods we can simply export Poc
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PocContainer)
+)(Poc)
